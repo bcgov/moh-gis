@@ -1,0 +1,4 @@
+create-jvm-options \-Xmx1024m
+create-jvm-options \-Xms512m
+delete-jvm-options \-XX\:NewRatio=2
+create-jvm-options \-XX\:NewRatio=3

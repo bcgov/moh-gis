@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+    <persistence-unit name="GIS-ejbPU" transaction-type="JTA">
+        <jta-data-source>java:app/jdbc/gis</jta-data-source>
+        <class>ca.bc.hnet.moh.ccims.gis.entity.GisRecipients</class>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties/>
+    </persistence-unit>
+</persistence>

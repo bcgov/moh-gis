@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="title" /></title>
+    </h:head>
+    <h:body styleClass="home">
+
+        <h:outputStylesheet name="css/navigation.css" />
+        <h:outputStylesheet name="css/header.css" />
+        <h:outputStylesheet name="css/footer.css" />
+        <h:outputStylesheet name="css/templatemain.css" />
+        <h:outputStylesheet name="css/gov30primefaces.css" />
+        <h:outputStylesheet name="css/fonts.css" />
+
+        <h:outputStylesheet name="css/style.css" />
+        <h:outputScript name="scripts/scripts.js" />
+
+
+        <header id="navbar" class="navbar navbar-static-top navbar-default">
+            <h:form id="header">
+                <div id="navbar-toolbar">
+                    <div class="container">
+                        <div class="col-sm-12 navbar-logo" style="width: 1000px; padding: 20px 0px;">
+                            <a href="https://www2.gov.bc.ca/gov/content/home" class="bcgov logo" title="Government of British Columbia Home">
+                                <h:graphicImage name="template-images/gov-logo.svg" alt="BC Government Logo" style="width: 10%" />
+                            </a>
+
+                            <h:commandLink id="home" styleClass="serviceLink" action="Search">
+                                <h1 class="page-title">Guaranteed Income Supplement</h1>
+                            </h:commandLink>
+                        </div>
+                        <div class="col-sm-30 pull-right navbar-links-container ">
+                            <div class="pull-right navbar-links">
+                                <ul class="menu nav">
+                                    <li>
+                                        <a id="MoH" title="Ministry Of Health Home" href="https://gov.bc.ca/healthservices" target="_blank">
+                                            Ministry Of Health
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <h:outputLink value="#{facesContext.externalContext.requestContextPath}/resources/moh/pdfs/GIS_User_Guide.pdf" 
+                                                      title="GIS User Guide" target="_blank">
+                                            User Guide
+                                        </h:outputLink>
+                                    </li>
+                                    <li>
+                                        <h:commandLink action="#{Logout.logout()}" styleClass="logout"
+                                                       title="Sign Out" onclick="return confirmExit()">
+                                            Log out
+                                        </h:commandLink>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </header>
+
+        <p:growl id="timeoutWarningGrowl" for="timeoutMessages" widgetVar="timeoutWarning" showDetail="true" sticky="true"/>
+        <p:remoteCommand name="extendSession" global="false" actionListener="#{SessionTimeout.extendSession}"/>
+        <p:remoteCommand name="endSession" global="false" actionListener="#{SessionTimeout.endSession}"/>
+
+        <div class="container" style="min-height: calc(100vh - 285px); padding-bottom: 20px;">
+            <ui:insert name="content">Content</ui:insert>
+            <p:dialog styleClass="spinner-box" widgetVar="statusDialog" modal="false" 
+                      draggable="false" closable="false" resizable="false" showHeader="false">
+                <h:graphicImage name="template-images/loader.png" styleClass="spinning-loader" />
+                <h:outputText value="Loading" />
+            </p:dialog>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-region">
+                    <ul class="nav">
+                        <li class="environment">Version: ${project.version}</li>
+                        <li><a target="_blank" href="http://www2.gov.bc.ca/gov/content/home/disclaimer">Disclaimer</a></li>
+                        <li><a target="_blank" href="http://www2.gov.bc.ca/gov/content/home/privacy">Privacy</a></li>
+                        <li><a target="_blank" href="http://www2.gov.bc.ca/gov/content/home/accessibility">Accessibility</a></li>
+                        <li><a target="_blank" href="http://www2.gov.bc.ca/gov/content/home/copyright">Copyright</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
+    </h:body>
+</html>
