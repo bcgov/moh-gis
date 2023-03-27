@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"       
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <!-- Details -->
+    <p:panel style="margin: 1em 0 1.5em 0;">
+        <f:facet name="header">
+            <h:outputText value="Recipient Information"/>
+        </f:facet>
+        
+        <p:panelGrid columns="4" styleClass="borderless ui-grid-blank search-grid" layout="grid"
+            columnClasses="ui-grid-col-3 text-right, ui-grid-col-2, ui-grid-col-3 text-right, ui-grid-col-4">
+            
+            <p:outputLabel value="Social Insurance Number:"/>
+            <h:outputText  value="#{Search.selectedRecipient.accountId}"/>
+            
+            <p:outputLabel value="Address Line 1:"/>
+            <h:outputText  value="#{Search.selectedRecipient.address1}"/>
+            
+            <p:outputLabel value="Status Code:"/>
+            <h:outputText  value="#{Search.selectedRecipient.acntStatusDesc}"/>
+            
+            <p:outputLabel value="Address Line 2:"/>
+            <h:outputText  value="#{Search.selectedRecipient.address2}"/>
+            
+            <p:outputLabel value="Surname:"/>
+            <h:outputText  value="#{Search.selectedRecipient.rcptSurname}" />
+            
+            <p:outputLabel value="Address Line 3:"/>
+            <h:outputText  value="#{Search.selectedRecipient.address3}" />
+            
+            <p:outputLabel value="Given Name:"/>
+            <h:outputText  value="#{Search.selectedRecipient.rcptGivenname}"/>
+            
+            <p:outputLabel value="Address Line 4:"/>
+            <h:outputText  value="#{Search.selectedRecipient.address4}"/>
+            
+            <p:outputLabel value="Birth Date:"/>
+            <h:outputText  value="#{Search.selectedRecipient.birthdate}"/>
+
+            <p:outputLabel value="Postal Code:"/>
+            <h:outputText  value="#{Search.selectedRecipient.postalCode}"/>    
+            
+            <p:outputLabel value="Marital Status:"/>
+            <h:outputText  value="#{Search.selectedRecipient.marStatusDescription}" />
+            
+            <p:outputLabel value="Spouse Account Id:"/>
+            <h:outputText  value="#{Search.selectedRecipient.spouseActId}" />          
+            
+            <!-- used to be a label for middle name but there's no actual data for it, blank label to keep spouse info on same column -->
+            <p:outputLabel value=""/> 
+            
+            <p:outputLabel value="Spouse Given Name:"/>
+            <h:outputText  value="#{Search.selectedRecipient.spouseGivenName}"/>
+        </p:panelGrid>
+    </p:panel>
+
+    <p:panel style="margin-bottom: 1em">
+        <f:facet name="header">
+            <h:outputText value="Recipient GIS Eligibility Information"/>
+        </f:facet>
+        
+        <p:panelGrid columns="4" styleClass="borderless ui-grid-blank search-grid" layout="grid"
+            columnClasses="ui-grid-col-4 text-right, ui-grid-col-1, ui-grid-col-3 text-right, ui-grid-col-2">
+
+                <span style="font-weight: 600">Entitlement Date:</span>
+                <h:outputText  value="#{Search.selectedRecipient.entlmntDate}"/>
+               
+                <span style="font-weight: 600">Pay Date:</span>
+                <h:outputText  value="#{Search.selectedRecipient.payDate}"/>
+
+                <span style="font-weight: 600">Final Pay Date:</span>
+                <h:outputText  value="#{Search.selectedRecipient.finalPayDate}"/>
+
+                <span style="font-weight: 600">Last Update Date:</span>
+                <h:outputText  value="#{Search.selectedRecipient.lastUpdateDate}"/>
+                
+                <!--label to preserve column positions -->
+                <p:outputLabel value=""/>
+                
+                <span style="font-weight: 600">Load Period:</span>
+                <h:outputText  value="#{Search.selectedRecipient.loadId}"/>
+        </p:panelGrid>
+
+    </p:panel>
+
+    <div style="font-size: 1em; font-weight: bold; color: red">
+        DISCLAIMER: If the information above is inaccurate, clients may contact Service Canada directly to correct information.
+    </div>
+
+
+</ui:composition>

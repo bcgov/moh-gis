@@ -1,0 +1,157 @@
+
+.top-level-item.common-health-concerns,
+.top-level-item.mental-health--substance-use {
+  width: 151px;
+}
+@media (max-width: 959px) {
+  .top-level-item.common-health-concerns,
+  .top-level-item.mental-health--substance-use {
+    width: inherit;
+  }
+  .top-level-item.public-health-alerts,
+  .top-level-item.services-and-resources {
+    width: inherit;
+  }
+}
+@media (max-width: 1200px) and (min-width: 960px) {
+  .top-level-item.common-health-concerns,
+  .top-level-item.mental-health--substance-use {
+    width: 130px;
+  }
+  .top-level-item.public-health-alerts,
+  .top-level-item.services--resources {
+    width: 103px;
+  }
+  .top-level-item.healthy-eating,
+  .top-level-item.medical-tests,
+  .top-level-item.health-topics,
+  .top-level-item.tools--videos {
+    width: 78px;
+  }
+}
+.region-site-links ul {
+  margin-right: 10px;
+  margin-top: 6px;
+}
+.region-site-links li > a {
+  font-size: 13px;
+}
+.region-site-links li:first-child > a:before {
+  font-family: FontAwesome;
+  content: '\f095';
+  margin-right: 8px;
+}
+.region-footer li.last > a:before {
+  font-family: FontAwesome;
+  content: '\f095';
+  margin-right: 8px;
+}
+.nav-bullet {
+  color: #999999;
+  font-size: 11px;
+  padding-right: 2px;
+}
+.region-sidebar-first.well .nav > li > a {
+  padding: 5px 15px;
+}
+.region-sidebar-first.well .nav > li > a:hover,
+.region-sidebar-first.well .nav > li > a:focus {
+  background: transparent;
+}
+ul.nav li.dropdown:hover ul.dropdown-menu {
+  display: block;
+}
+ul.nav li.dropdown ul.dropdown-menu {
+  margin-top: 0;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+  color: #ffffff;
+  background-color: #6583b0;
+}
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+  text-decoration: underline;
+}
+.dropdown-menu > .active > a {
+  background-color: #5475a7;
+  text-decoration: underline;
+}
+.footer .nav > li,
+.navbar-links .nav > li {
+  float: left;
+  list-style-image: none;
+}
+.footer .nav > li:last-child a,
+.navbar-links .nav > li:last-child a {
+  border-right: none;
+}
+.footer .nav > li > a,
+.navbar-links .nav > li > a {
+  padding: 0px 10px;
+  border-right: 1px solid #636c7b;
+  color: #ffffff;
+  display: block;
+  margin: 10px 0;
+  line-height: 1em;
+  font-size: 13px;
+}
+.footer .nav > li > a:hover,
+.navbar-links .nav > li > a:hover,
+.footer .nav > li > a:active,
+.navbar-links .nav > li > a:active,
+.footer .nav > li > a:focus,
+.navbar-links .nav > li > a:focus {
+  background: transparent;
+}
+.footer .nav > li a:hover,
+.navbar-links .nav > li > a:hover {
+    text-decoration: underline;
+}
+
+@media (min-width: 960px) and (max-width: 1199px) {
+  .navbar-links .nav > li > a {
+    padding: 0 10px;
+  }
+}
+.navbar-links .nav {
+  margin-top: 9px;
+}
+.navbar-header {
+  color: white;
+}
+.navbar-header .search-toggle {
+  margin-top: 3px;
+}
+/*Left Menu Navigation Dropdown*/
+#left-menu-sidebar.dropdown-menu {
+  left: auto;
+  background: #ffffff;
+  margin: 0 0 -100% 0;
+  border-top: none;
+  width: 100%;
+  position: relative;
+}
+#left-menu-sidebar.dropdown-menu .well {
+  border: none;
+}
+.mobile-section-navigation {
+  margin-bottom: 1em;
+}
+.mobile-section-navigation #left-mobile-dropdown {
+  width: 100%;
+  text-align: left;
+  line-height: 2em;
+}
+.mobile-section-navigation #left-mobile-dropdown .dropdown-toggle-icon {
+  position: absolute;
+  right: 27px;
+  top: 8px;
+}
+@media (min-width: 960px) {
+    .navbar-nav > li {
+        float: left;
+    }
+}

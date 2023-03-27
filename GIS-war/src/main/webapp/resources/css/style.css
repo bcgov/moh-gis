@@ -1,0 +1,34 @@
+.serviceLink,
+.serviceLink:hover{
+    color: #ffffff;
+    text-decoration: none; 
+}
+.page-title {
+    display: inline-block;
+    font-size: 35px;
+    padding-left: 20px;
+    position: absolute;
+}
+.form-submit-buttons {
+    margin: 10px 0px 10px 0px;
+}
+.preformatted {
+    white-space: pre;
+}
+body .ui-button.submit-button {
+    margin-right: 10px;
+}
+.ui-calendar .ui-inputfield {
+    display: none
+}
+body .ui-dialog .ui-dialog-content {
+    background: #ffffff;
+    color: #495057;
+    border: 0 none;
+    padding: 1.5rem 1.5rem 2rem 1.5rem;
+    border: 0 none;
+}
+
+#detailedResults_content .ui-outputlabel {
+    font-weight: 600;
+}

@@ -1,0 +1,90 @@
+<ui:composition template="/WEB-INF/templates/gisTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"       
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">Guaranteed Income Supplement Recipients - Search</ui:define>
+
+    <ui:define name="content">
+
+        <script>
+            function detectEnter(event) {
+                if (event.keyCode === 13) {
+                    document.getElementById('searchForm:searchButton').click();
+                    return false;
+                }
+            }
+        </script>
+
+        <h:form id="searchForm">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+            <p:messages />
+
+            <p:outputPanel id="recipientsSearch" rendered="#{empty Search.recipientSearchResults}">
+                <h1 style="margin-top: 0px">GIS Recipients Search</h1>
+                <h:outputText style="float: right; font-size: 16px" value="Last Load Period: #{Search.lastLoadPeriod}" />
+                <p:panelGrid columns="2" styleClass="borderless ui-grid-blank" layout="grid"
+                             columnClasses="ui-grid-col-3 label-col, ui-grid-col-4">
+
+                    <p:outputLabel for="loadPeriods" value="Load Periods Back:" />
+                    <h:selectOneMenu id="loadPeriods" value="#{Search.recipientSearchParams.loadId}">
+                        <f:selectItems value="#{Search.loadPeriods}" />
+                    </h:selectOneMenu>
+
+                    <p:outputLabel for="sin" value="Social Insurance Number:" />
+                    <p:inputText id="sin" value="#{Search.recipientSearchParams.accountId}" maxlength="9" />
+
+                    <p:outputLabel for="surname" value="Surname:" />
+                    <p:inputText id="surname" value="#{Search.recipientSearchParams.rcptSurname}" size="40" maxlength="40" />
+
+                    <p:outputLabel for="givenName" value="Given Name:" />
+                    <p:inputText id="givenName" value="#{Search.recipientSearchParams.rcptGivenname}" size="40" maxlength="40" />
+
+                    <h:panelGroup >
+                        <h:outputLabel for="dateOfBirth" styleClass="preformatted" value="Birth Date:" />
+                        <br/>
+                        (yyyy-MM)
+                    </h:panelGroup>
+
+
+                    <h:panelGroup>
+                        <p:inputMask id="dateOfBirth" mask="9999-99" value="#{Search.birthdate}" size="10" maxlength="7" validator="#{BirthDateValidator.validate}" />
+                        <p:datePicker id="birthDate" value="#{Search.birthdateCal}"
+                                      size="16" monthNavigator="true" yearNavigator="true"
+                                      showIcon="true" showOnFocus="false" yearRange="1885:2040"
+                                      validatorMessage="Error: Birth Date must be a valid date with the format yyyy-MM">
+                            <p:ajax event="dateSelect" listener="#{Search.onDateSelect}" update="@form:recipientsSearch:dateOfBirth" />
+                        </p:datePicker>
+                    </h:panelGroup>
+
+
+                    <h:panelGroup/>
+                    <h:panelGroup>
+                        <div class="form-submit-buttons">      
+                            <p:commandButton id="searchButton" update="@form" styleClass="submit-button"
+                                             action="#{Search.searchGisRecipients}" value="Search"
+                                             style="margin-right: 20px"
+                                             />
+                            <p:commandButton styleClass="secondary-button" value="Clear Form" update="@form" process="@this" action="#{Search.clearSearch}">
+                                <p:resetInput target="recipientsSearch" />
+                            </p:commandButton>
+                        </div>
+                    </h:panelGroup>
+                </p:panelGrid>     
+            </p:outputPanel>
+
+            <ui:include src="searchResults.xhtml" />
+        </h:form> 
+
+        <p:dialog id="detailedResults" widgetVar="detailedResults" modal="true" 
+                  styleClass="disable-scroll" resizable="false" width="1024">
+            <f:facet name="header">
+                <h:outputText value="GIS Recipient Details" />
+            </f:facet>
+            <ui:include src="detailedResult.xhtml" />
+        </p:dialog> 
+
+    </ui:define>
+</ui:composition>

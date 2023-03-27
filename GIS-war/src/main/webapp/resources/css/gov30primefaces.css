@@ -1,0 +1,500 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Sep 20, 2017, 11:37:11 AM
+    Author     : trevor.schiavone
+*/
+
+/***
+Remove pink background from primefaces error
+***/
+.ui-outputlabel.ui-state-error {
+    background: none;
+}
+
+.ui-message-info-summary {
+    display: block;
+}
+
+.ui-messages-error,
+.ui-messages-info{
+    margin: 0px 0px 10px 0px;
+}
+
+.ui-message-error {
+    margin: 0px 0px 0px 5px;
+    display: inline-flex;
+}
+.ui-message-error-detail {
+    margin: 0px;
+}
+.ui-message-error-icon {
+    display: none;
+}
+
+/****
+Changes autocomplete text and placeholder text
+*****/
+body .ui-widget,
+.ui-widget {
+    font-family: 'BCSans', helvetica, arial, sans-serif !important;
+    font-size: 16px;
+}
+.ui-widget.ui-autocomplete-input {
+    font-size: 18px;
+}
+::-webkit-input-placeholder {
+    font-size: 18px;
+    font-style: italic;
+}
+::placeholder {
+    font-size: 18px;
+    font-style: italic;
+}
+:-ms-input-placeholder {
+    font-size: 18px;
+    font-style: italic;
+    color: #AEAEAE;
+}
+textarea::-webkit-input-placeholder {
+    font-size: 16px;
+    font-style: italic;
+}
+textarea::placeholder {
+    font-size: 16px;
+    font-style: italic;
+}
+textarea:-ms-input-placeholder {
+    font-size: 16px;
+    font-style: italic;
+    color: #AEAEAE;
+}
+
+/***
+* Styling For Select one menus and autocompletes
+****/
+.ui-selectonemenu .ui-selectonemenu-trigger.ui-state-default.ui-corner-right {
+        width: 28px;
+        background: white;
+        border-left: none;
+        padding-top: 3px;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger.ui-corner-right.ui-state-hover,
+.ui-selectonemenu .ui-selectonemenu-trigger.ui-corner-right.ui-state-focus {
+        width: 28px;
+        background: white;
+        border-left: none;
+        padding-top: 3px;
+        box-shadow: 0 0 0px #85b2cb;
+        margin-top: 0px;
+}
+.ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
+    margin-top: 0px;
+}
+
+.ui-selectcheckboxmenu .ui-selectcheckboxmenu-trigger.ui-state-default.ui-corner-right {
+        width: 28px;
+        background: white;
+        border-left: none;
+        padding-top: 3px;
+}
+
+.ui-selectcheckboxmenu .ui-selectcheckboxmenu-trigger.ui-corner-right.ui-state-hover,
+.ui-selectcheckboxmenu .ui-selectcheckboxmenu-trigger.ui-corner-right.ui-state-focus {
+        width: 28px;
+        background: white;
+        border-left: none;
+        padding-top: 3px;
+        box-shadow: 0 0 0px #85b2cb;
+        margin-top: 0px;
+}
+.ui-selectcheckboxmenu .ui-selectcheckboxmenu-trigger .ui-icon {
+    margin-top: 0px;
+}
+.ui-selectcheckboxmenu .ui-selectcheckboxmenu-label {
+    background: white;
+    font-weight: 400;
+    font-size: 16px
+}
+
+/***
+* Panel Grid
+***/
+body .ui-panelgrid .ui-panelgrid-cell {
+    padding: 4px 10px
+}
+
+.ui-panelgrid .ui-panelgrid-cell.ui-widget-header {
+    background: #305982;
+    border-color: #305982;
+    background-clip: padding-box;
+}
+
+.ui-widget-header,
+.ui-panelgrid-header{
+    background: #305982;
+    color: white;
+    border: 0px;
+    border-radius: 0px;
+    text-shadow: none;
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal;
+}
+.ui-widget-header.no-background {
+    background: none;
+}
+.ui-panelgrid.ui-widget .ui-panelgrid-header .ui-panelgrid-cell{
+    border-right: solid 1px #305982;
+    padding: .5em 1em .3em;
+    background: #305982;
+    border-color: #305982;
+    background-clip: padding-box;
+}
+
+/***
+* buttons and icons on primefaces command buttons
+***/
+
+body .ui-button,
+.ui-widget-content .ui-button,
+.ui-widget-header .ui-button {
+    background: #003366;
+    color: white;
+    text-shadow: none;
+    border: none;
+    font-size: 16px;
+    border-radius: 4px;
+    height: 40px;
+    padding: 0 20px;
+}
+
+body .ui-button.ui-state-hover,
+body .ui-widget-content .ui-button.ui-state-hover {
+    text-decoration: underline !important;
+    opacity: 0.80;
+    background: #003366;
+    box-shadow: none;
+}
+
+.ui-button.secondary-button,
+.ui-widget-content .ui-button.secondary-button{
+    background: white;
+    border: 1px solid #38598a;
+    color: #003366;
+}
+
+body .ui-button.ui-state-hover.secondary-button,
+body .ui-widget-content .ui-button.ui-state-hover.secondary-button {
+    background: white;
+    color: #003366;
+    opacity: 1;
+}
+
+.ui-button.danger,
+.ui-widget-content .ui-button.danger {
+    background: #d8292f;
+}
+
+.ui-button-text-only .ui-button-text,
+.ui-widgetheader .ui-buton-text-only .ui-button-text {
+    font-weight: bold;
+    font-size: 16px;
+    font-family: 'BCSans', helvetica, arial, sans-serif;
+    padding: 0 0 0 0;
+}
+.ui-button-icon-left {
+    left: 1em;
+    margin-top: -17px;
+}
+.ui-button-text-icon-left .ui-icon {
+    margin-top: -17px;
+}
+
+.ui-widget-content .ui-button.ui-button-icon-only,
+.ui-button.ui-button-icon-only {
+    height: 34px;
+    font-size: 16px;
+}
+
+body .ui-button.ui-button-icon-only .ui-icon {
+    margin-top: -1.4rem;
+    margin-left: -1.0rem;
+}
+
+body .ui-calendar .ui-button.ui-button-icon-only .ui-icon-calendar:before {
+    font-size: 20px;
+}
+body .p-datepicker .ui-datepicker-trigger.ui-button {
+    position: absolute;
+    right: 0;
+    top: -23px;
+}
+
+/*This has to be changed to the context root of the application */
+.ui-state-default .ui-icon.ui-sortable-column-icon{
+    background-image: url(/gis/faces/javax.faces.resource/images/ui-icons_ffffff_256x240.png?ln=primefaces-aristo);
+}
+
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+    width: 50%;
+}
+
+.ui-datepicker table {
+    font-size: 1.1em
+}
+
+.ui-datepicker {
+  width: 19em;
+}
+
+/***
+* remove default border from primefaces "widget" (usually a panel, dialog etc)
+* Panel grids inherit border color, replace the default black with #DDDDDD - light grey
+****/
+.ui-widget-content {
+    border: none;
+    border-color: #DDDDDD
+}
+.ui-widget-content a {
+    color: #1a5a96;
+}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-family: 'BCSans', helvetica, arial, sans-serif;
+    font-size: 1em;
+}
+
+
+/**
+* Remove primefaces text shadow
+*/
+.ui-state-default,
+.ui-widget-content .ui-state-default {
+    text-shadow: none;
+    font-weight: 400;
+}
+
+/*
+* Removed Primefaces box shadows
+*/
+.ui-state-default {
+   box-shadow: inset 0px 0px 0px #fff;
+}
+.ui-state-hover {
+   box-shadow: 0px 0px 8px #85b2cb;
+}
+.ui-inputfield,
+body .ui-inputfield,
+.ui-widget-content .ui-inputfield {
+    border: #606060 solid 1px
+}
+
+/*
+* Tooltips
+*/
+.ui-tooltip {
+    line-height: 1.2;
+    width: 250px;
+    z-index: 2000;
+}
+
+/****
+* Style for tab panels
+****/
+
+.ui-tabs {
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 0px;
+}
+.ui-tabs .ui-tabs-nav {
+    border: 1px solid black !important;
+    border-bottom: none;
+    background: #305982;
+    border-radius: 10px;
+}
+
+.ui-tabs .ui-tabs-nav li {
+    border-radius: 15px 15px 0px 0px;
+    text-align: center;
+    border: 3px solid #E5E5E5;
+    background: #EFEFEF;
+    width: 150px;
+    margin-bottom: -1px;
+    margin-right: 5px;
+    border-bottom: 1px #E5E5E5 solid;
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected {
+    border: 3px solid #E5E5E5;
+}
+.ui-tabs .ui-tabs-nav li a {
+    font-weight: 400;
+    margin-left: 10%;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+@media (max-width: 767px) {
+    .ui-tabs .ui-tabs-nav {
+        font-size: 16px;
+    }
+    .ui-tabs .ui-tabs-nav li {
+        width: 110px;
+    }
+    .ui-tabs .ui-tabs-nav li a {
+        margin-left: 0px;
+    }
+}
+
+.ui-tabs-panel .ui-panelgrid .ui-panelgrid-content {
+    background: none;
+    padding: 20px 0px 20px 0px;
+}
+
+/****
+*Panels
+***/
+.ui-panel {
+    padding: 0px;
+}
+.ui-panel .ui-panel-content {
+    padding: 25px 20px 25px 20px;
+    font-weight: 400;
+    font-size: 16px;
+    border: solid #E3E3E3 1px;
+}
+.ui-panel .ui-panel-content > h3{
+    font-weight: 400;
+    border: none;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+.ui-panel .ui-panel-content > h2{
+    font-weight: 500;
+    border: none;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+/****
+* Make select checkbox menus have the
+* same padding as ui-inputfield and .ui-selectone menu
+****/
+.ui-selectcheckboxmenu .ui-selectcheckboxmenu-label {
+    padding: 4px;
+}
+
+.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-list-item {
+    white-space: normal;
+}
+.ui-tabs {
+    padding: 0px;
+}
+
+/*****
+* Datatables
+****/
+
+.ui-datatable thead th {
+    padding: 10px;
+}
+
+.ui-datatable thead th.ui-state-default {
+    background: #305982;
+    border: 1px solid #305982;
+    color: white;
+    border-right: 1px solid white;
+}
+.ui-datatable thead th.ui-state-default.table-head-last {
+    border-right: 1px solid #305982;
+}
+
+.ui-datepicker .ui-datepicker-title {
+    color: black;
+    line-height: 1em;
+}
+
+.ui-paginator.ui-paginator-top {
+    line-height: 1em;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.ui-paginator .ui-paginator-page {
+    color: #1a5a96;
+}
+
+.ui-paginator select.ui-paginator-rpp-options {
+    -webkit-appearance:none;
+    -moz-appearance: none;
+    background-image: url("#{resource['template-images/dropdown-caret.png']}");
+    background-repeat: no-repeat;
+    background-position: right 10px top 48%;
+    font-family: 'BCSans', helvetica, arial, sans-serif;
+    border: 1px solid #606D84 !important;
+    border-radius: 5px;
+    padding: 4px 25px 4px 4px;
+    cursor: pointer;
+    background-color: white;
+}
+.ui-datepicker .ui-datepicker-header {
+    background: #e3e3e3
+}
+.ui-datatable-odd {
+    background: none;
+}
+
+.ui-datatable .ui-paginator select {
+    color: #494949;
+}
+
+body .ui-datatable thead th.ui-state-active,
+body .ui-datatable thead th.ui-state-hover,
+body .ui-datatable thead th.ui-state-hover.ui-state-active {
+    background: #305982;
+    color: white;
+}
+
+body .ui-datatable .ui-paginator {
+    padding: 1rem 0rem;
+}
+
+.ui-paginator.ui-paginator-top .ui-paginator-top-right-content {
+    color: #494949;
+    margin-top: 13px;
+    font-size: 16px;
+}
+/* Growl */
+body .ui-growl .ui-growl-item-container.ui-growl-warn {
+    background: #fcba19;
+    font-family: 'BCSans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    text-shadow: none;
+    opacity: 1;
+    background-color: #38598A;
+    border: 5px solid #FCBA19;
+    color: #FFFFFF;
+    padding: 2px 5px 0 5px;
+}
+body .ui-growl .ui-growl-item-container.ui-growl-warn .ui-growl-image {
+    display: none;
+}
+.ui-growl-message {
+    float: none;
+    width: auto;
+}
+.ui-growl-title {
+    padding: 0 0 9px 0;
+}
+body .ui-growl {
+    top: 20px;
+}
+body .ui-growl .ui-growl-item-container {
+    box-shadow: none;
+}

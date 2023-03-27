@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <p:outputPanel rendered="#{not empty Search.recipientSearchResults}">
+
+        <h2 style="margin-top: 0px">Recipient Search Results</h2> 
+
+        <div style="margin-bottom: 10px">
+
+        </div>
+
+        <p:dataTable id="tblRecips" styleClass="results" value="#{Search.recipientSearchResults}" 
+                     var="recipient" rowIndexVar="index" rows="20"
+                     paginator="true" paginatorPosition="top"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="15,20,25">
+
+            <f:facet name="paginatorTopLeft">
+                <p:commandButton action="Search" styleClass="submit-button" ajax="false" value="New Search"/>
+                <p:commandButton action="#{Search.clearResults}" update="@form" value="Return to Search"/>
+            </f:facet>
+
+            <f:facet name="paginatorTopRight">
+                <h:outputText value="Last Load Period: #{Search.lastLoadPeriod}"/>
+            </f:facet>
+
+            <p:column id="colSelect" width="50" sortBy="#{recipient.rownum}" headerText="Select">
+                <h:outputText value="#{recipient.rownum}"/>
+            </p:column>
+
+            <p:column id="colSIN" width="70" sortBy="#{recipient.accountId}" headerText="S.I.N.">
+                <p:commandLink id="detailsLink" value="#{recipient.accountId}" update="detailedResults"
+                               oncomplete="PF('detailedResults').show();" process="@this"
+                               actionListener="#{Search.getDetails(recipient)}">
+                   
+                </p:commandLink>
+            </p:column>
+
+            <p:column id="colSurname" width="70" sortBy="#{recipient.rcptSurname}" headerText="Surname">
+                <h:outputText value="#{recipient.rcptSurname}"/>
+            </p:column>
+
+            <p:column id="colGivenName" width="120" sortBy="#{recipient.rcptGivenname}" headerText="Given Name">
+                <h:outputText value="#{recipient.rcptGivenname}"/>
+            </p:column>
+
+            <p:column id="colBirthDate" width="70" headerText="Birth Date">
+                <h:outputText value="#{recipient.birthdate}"/>
+            </p:column>
+
+            <p:column id="colEntitlementDate" width="70" headerText="Entitlement Date">
+                <h:outputText value="#{recipient.entlmntDate}"/>
+            </p:column>
+
+            <p:column id="colPayDate" width="70" headerText="Pay Date">
+                <h:outputText value="#{recipient.payDate}"/>
+            </p:column>
+
+            <p:column id="colLastUpdateDate" width="70" headerText="Last Update Date">
+                <h:outputText value="#{recipient.lastUpdateDate}"/>
+            </p:column>
+
+            <p:column id="colLoadDate" width="70" sortBy="#{recipient.loadId}" headerText="Load Date">
+                <h:outputText value="#{recipient.loadId}"/>
+            </p:column>
+        </p:dataTable>
+    </p:outputPanel> 
+    
+  
+    
+</ui:composition>  
+
