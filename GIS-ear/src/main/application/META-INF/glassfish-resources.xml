@@ -8,7 +8,7 @@
         <property name="batch-auto-start-schedule" value="*/5 * * * *"></property>
         <property name="bufferSize" value="30000"></property>
         <property name="chainItems" value="giswar.batch.DataComponent,giswar.batch.DataLoadComponent,giswar.batch.HarsFileCreatorComponent,giswar.batch.ArchiverComponent,giswar.batch.EmailComponent,giswar.batch.CleanupComponent"></property>
-        <property name="createImmediateScheduler" value="true"></property>
+        <property name="createImmediateScheduler" value="false"></property>
         <property name="dbBatchSize" value="5000"></property>
         <property name="emailBody" value="Please find attached summary for the last GIS data load"></property>
         <property name="emailSubject" value="GIS Dev Data load Summary"></property>
