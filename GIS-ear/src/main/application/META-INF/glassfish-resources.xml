@@ -26,7 +26,7 @@
     
     <custom-resource res-type="java.util.Properties" jndi-name="gis/oidc_properties"
                      factory-class="org.glassfish.resources.custom.factory.PropertiesFactory">
-        <property name="providerUri" value="https://common-logon-dev.hlth.gov.bc.ca/auth/realms/moh_applications/"/>
+        <property name="providerUri" value="https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/"/>
         <property name="clientId" value="GIS"/>
         <property name="clientSecret" value="${ENV=gis_keycloak_client_secret}"/>
         <property name="redirectUri" value="${ENV=REDIRECT_URI}"/>
@@ -36,15 +36,7 @@
         <property name="callerNameClaim" value="preferred_username"/>
         <property name="phsaLogoutUri" value="https://sts.healthbc.org/adfs/ls/?wa=wsignout1.0"/>
     </custom-resource>
-    
-    <!-- JDBC Connections -->
-   <!-- <jdbc-connection-pool name="GISPool" connection-validation-method="auto-commit"
-                          datasource-classname="oracle.jdbc.pool.OracleConnectionPoolDataSource"
-                          res-type="javax.sql.ConnectionPoolDataSource" is-connection-validation-required="true">
-        <property name="Password" value="${ALIAS=gisdb-password}"></property>
-        <property name="User" value="gis"></property>
-        <property name="URL" value="jdbc:oracle:thin:@pellan.hlth.gov.bc.ca:1521:gisp"></property>
-    </jdbc-connection-pool>-->
+
     <jdbc-resource pool-name="GIS-DB-Internal_Proxy_user" jndi-name="jdbc/gis"></jdbc-resource>
 
     <jdbc-connection-pool name="GIS-DB-Internal_Proxy_user" is-isolation-level-guaranteed="false"
