@@ -3,25 +3,25 @@
 <resources>
 
     <!-- Custom Resources -->
-    <custom-resource res-type="java.util.Properties" jndi-name="gis/batch_properties" factory-class="org.glassfish.resources.custom.factory.PropertiesFactory">
-        <property name="archiveFileUploadLocation" value="/archive/"></property>
-        <property name="batch-auto-start-schedule" value="*/5 * * * *"></property>
-        <property name="bufferSize" value="30000"></property>
-        <property name="chainItems" value="giswar.batch.DataComponent,giswar.batch.DataLoadComponent,giswar.batch.HarsFileCreatorComponent,giswar.batch.ArchiverComponent,giswar.batch.EmailComponent,giswar.batch.CleanupComponent"></property>
-        <property name="createImmediateScheduler" value="false"></property>
-        <property name="dbBatchSize" value="5000"></property>
-        <property name="emailBody" value="Please find attached summary for the last GIS data load"></property>
-        <property name="emailSubject" value="GIS Dev Data load Summary"></property>
-        <property name="fedFileHostUserId" value="gisd"></property>
-        <property name="fedFileLocation" value="/"></property>
-        <property name="fedFilehost" value="ftpsvcs.hlth.gov.bc.ca"></property>
-        <property name="harsFileHostUserId" value="HARGISUser"></property>
-        <property name="harsFileUploadLocation" value="/dev/"></property>
-        <property name="harsFilehost" value="ftpsvcs.hlth.gov.bc.ca"></property>
-        <property name="mailFrom" value="Java.vic@cgi.com"></property>
-        <property name="mailTo" value="Java.vic@cgi.com"></property>
-        <property name="run-batch-job" value="true"></property>
-        <property name="schedule" value="9 0 * * *"></property>
+    <custom-resource factory-class="org.glassfish.resources.custom.factory.PropertiesFactory" jndi-name="gis/batch_properties" res-type="java.util.Properties">
+        <property value="/archive/" name="archiveFileUploadLocation"/>
+        <property value="*/5 * * * *" name="batch-auto-start-schedule"/>
+        <property value="30000" name="bufferSize"/>
+        <property value="giswar.batch.DataComponent,giswar.batch.DataLoadComponent,giswar.batch.HarsFileCreatorComponent,giswar.batch.ArchiverComponent,giswar.batch.EmailComponent,giswar.batch.CleanupComponent" name="chainItems"/>
+        <property value="false" name="createImmediateScheduler"/>
+        <property value="5000" name="dbBatchSize"/>
+        <property value="Please find attached summary for the last GIS data load" name="emailBody"/>
+        <property value="GIS Dev Data load Summary" name="emailSubject"/>
+        <property value="gisd" name="fedFileHostUserId"/>
+        <property value="/" name="fedFileLocation"/>
+        <property value="ftpsvcs.hlth.gov.bc.ca" name="fedFilehost"/>
+        <property value="HARGISUser" name="harsFileHostUserId"/>
+        <property value="/dev/" name="harsFileUploadLocation"/>
+        <property value="ftpsvcs.hlth.gov.bc.ca" name="harsFilehost"/>
+        <property value="Java.vic@cgi.com" name="mailFrom"/>
+        <property value="Java.vic@cgi.com" name="mailTo"/>
+        <property value="true" name="run-batch-job"/>
+        <property value="9 0 * * *" name="schedule"/>
     </custom-resource>
     
     <custom-resource res-type="java.util.Properties" jndi-name="gis/oidc_properties"
@@ -30,15 +30,22 @@
         <property name="clientId" value="GIS"/>
         <property name="clientSecret" value="${ENV=gis_keycloak_client_secret}"/>
         <property name="redirectUri" value="${ENV=REDIRECT_URI}"/>
-        <property name="siteminderLogoutUri" value="https://logontest7.gov.bc.ca/clp-cgi/logoff.cgi"/>
+        <property value="https://logontest7.gov.bc.ca/clp-cgi/logoff.cgi" name="siteminderLogoutUri"/>
         <property name="scope" value="openid"/>
-        <property name="callerGroupsClaim" value="GISUSER"/>
+        <property name="callerGroupsClaim" value="gis_role"/>
         <property name="callerNameClaim" value="preferred_username"/>
         <property name="phsaLogoutUri" value="https://sts.healthbc.org/adfs/ls/?wa=wsignout1.0"/>
     </custom-resource>
-
+    
+    <!-- JDBC Connections -->
+   <!-- <jdbc-connection-pool name="GISPool" connection-validation-method="auto-commit"
+                          datasource-classname="oracle.jdbc.pool.OracleConnectionPoolDataSource"
+                          res-type="javax.sql.ConnectionPoolDataSource" is-connection-validation-required="true">
+        <property name="Password" value="${ALIAS=gisdb-password}"></property>
+        <property name="User" value="gis"></property>
+        <property name="URL" value="jdbc:oracle:thin:@pellan.hlth.gov.bc.ca:1521:gisp"></property>
+    </jdbc-connection-pool>-->
     <jdbc-resource pool-name="GIS-DB-Internal_Proxy_user" jndi-name="jdbc/gis"></jdbc-resource>
-
     <jdbc-connection-pool name="GIS-DB-Internal_Proxy_user" is-isolation-level-guaranteed="false"
                           datasource-classname="org.postgresql.ds.PGSimpleDataSource"
                           sql-trace-listeners="" res-type="javax.sql.DataSource">

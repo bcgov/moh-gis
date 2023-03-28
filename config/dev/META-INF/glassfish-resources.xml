@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN" "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+
+    <!-- Custom Resources -->
+    <custom-resource res-type="java.util.Properties" jndi-name="gis/batch_properties" factory-class="org.glassfish.resources.custom.factory.PropertiesFactory">
+        <property name="archiveFileUploadLocation" value="/archive/"></property>
+        <property name="batch-auto-start-schedule" value="*/5 * * * *"></property>
+        <property name="bufferSize" value="30000"></property>
+        <property name="chainItems" value="giswar.batch.DataComponent,giswar.batch.DataLoadComponent,giswar.batch.HarsFileCreatorComponent,giswar.batch.ArchiverComponent,giswar.batch.EmailComponent,giswar.batch.CleanupComponent"></property>
+        <property name="createImmediateScheduler" value="false"></property>
+        <property name="dbBatchSize" value="5000"></property>
+        <property name="emailBody" value="Please find attached summary for the last GIS data load"></property>
+        <property name="emailSubject" value="GIS Dev Data load Summary"></property>
+        <property name="fedFileHostUserId" value="gisd"></property>
+        <property name="fedFileLocation" value="/"></property>
+        <property name="fedFilehost" value="ftpsvcs.hlth.gov.bc.ca"></property>
+        <property name="harsFileHostUserId" value="HARGISUser"></property>
+        <property name="harsFileUploadLocation" value="/dev/"></property>
+        <property name="harsFilehost" value="ftpsvcs.hlth.gov.bc.ca"></property>
+        <property name="mailFrom" value="Java.vic@cgi.com"></property>
+        <property name="mailTo" value="Java.vic@cgi.com"></property>
+        <property name="run-batch-job" value="true"></property>
+        <property name="schedule" value="9 0 * * *"></property>
+    </custom-resource>
+    
+    <custom-resource res-type="java.util.Properties" jndi-name="gis/oidc_properties" factory-class="org.glassfish.resources.custom.factory.PropertiesFactory">
+        <property name="providerUri" value="https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/"/>
+        <property name="clientId" value="GIS"/>
+        <property name="clientSecret" value="${ALIAS=gis-keycloak-client-secret}"/>
+        <property name="redirectUri" value="https://gisd.hlth.gov.bc.ca/gis/callback"/>
+        <property name="siteminderLogoutUri" value="https://logontest7.gov.bc.ca/clp-cgi/logoff.cgi"/>
+        <property name="scope" value="openid"/>
+        <property name="callerGroupsClaim" value="gis_role"/>
+        <property name="callerNameClaim" value="preferred_username"/>
+        <property name="phsaLogoutUri" value="https://sts.healthbc.org/adfs/ls/?wa=wsignout1.0"/>
+    </custom-resource>
+    
+    <!-- JDBC Connections -->
+    <jdbc-connection-pool name="GISPool" connection-validation-method="auto-commit" datasource-classname="oracle.jdbc.pool.OracleConnectionPoolDataSource" res-type="javax.sql.ConnectionPoolDataSource" is-connection-validation-required="true">
+        <property name="Password" value="${ALIAS=gisdb-password}"></property>
+        <property name="User" value="gis"></property>
+        <property name="URL" value="jdbc:oracle:thin:@daudelin.hlth.gov.bc.ca:1521:gisd"></property>
+    </jdbc-connection-pool>
+    <jdbc-resource pool-name="GISPool" jndi-name="jdbc/gis"></jdbc-resource>
+
+</resources>
