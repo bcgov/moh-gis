@@ -74,10 +74,10 @@ public class GisRecipientsFacade
         System.out.println(query);
 
         Query q = em.createNativeQuery(query);
+
+        return Integer.parseInt(q.getSingleResult().toString());
         
-        BigDecimal qr = (BigDecimal)q.getSingleResult();
-        
-        return qr.intValue();
+
     }
 
     public List<GisRecipients> findAll() {
@@ -86,7 +86,7 @@ public class GisRecipientsFacade
 
     public String getLastLoadDate() {
 
-        final String SQL = "select * from gis_last_load_vw";
+        final String SQL = "select * from gis.gis_last_load_vw";
 
         String result = "";
 
@@ -107,13 +107,9 @@ public class GisRecipientsFacade
 
         StringBuilder sb = new StringBuilder();
         StringBuilder where = new StringBuilder();
-        StringBuilder orderBy = new StringBuilder();
 
         //orderBy.append(" order by row_number");
-        orderBy.append(" order by rcpt_surname, " +
-                "rcpt_givenname, " +
-                "account_id, " +
-                "load_id desc)");
+        String orderBy = " order by rcpt_surname, rcpt_givenname, account_id, load_id desc) recSubquery ";
 
         sb.append(getStaticSql());
 
@@ -138,16 +134,16 @@ public class GisRecipientsFacade
      * @return
      */
     private String getStaticSqlForCount() {
-        String result = "SELECT COUNT(1) " +
-                "FROM GIS_RECIPIENTS        GR, " +
-                "GIS_MARITAL_STATUS_CD GMS, " +
-                "GIS_ACNT_STATUS_CD    GAS, " +
-                "GIS_ACNT_CD           GA " +
-                "WHERE GMS.MAR_STATUS_CODE = GR.MAR_STATUS_CODE " +
-                "AND GAS.ACNT_STATUS_CODE = GR.ACNT_STATUS_CODE " +
-                "AND GA.ACNT_CODE = GR.ACNT_CODE";
 
-        return result;
+        StringBuilder queryBuilder = new StringBuilder("SELECT COUNT(1) ");
+        queryBuilder.append("FROM GIS.GIS_RECIPIENTS        GR, ")
+                .append("GIS.GIS_MARITAL_STATUS_CD GMS, ")
+                .append("GIS.GIS_ACNT_STATUS_CD    GAS, ")
+                .append("GIS.GIS_ACNT_CD           GA ")
+                .append("WHERE GMS.MAR_STATUS_CODE = GR.MAR_STATUS_CODE ")
+                .append("AND GAS.ACNT_STATUS_CODE = GR.ACNT_STATUS_CODE ")
+                .append("AND GA.ACNT_CODE = GR.ACNT_CODE");
+        return queryBuilder.toString();
     }
 
     // <editor-fold defaultstate="collapsed" desc="Private methods">
@@ -157,138 +153,92 @@ public class GisRecipientsFacade
         //  as passing where clause elements as a filter doesn't cause the filter to take
         //  place prior to the view initially executing and this tends to slow things down
         //  if there's a better way of doing this let me know and I'll change it
-//        String result =
-//                "SELECT GR.ID, " +
-//                "( case when nvl(GR.LOAD_ID, null) is not null then substr(GR.LOAD_ID,1,4 )||'-'|| substr(GR.LOAD_ID,5) " +
-//                "else '' " +
-//                "end ) as LOAD_ID, " +
-//                "GR.ACCOUNT_ID, " +
-//                "GR.ACNT_CODE, " +
-//                "GA.ACNT_DESCRIPTION, " +
-//                "GR.ACNT_STATUS_CODE, " +
-//                "GAS.ACNT_STATUS_DESC, " +
-//                "GR.ADDRESS1, " +
-//                "GR.ADDRESS2, " +
-//                "GR.ADDRESS3, " +
-//                "GR.ADDRESS4, " +
-//                "( case when nvl(GR.BIRTHDATE, null) is not null then substr(GR.BIRTHDATE,1,4 )||'-'|| substr(GR.BIRTHDATE,5) " +
-//                "else '' " +
-//                "end ) as BIRTHDATE, " +
-//                "( case when nvl(GR.ENTLMNT_DATE, null) is not null then substr(GR.ENTLMNT_DATE,1,4 )||'-'|| substr(GR.ENTLMNT_DATE,5) " +
-//                "else '' " +
-//                "end ) as ENTLMNT_DATE, " +
-//                "( case when nvl(GR.FINAL_PAY_DATE, null) is not null then substr(GR.FINAL_PAY_DATE,1,4 )||'-'|| substr(GR.FINAL_PAY_DATE,5) " +
-//                "else '' " +
-//                "end ) as FINAL_PAY_DATE, " +
-//                "GR.RCPT_SURNAME, " +
-//                "GR.RCPT_GIVENNAME, " +
-//                "to_char(GR.LAST_UPDATE_DATE,'YYYY-MM-DD') as LAST_UPDATE_DATE, " +
-//                "GR.MAR_STATUS_CODE, " +
-//                "GMS.MAR_STATUS_DESCRIPTION, " +
-//                "( case when nvl(GR.PAY_DATE, null) is not null then substr(GR.PAY_DATE,1,4 )||'-'|| substr(GR.PAY_DATE,5) " +
-//                "else '' " +
-//                "end ) as PAY_DATE, " +
-//                "( case when nvl(GR.POSTAL_CODE, null) is not null then substr(GR.POSTAL_CODE,1,3 )||' '|| substr(GR.POSTAL_CODE,4) " +
-//                "else '' " +
-//                "end ) as POSTAL_CODE, " +
-//                "GR.SPOUSE_ACT_ID, " +
-//                "GR.SPOUSE_GIVEN_NAME, " +
-//                "rownum as ROW_NUMBER " +
-//                "FROM GIS_RECIPIENTS GR, " +
-//                "GIS_MARITAL_STATUS_CD GMS, " +
-//                "GIS_ACNT_STATUS_CD GAS, " +
-//                "GIS_ACNT_CD GA " +
-//                "WHERE GMS.MAR_STATUS_CODE = GR.MAR_STATUS_CODE " +
-//                "AND GAS.ACNT_STATUS_CODE = GR.ACNT_STATUS_CODE " +
-//                "AND GA.ACNT_CODE = GR.ACNT_CODE ";
 
         String result = "select ID, " +
-                "LOAD_ID, " +
-                "ACCOUNT_ID, " +
-                "ACNT_CODE, " +
-                "ACNT_DESCRIPTION, " +
-                "ACNT_STATUS_CODE, " +
-                "ACNT_STATUS_DESC, " +
-                "ADDRESS1, " +
-                "ADDRESS2, " +
-                "ADDRESS3, " +
-                "ADDRESS4, " +
-                "BIRTHDATE, " +
-                "ENTLMNT_DATE, " +
-                "FINAL_PAY_DATE, " +
-                "RCPT_SURNAME, " +
-                "RCPT_GIVENNAME, " +
-                "LAST_UPDATE_DATE, " +
-                "PAY_DATE, " +
-                "POSTAL_CODE, " +
-                "SPOUSE_ACT_ID, " +
-                "SPOUSE_GIVEN_NAME, " +
-                "MAR_STATUS_DESCRIPTION, " +
-                "rownum " +
-                "from( " +
-                "SELECT GR.ID, " +
-                "(case " +
-                "when nvl(GR.LOAD_ID, null) is not null then " +
-                "substr(GR.LOAD_ID, 1, 4) || '-' || substr(GR.LOAD_ID, 5) " +
-                "else " +
-                "'' " +
-                "end) as LOAD_ID, " +
-                "GR.ACCOUNT_ID, " +
-                "GR.ACNT_CODE, " +
-                "GA.ACNT_DESCRIPTION, " +
-                "GR.ACNT_STATUS_CODE, " +
-                "GAS.ACNT_STATUS_DESC, " +
-                "GR.ADDRESS1, " +
-                "GR.ADDRESS2, " +
-                "GR.ADDRESS3, " +
-                "GR.ADDRESS4, " +
-                "(case " +
-                "when nvl(GR.BIRTHDATE, null) is not null then " +
-                "substr(GR.BIRTHDATE, 1, 4) || '-' || substr(GR.BIRTHDATE, 5) " +
-                "else " +
-                "'' " +
-                "end) as BIRTHDATE, " +
-                "(case " +
-                "when nvl(GR.ENTLMNT_DATE, null) is not null then " +
-                "substr(GR.ENTLMNT_DATE, 1, 4) || '-' || substr(GR.ENTLMNT_DATE, 5) " +
-                "else " +
-                "'' " +
-                "end) as ENTLMNT_DATE, " +
-                "(case " +
-                "when nvl(GR.FINAL_PAY_DATE, null) is not null then " +
-                "substr(GR.FINAL_PAY_DATE, 1, 4) || '-' || " +
-                "substr(GR.FINAL_PAY_DATE, 5) " +
-                "else " +
-                "'' " +
-                "end) as FINAL_PAY_DATE, " +
-                "GR.RCPT_SURNAME, " +
-                "GR.RCPT_GIVENNAME, " +
-                "to_char(GR.LAST_UPDATE_DATE, 'YYYY-MM-DD') as LAST_UPDATE_DATE, " +
-                "GR.MAR_STATUS_CODE, " +
-                "GMS.MAR_STATUS_DESCRIPTION, " +
-                "(case " +
-                "when nvl(GR.PAY_DATE, null) is not null then " +
-                "substr(GR.PAY_DATE, 1, 4) || '-' || substr(GR.PAY_DATE, 5) " +
-                "else " +
-                "'' " +
-                "end) as PAY_DATE, " +
-                "(case " +
-                "when nvl(GR.POSTAL_CODE, null) is not null then " +
-                "substr(GR.POSTAL_CODE, 1, 3) || ' ' || substr(GR.POSTAL_CODE, 4) " +
-                "else " +
-                "'' " +
-                "end) as POSTAL_CODE, " +
-                "GR.SPOUSE_ACT_ID, " +
-                "GR.SPOUSE_GIVEN_NAME " +
-                "FROM GIS_RECIPIENTS        GR, " +
-                "GIS_MARITAL_STATUS_CD GMS, " +
-                "GIS_ACNT_STATUS_CD    GAS, " +
-                "GIS_ACNT_CD           GA " +
-                "WHERE GMS.MAR_STATUS_CODE = GR.MAR_STATUS_CODE " +
-                "AND GAS.ACNT_STATUS_CODE = GR.ACNT_STATUS_CODE " +
-                "AND GA.ACNT_CODE = GR.ACNT_CODE";
-
+                "LOAD_ID," +
+                "ACCOUNT_ID," +
+                "ACNT_CODE," +
+                "ACNT_DESCRIPTION," +
+                "ACNT_STATUS_CODE," +
+                "ACNT_STATUS_DESC," +
+                "ADDRESS1," +
+                "ADDRESS2," +
+                "ADDRESS3," +
+                "ADDRESS4," +
+                "BIRTHDATE," +
+                "ENTLMNT_DATE," +
+                "FINAL_PAY_DATE," +
+                "RCPT_SURNAME," +
+                "RCPT_GIVENNAME," +
+                "LAST_UPDATE_DATE," +
+                "PAY_DATE," +
+                "POSTAL_CODE," +
+                "SPOUSE_ACT_ID," +
+                "SPOUSE_GIVEN_NAME," +
+                "MAR_STATUS_DESCRIPTION," +
+                " ROW_NUMBER() OVER (order by ID ) AS row_num" +
+                " from(" +
+                "SELECT" +
+                " GR.ID," +
+                "(CASE" +
+                "    WHEN COALESCE(GR.LOAD_ID, '') <> '' THEN" +
+                "        CONCAT(SUBSTR(GR.LOAD_ID, 1, 4), '-', SUBSTR(GR.LOAD_ID, 5))" +
+                "    ELSE ''" +
+                "END ) AS LOAD_ID," +
+                "(CASE" +
+                "    WHEN COALESCE(GR.BIRTHDATE, '') <> '' THEN" +
+                "        CONCAT(SUBSTR(GR.BIRTHDATE, 1, 4), '-', SUBSTR(GR.BIRTHDATE, 5))" +
+                "    ELSE ''" +
+                "END) AS BIRTHDATE," +
+                "(CASE" +
+                "    WHEN COALESCE(GR.ENTLMNT_DATE, '') <> '' THEN" +
+                "        CONCAT(SUBSTRING(GR.ENTLMNT_DATE FROM 1 FOR 4), '-', SUBSTRING(GR.ENTLMNT_DATE FROM 5))" +
+                "    ELSE" +
+                "        ''" +
+                "END) AS ENTLMNT_DATE," +
+                "(CASE  " +
+                "    WHEN COALESCE(GR.FINAL_PAY_DATE, '') <> '' THEN" +
+                "        CONCAT(SUBSTRING(GR.FINAL_PAY_DATE FROM 1 FOR 4), '-', SUBSTRING(GR.FINAL_PAY_DATE FROM 5))" +
+                "    ELSE" +
+                "        ''" +
+                "END) AS FINAL_PAY_DATE," +
+                "GR.ACCOUNT_ID," +
+                "GR.ACNT_CODE," +
+                "GA.ACNT_DESCRIPTION," +
+                "GR.ACNT_STATUS_CODE," +
+                "GAS.ACNT_STATUS_DESC," +
+                "GR.ADDRESS1," +
+                "GR.ADDRESS2," +
+                "GR.ADDRESS3," +
+                "GR.ADDRESS4," +
+                "GR.SPOUSE_ACT_ID," +
+                "GR.RCPT_SURNAME," +
+                "GR.RCPT_GIVENNAME," +
+                "to_char(GR.LAST_UPDATE_DATE, 'YYYY-MM-DD') as LAST_UPDATE_DATE," +
+                "(CASE" +
+                "    WHEN COALESCE(GR.PAY_DATE, '') <> '' THEN" +
+                "        CONCAT(SUBSTRING(GR.PAY_DATE FROM 1 FOR 4), '-', SUBSTRING(GR.PAY_DATE FROM 5))" +
+                "    ELSE" +
+                "        ''" +
+                "END) AS PAY_DATE," +
+                "(CASE  " +
+                "    WHEN COALESCE(GR.POSTAL_CODE, '') <> '' THEN" +
+                "        CONCAT(SUBSTRING(GR.POSTAL_CODE FROM 1 FOR 3), ' ', SUBSTRING(GR.POSTAL_CODE FROM 4))" +
+                "    ELSE" +
+                "        ''" +
+                "END) AS POSTAL_CODE," +
+                "GR.SPOUSE_GIVEN_NAME," +
+                "GR.MAR_STATUS_CODE," +
+                "GMS.MAR_STATUS_DESCRIPTION" +
+                " FROM GIS.GIS_RECIPIENTS GR," +
+                "GIS.GIS_MARITAL_STATUS_CD GMS," +
+                "GIS.GIS_ACNT_STATUS_CD GAS," +
+                "GIS.GIS_ACNT_CD GA" +
+                " WHERE GMS.MAR_STATUS_CODE = GR.MAR_STATUS_CODE" +
+                " AND GAS.ACNT_STATUS_CODE = GR.ACNT_STATUS_CODE" +
+                " AND GA.ACNT_CODE = GR.ACNT_CODE" ;
         return result;
+
     }
 
     private void setWhereSql(StringBuilder where, String sin, String surName,
@@ -331,7 +281,7 @@ public class GisRecipientsFacade
 
             applySuffix(where);
 
-            where.append(String.format("( GR.LOAD_ID > = '%s' AND GR.LOAD_ID < = '%s') ",
+            where.append(String.format("( GR.LOAD_ID >= '%s' AND GR.LOAD_ID <= '%s') ",
                     gtLastUpdateDate, ltLastUpdateDate));
         }
 
