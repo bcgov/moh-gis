@@ -13,7 +13,7 @@ data "aws_alb_listener" "front_end" {
 }
 
 resource "aws_alb_target_group" "app" {
-  name                 = "fmdb-test-target-group"
+  name                 = "gis-test-target-group"
   port                 = var.app_port
   protocol             = "HTTPS"
   vpc_id               = data.aws_vpc.main.id
