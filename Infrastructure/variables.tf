@@ -9,7 +9,7 @@ variable "aws_region" {
 
 variable "ecs_task_execution_role_name" {
   description = "ECS task execution role name"
-  default     = "FMDB_EcsTaskExecutionRole"
+  default     = "GIS_EcsTaskExecutionRole"
 }
 
 variable "fargate_cpu" {
@@ -22,28 +22,28 @@ variable "fargate_memory" {
   default     = 1024
 }
 
-variable "fmdb_cluster_name" {
+variable "gis_cluster_name" {
   description = "Name for the FAM database cluster -- must be unique"
   type        = string
-  default     = "fmdb-cluster" 
+  default     = "gis-cluster" 
 }
 
 variable "cluster_name" { 
   description = "Name for ECS cluster (with underscore)" 
   type        = string 
-  default     = "fmdb_cluster"
+  default     = "gis_cluster"
 }
 
 variable "ecs_service_name" {
   description = "Name for the ECS service name"
   type        = string
-  default     = "fmdb-dev-service"
+  default     = "gis-dev-service"
 }
 
 variable "common_tags" {
   description = "Common tags for created resources"
   default = {
-    Application = "fmdb"
+    Application = "gis"
   }
 }
 
@@ -84,5 +84,5 @@ variable "fam_console_idp_name" {
 
 variable "db_instance_identifier" {
   description = "Identifies the cluster ID of aurora_rds_v2"
-  default     = "fmdb-cluster"
+  default     = "gis-cluster"
 }
