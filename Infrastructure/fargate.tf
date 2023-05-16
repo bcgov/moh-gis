@@ -3,12 +3,12 @@ resource "aws_cloudwatch_log_group" "ecs_monitoring" {
   retention_in_days = "90"
 }
 
-resource "aws_ecs_cluster" "fmdb_cluster" {
-  name = "fmdb_cluster"
+resource "aws_ecs_cluster" "gis_cluster" {
+  name = "gis_cluster"
 }
 
-resource "aws_ecs_cluster_capacity_providers" "fmdb_cluster" {
-  cluster_name               = aws_ecs_cluster.fmdb_cluster.name
+resource "aws_ecs_cluster_capacity_providers" "gis_cluster" {
+  cluster_name               = aws_ecs_cluster.gis_cluster.name
   capacity_providers = ["FARGATE"]
 
   default_capacity_provider_strategy {
@@ -18,8 +18,8 @@ resource "aws_ecs_cluster_capacity_providers" "fmdb_cluster" {
   }
 }
 
-resource "aws_ecs_task_definition" "fmdb_td" {
-  family                   = "fmdb-${var.target_env}-task"
+resource "aws_ecs_task_definition" "gis_td" {
+  family                   = "gis-${var.target_env}-task"
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
   network_mode             = "awsvpc"
@@ -30,9 +30,9 @@ resource "aws_ecs_task_definition" "fmdb_td" {
   container_definitions = jsonencode([
     {
       essential   = true
-      name        = "fmdb-${var.target_env}-definition"
+      name        = "gis-${var.target_env}-definition"
       #change to variable to env. for GH Actions
-      image       = "${data.aws_caller_identity.current.account_id}.dkr.ecr.ca-central-1.amazonaws.com/fmdb:latest"
+      image       = "${data.aws_caller_identity.current.account_id}.dkr.ecr.ca-central-1.amazonaws.com/gis:latest"
       cpu         = var.fargate_cpu
       memory      = var.fargate_memory
       networkMode = "awsvpc"
@@ -50,7 +50,7 @@ resource "aws_ecs_task_definition" "fmdb_td" {
          "valueFrom": "${aws_secretsmanager_secret_version.rds_credentials.arn}:password::"},
         {"name": "JDBC_SETTING", 
          "valueFrom": "${aws_secretsmanager_secret_version.jdbc_setting.arn}"},
-         {"name": "fmdb_keycloak_client_secret",
+         {"name": "gis_keycloak_client_secret",
          "valueFrom": "${aws_secretsmanager_secret_version.fmdb_keycloak-client-secret.arn}"},
          {"name": "REDIRECT_URI",
          "valueFrom": "${aws_secretsmanager_secret_version.redirect_uri.arn}"}
@@ -75,9 +75,9 @@ resource "aws_ecs_task_definition" "fmdb_td" {
 }
 
 resource "aws_ecs_service" "main" {
-  name                              = "fmdb-${var.target_env}-service"
-  cluster                           = aws_ecs_cluster.fmdb_cluster.arn
-  task_definition                   = aws_ecs_task_definition.fmdb_td.arn
+  name                              = "gis-${var.target_env}-service"
+  cluster                           = aws_ecs_cluster.gis_cluster.arn
+  task_definition                   = aws_ecs_task_definition.gis_td.arn
   desired_count                     = 2
   #Health Check need to go up?
   health_check_grace_period_seconds = 60
@@ -91,7 +91,7 @@ resource "aws_ecs_service" "main" {
 
   load_balancer {
     target_group_arn = aws_alb_target_group.app.id
-    container_name   = "fmdb-${var.target_env}-definition"
+    container_name   = "gis-${var.target_env}-definition"
     container_port   = var.app_port
   }
 
