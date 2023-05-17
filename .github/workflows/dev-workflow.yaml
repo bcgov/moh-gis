@@ -18,8 +18,8 @@ concurrency: dev
 
 env:
   APP_IMAGE: ${{ secrets.APP_IMAGE }} 
-  IMAGE_ID: ${{ secrets.AWS_ECR_URI }}
-  IMAGE_NAME: fmdbtest
+  IMAGE_ID: ${{ secrets.AWS_ECR_URI_DEV }}
+  IMAGE_NAME: gisdev
   TF_VERSION: 1.2.2
   TG_VERSION: 0.37.1
   TG_SRC_PATH: Terraform
@@ -68,7 +68,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-          file: MyFMDB/Dockerfile
+          file: DockerFile
           push: true
           tags: ${{ env.IMAGE_ID  }}${{env.IMAGE_NAME}}
           
@@ -116,7 +116,7 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
-          target: 'https://fmdbt.hlth.gov.bc.ca/'
+          target: 'https://https://gis.ynr9ed-dev.nimbus.cloud.gov.bc.ca/'
 #   ----------------------------Commenting out while trying to get rollback working-------------------------------          
 #   bump_version:
 #     runs-on: ubuntu-22.04
