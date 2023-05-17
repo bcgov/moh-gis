@@ -1,14 +1,14 @@
 resource "aws_secretsmanager_secret" "jdbc_setting" {
-  name = "jdbc_setting"
+  name = "gis_jdbc_setting"
 }
 
 resource "aws_secretsmanager_secret" "fmdb_proxy_user" {
-  name = "fmdb_user"
+  name = "gis_user"
 }
 
 
 resource "aws_secretsmanager_secret" "fmdb_keycloak-client-secret" {
-  name = "fmdb_keycloak-client-secret"
+  name = "gis_keycloak-client-secret"
 }
 
 resource "aws_secretsmanager_secret" "redirect_uri"{ 
@@ -21,10 +21,10 @@ resource "aws_secretsmanager_secret_version" "jdbc_setting" {
 }
 
 resource "aws_secretsmanager_secret_version" "rds_credentials" {
-  secret_id     = aws_secretsmanager_secret.fmdb_proxy_user.id
+  secret_id     = aws_secretsmanager_secret.gis_proxy_user.id
   secret_string = <<EOF
 {
-  "username": "fmdb_proxy_user",
+  "username": "gis_proxy_user",
   "password": "changeme",
   "engine": "${data.aws_rds_engine_version.postgresql.version}",
   "host": "${module.aurora_postgresql_v2.cluster_endpoint}",
@@ -37,8 +37,8 @@ lifecycle {
   }
 }
 
-resource "aws_secretsmanager_secret_version" "fmdb_keycloak-client-secret" {
-  secret_id     = aws_secretsmanager_secret.fmdb_keycloak-client-secret.id
+resource "aws_secretsmanager_secret_version" "gis_keycloak-client-secret" {
+  secret_id     = aws_secretsmanager_secret.gis_keycloak-client-secret.id
   secret_string = "changeme"
 }
 
