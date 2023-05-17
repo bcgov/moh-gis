@@ -15,7 +15,7 @@ generate "remote_state" {
 terraform {
   backend "s3" {
     bucket         = "terraform-remote-state-${ local.project }-${ local.environment }"
-    key            = "${ local.project }/${ local.environment }/fmdb-app.tfstate"
+    key            = "${ local.project }/${ local.environment }/gis-app.tfstate"
     dynamodb_table = "terraform-remote-state-lock-${ local.project }"
     region         = "ca-central-1"
     encrypt        = true
