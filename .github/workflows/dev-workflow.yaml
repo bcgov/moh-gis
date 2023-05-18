@@ -67,7 +67,7 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           push: true
-          tags: ${{ env.IMAGE_ID  }}${{env.IMAGE_NAME}}
+          tags: ${{ env.IMAGE_ID  }}:latest
           
   terraform_apply:
     name: terraform apply 
