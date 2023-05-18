@@ -49,9 +49,9 @@ resource "aws_ecs_task_definition" "gis_td" {
         {"name": "PG_PASSWORD", 
          "valueFrom": "${aws_secretsmanager_secret_version.rds_credentials.arn}:password::"},
         {"name": "JDBC_SETTING", 
-         "valueFrom": "${aws_secretsmanager_secret_version.jdbc_setting.arn}"},
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_jdbc_setting.arn}"},
          {"name": "gis_keycloak_client_secret",
-         "valueFrom": "${aws_secretsmanager_secret_version.fmdb_keycloak-client-secret.arn}"},
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_keycloak-client-secret.arn}"},
          {"name": "REDIRECT_URI",
          "valueFrom": "${aws_secretsmanager_secret_version.redirect_uri.arn}"}
       ]

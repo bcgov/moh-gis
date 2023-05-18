@@ -1,2 +1,11 @@
 **/target
 **/nbproject
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+**/.terragrunt-cache/**
