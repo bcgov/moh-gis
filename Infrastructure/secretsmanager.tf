@@ -1,22 +1,21 @@
-resource "aws_secretsmanager_secret" "jdbc_setting" {
-  name = "gis_jdbc_setting"
+resource "aws_secretsmanager_secret" "gis_jdbc_setting" {
+  name = "${var.application}_jdbc_setting"
 }
 
-resource "aws_secretsmanager_secret" "fmdb_proxy_user" {
-  name = "gis_user"
+resource "aws_secretsmanager_secret" "gis_proxy_user" {
+  name = "${var.application}_user"
 }
 
-
-resource "aws_secretsmanager_secret" "fmdb_keycloak-client-secret" {
-  name = "gis_keycloak-client-secret"
+resource "aws_secretsmanager_secret" "gis_keycloak-client-secret" {
+  name = "${var.application}_keycloak-client-secret"
 }
 
 resource "aws_secretsmanager_secret" "redirect_uri"{ 
   name = "redirect_uri"
 }
 
-resource "aws_secretsmanager_secret_version" "jdbc_setting" {
-  secret_id     = aws_secretsmanager_secret.jdbc_setting.id
+resource "aws_secretsmanager_secret_version" "gis_jdbc_setting" {
+  secret_id     = aws_secretsmanager_secret.gis_jdbc_setting.id
   secret_string = "changeme"
 }
 
