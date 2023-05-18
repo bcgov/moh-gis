@@ -4,7 +4,7 @@ resource "aws_cloudwatch_log_group" "ecs_monitoring" {
 }
 
 resource "aws_ecs_cluster" "gis_cluster" {
-  name = "gis_cluster"
+  name = "${var.application}_cluster"
 }
 
 resource "aws_ecs_cluster_capacity_providers" "gis_cluster" {
@@ -19,7 +19,7 @@ resource "aws_ecs_cluster_capacity_providers" "gis_cluster" {
 }
 
 resource "aws_ecs_task_definition" "gis_td" {
-  family                   = "gis-${var.target_env}-task"
+  family                   = "${var.application}-${var.target_env}-task"
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
   network_mode             = "awsvpc"
@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "gis_td" {
   container_definitions = jsonencode([
     {
       essential   = true
-      name        = "gis-${var.target_env}-definition"
+      name        = "${var.application}-${var.target_env}-definition"
       #change to variable to env. for GH Actions
       image       = "${data.aws_caller_identity.current.account_id}.dkr.ecr.ca-central-1.amazonaws.com/gis:latest"
       cpu         = var.fargate_cpu
@@ -75,7 +75,7 @@ resource "aws_ecs_task_definition" "gis_td" {
 }
 
 resource "aws_ecs_service" "main" {
-  name                              = "gis-${var.target_env}-service"
+  name                              = "${var.application}-${var.target_env}-service"
   cluster                           = aws_ecs_cluster.gis_cluster.arn
   task_definition                   = aws_ecs_task_definition.gis_td.arn
   desired_count                     = 2
@@ -91,7 +91,7 @@ resource "aws_ecs_service" "main" {
 
   load_balancer {
     target_group_arn = aws_alb_target_group.app.id
-    container_name   = "gis-${var.target_env}-definition"
+    container_name   = "${var.application}-${var.target_env}-definition"
     container_port   = var.app_port
   }
 
