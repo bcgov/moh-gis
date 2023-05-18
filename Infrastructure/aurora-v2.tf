@@ -1,5 +1,5 @@
 resource "random_pet" "gis_subnet_group_name" {
-  prefix = "fmdb-subnet-group"
+  prefix = "${var.application}-subnet-group"
   length = 2
 }
 
@@ -20,7 +20,7 @@ variable "gis_master_username" {
 variable "gis_database_name" {
   description = "The name of the database"
   type        = string
-  default     = "gis"
+  default     = "${var.application}"
 }
 
 resource "aws_db_subnet_group" "gis_subnet_group" {
