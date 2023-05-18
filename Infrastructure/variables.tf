@@ -83,7 +83,7 @@ variable "fam_console_idp_name" {
 }
 
 variable "application" {
-  description = "Application that is being deployed"
+ description = "Application that is being deployed"
 }
 
 variable "db_instance_identifier" {

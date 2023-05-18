@@ -20,7 +20,7 @@ variable "gis_master_username" {
 variable "gis_database_name" {
   description = "The name of the database"
   type        = string
-  default     = "${var.application}"
+  default     = "gis"
 }
 
 resource "aws_db_subnet_group" "gis_subnet_group" {
