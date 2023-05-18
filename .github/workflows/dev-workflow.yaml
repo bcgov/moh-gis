@@ -116,7 +116,7 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
-          target: 'https://https://gis.ynr9ed-dev.nimbus.cloud.gov.bc.ca/'
+          target: 'https://gis.ynr9ed-dev.nimbus.cloud.gov.bc.ca/'
 #   ----------------------------Commenting out while trying to get rollback working-------------------------------          
 #   bump_version:
 #     runs-on: ubuntu-22.04
