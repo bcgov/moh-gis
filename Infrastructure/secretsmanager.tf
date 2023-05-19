@@ -10,7 +10,7 @@ resource "aws_secretsmanager_secret" "gis_keycloak-client-secret" {
   name = "${var.application}_keycloak-client-secret"
 }
 
-resource "aws_secretsmanager_secret" "redirect_uri"{ 
+resource "aws_secretsmanager_secret" "gis_redirect_uri"{ 
   name = "redirect_uri"
 }
 
@@ -41,7 +41,7 @@ resource "aws_secretsmanager_secret_version" "gis_keycloak-client-secret" {
   secret_string = "changeme"
 }
 
-resource "aws_secretsmanager_secret_version" "redirect_uri" {
-  secret_id     = aws_secretsmanager_secret.redirect_uri.id
+resource "aws_secretsmanager_secret_version" "gis_redirect_uri" {
+  secret_id     = aws_secretsmanager_secret.gis_redirect_uri.id
   secret_string = "changeme"
 }
