@@ -53,7 +53,7 @@ resource "aws_ecs_task_definition" "gis_td" {
          {"name": "gis_keycloak_client_secret",
          "valueFrom": "${aws_secretsmanager_secret_version.gis_keycloak-client-secret.arn}"},
          {"name": "REDIRECT_URI",
-         "valueFrom": "${aws_secretsmanager_secret_version.redirect_uri.arn}"}
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_redirect_uri.arn}"}
       ]
       environment = [
         {"name": "XMX_DEV",
