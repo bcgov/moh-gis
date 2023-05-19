@@ -20,25 +20,25 @@ data "aws_iam_policy_document" "ec2_assume_role_policy" {
   }
 }
 
-resource "aws_iam_policy" "get_secret" {
-  name        = "ECS_GetSecret"
+# resource "aws_iam_policy" "get_secret" {
+#   name        = "ECS_GetSecret"
 
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
-  policy = jsonencode(
-    {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": "secretsmanager:GetSecretValue",
-            "Resource": "*"
-        }
-    ]
-}
-  )
-}
+#   # Terraform's "jsonencode" function converts a
+#   # Terraform expression result to valid JSON syntax.
+#   policy = jsonencode(
+#     {
+#     "Version": "2012-10-17",
+#     "Statement": [
+#         {
+#             "Sid": "VisualEditor0",
+#             "Effect": "Allow",
+#             "Action": "secretsmanager:GetSecretValue",
+#             "Resource": "*"
+#         }
+#     ]
+# }
+#   )
+# }
 
 # ECS task execution role
 resource "aws_iam_role" "ecs_task_execution_role" {
