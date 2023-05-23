@@ -11,7 +11,7 @@ resource "aws_secretsmanager_secret" "gis_keycloak-client-secret" {
 }
 
 resource "aws_secretsmanager_secret" "gis_redirect_uri"{ 
-  name = "redirect_uri"
+  name = "${var.application}_redirect_uri"
 }
 
 resource "aws_secretsmanager_secret_version" "gis_jdbc_setting" {

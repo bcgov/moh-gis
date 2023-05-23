@@ -8,4 +8,4 @@
 *.tfstate
 *.tfstate.*
 .terraform.lock.hcl
-**/.terragrunt-cache/**
+**/.terragrunt-cache/*
