@@ -39,10 +39,6 @@ resource "aws_db_subnet_group" "gis_subnet_group" {
 data "aws_rds_engine_version" "postgresql" {
   engine  = "aurora-postgresql"
   version = "14.6"
-  filter {
-    name = "engine-mode"
-    values = [ "serverless" ]
-  }
 }
 
 module "aurora_postgresql_v2" {
@@ -95,7 +91,7 @@ module "aurora_postgresql_v2" {
 
 resource "aws_db_parameter_group" "gis_postgresql13" {
   name        = "${var.gis_cluster_name}-parameter-group"
-  family      = "aurora-postgresql13"
+  family      = "aurora-postgresql14"
   description = "${var.gis_cluster_name}-parameter-group"
   tags = {
     managed-by = "terraform"
@@ -104,7 +100,7 @@ resource "aws_db_parameter_group" "gis_postgresql13" {
 
 resource "aws_rds_cluster_parameter_group" "gis_postgresql13" {
   name        = "${var.gis_cluster_name}-cluster-parameter-group"
-  family      = "aurora-postgresql13"
+  family      = "aurora-postgresql14"
   description = "${var.gis_cluster_name}-cluster-parameter-group"
   tags = {
     managed-by = "terraform"
