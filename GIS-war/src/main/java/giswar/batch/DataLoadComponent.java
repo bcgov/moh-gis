@@ -163,7 +163,7 @@ public class DataLoadComponent implements IBatchComponent {
 
                 // If we have only type when at end of the file, then we need to make sure we write this record
                 // because we always wait to see if we have type 2 before we write.
-                if (read == null && prevLine.startsWith("1")) {
+                if (read == null && prevLine != null && prevLine.startsWith("1")) {
                     gisEntry = new GisEntry();
                     gisEntry.setEntry(prevLine, null);
 
@@ -173,6 +173,8 @@ public class DataLoadComponent implements IBatchComponent {
                          logger.log(Level.WARNING, "Cannot write into summary file", io);
                     }
                     batch.add(MiscellaneousHelper.makeStringArray(gisEntry));
+
+                    prevLine = null;
                 }
 
                 if (!batch.isEmpty()) {                  
