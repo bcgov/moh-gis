@@ -35,7 +35,7 @@ public class LogHelperImpl implements ILogHelper {
     
     private static final Logger logger = Logger.getLogger(LogHelperImpl.class.getName());
     private final String LOG_INSERT_QUERY = "insert into gis_log (log_date,  log_type,   log_message) "
-            + "values (sysdate, ?, ?)";
+            + "values (CURRENT_TIMESTAMP, ?, ?)";
     private IDatabase db;
     private DataSource ds;
 
