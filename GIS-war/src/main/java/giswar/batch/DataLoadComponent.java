@@ -52,11 +52,15 @@ public class DataLoadComponent implements IBatchComponent {
             + " values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
     private DataSource ds;
 
+    private StringBuilder summary;
+
     public void init(IBatchContext context) {
         this.context = context;
         db = (IDatabase) context.getProperty(BatchConstants.DATASBASE);
         ds = (DataSource) context.getProperty(BatchConstants.DB_DATASOURCE);
         logHelper = (ILogHelper) context.getProperty(BatchConstants.LOG_HELPER);
+
+        summary = new StringBuilder();
     }
 
     //Read the fed file and load the data into database
@@ -68,6 +72,8 @@ public class DataLoadComponent implements IBatchComponent {
 
         boolean success = true;
 
+        // Clear the attachment string and create a new file for logs
+        summary.delete(0, summary.length());
         BufferedReader br = null;
         BufferedWriter bw = null;
         String fedFile = (String) context.getProperty(BatchConstants.FILEPATH);
@@ -231,6 +237,7 @@ public class DataLoadComponent implements IBatchComponent {
                     bw.close();
 
                     context.addProperty(BatchConstants.ATTACHMENT, outputFile.getAbsolutePath());
+                    context.addProperty(BatchConstants.ATTACHMENT_TEXT, summary.toString());
                 }
             } catch (Exception e) {
                 //do nothing here
@@ -352,7 +359,12 @@ public class DataLoadComponent implements IBatchComponent {
 
     private void writeMessage(String message, String level, BufferedWriter bw) throws IOException {
         if (message != null && message.length() > 0) {
-            bw.write(new java.util.Date() + ": " + level + ": " + message);
+            String formattedMessage = new java.util.Date() + ": " + level + ": " + message;
+
+            summary.append(formattedMessage);
+            summary.append('\n');
+
+            bw.write(formattedMessage);
             bw.newLine();
             bw.flush();
             logHelper.log(level, message);
