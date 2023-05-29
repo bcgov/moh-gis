@@ -22,6 +22,8 @@
         <property value="Java.vic@cgi.com" name="mailTo"/>
         <property value="true" name="run-batch-job"/>
         <property value="9 0 * * *" name="schedule"/>
+        <property value="true" name="is-cloud-deployed"/>
+        <property value="https://u6onig9xxj.execute-api.ca-central-1.amazonaws.com/default/arlo-test-sns" name="aws-api-url"/>
     </custom-resource>
     
     <custom-resource res-type="java.util.Properties" jndi-name="gis/oidc_properties"
