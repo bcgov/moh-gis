@@ -49,7 +49,7 @@ public class DataLoadComponent implements IBatchComponent {
             + "ADDRESS1, ADDRESS2, ADDRESS3, ADDRESS4,"
             + "POSTAL_CODE, MARital_STATUS_CODE, SPOUSE_ACT_ID, "
             + "SPOUSE_GIVEN_NAME, IMS_STRT_DT, LAST_UPDATE_DATE, LAST_MODIFIED_DATETIME) "
-            + " values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate, sysdate)";
+            + " values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
     private DataSource ds;
 
     public void init(IBatchContext context) {
@@ -299,7 +299,7 @@ public class DataLoadComponent implements IBatchComponent {
 
 
         prop.put(BatchConstants.QUERY, "insert into GIS_LOAD_SA (load_id, File_name, pay_date, CREATE_DATETIME) values "
-                + "(" + load_id + ", '', '" + payDate + "', sysdate)");
+                + "(" + load_id + ", '', '" + payDate + "', CURRENT_TIMESTAMP)");
         prop.put(BatchConstants.STATEMENT_TYPE, IDatabase.STATEMENT_TYPE.INSERT);
         db.execute(prop);
     }
@@ -331,7 +331,7 @@ public class DataLoadComponent implements IBatchComponent {
     private void mergeProcess() throws DatabaseException {
         Properties prop = new Properties();
         prop.put(BatchConstants.DB_DATASOURCE, ds);
-        prop.put(BatchConstants.QUERY, "{call GIS.merge}");
+        prop.put(BatchConstants.QUERY, "call gis.merge()");
         prop.put(BatchConstants.STATEMENT_TYPE, IDatabase.STATEMENT_TYPE.CALLABLE);
 
         db.execute(prop);
@@ -340,7 +340,7 @@ public class DataLoadComponent implements IBatchComponent {
     private void deleteOldData() throws DatabaseException  {
         Properties prop = new Properties();
         prop.put(BatchConstants.DB_DATASOURCE, ds);
-        prop.put(BatchConstants.QUERY, "{call GIS.delete_old_data}");
+        prop.put(BatchConstants.QUERY, "call gis.delete_old_data()");
         prop.put(BatchConstants.STATEMENT_TYPE, IDatabase.STATEMENT_TYPE.CALLABLE);
 
         db.execute(prop);
