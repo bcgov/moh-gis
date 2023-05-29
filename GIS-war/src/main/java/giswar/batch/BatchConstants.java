@@ -51,6 +51,9 @@ public class BatchConstants {
     public static final String EMAIL_SUBJECT = "emailSubject";
     public static final String EMAIL_BODY = "emailBody";
     public static final String ATTACHMENT = "attachment";
+    public static final String ATTACHMENT_TEXT = "attachment-text";
+    public static final String IS_CLOUD_DEPLOYED = "is-cloud-deployed";
+    public static final String AWS_API_URL = "aws-api-url";
 
     //File
     public static final String ARCHIVE_FILE = "archiveFile";

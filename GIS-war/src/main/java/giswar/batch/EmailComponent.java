@@ -34,6 +34,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.net.URL;
+import java.net.HttpURLConnection;
+import java.io.InputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  *
@@ -54,11 +59,16 @@ public class EmailComponent implements IBatchComponent {
 
         logger.log(Level.FINEST, "Executing: %1$s", EmailComponent.class.getName());
 
+        boolean isCloudDeployed = Boolean.valueOf((String) context.getProperty(BatchConstants.IS_CLOUD_DEPLOYED));
+
+        String apiURL = (String) context.getProperty(BatchConstants.AWS_API_URL);
+
         boolean success = false;
         String from = (String) context.getProperty(BatchConstants.MAIL_FROM);
         String to = (String) context.getProperty(BatchConstants.MAIL_TO);
         String subject = (String) context.getProperty(BatchConstants.EMAIL_SUBJECT);
         String bodyText = (String) context.getProperty(BatchConstants.EMAIL_BODY);
+        String attachmentText = (String) context.getProperty(BatchConstants.ATTACHMENT_TEXT);
         String filename = (String) context.getProperty(BatchConstants.ATTACHMENT);
         List<String> recipients = null;
 
@@ -79,58 +89,105 @@ public class EmailComponent implements IBatchComponent {
             return true;
         }
 
+        if (isCloudDeployed) {
+            // Make a call to the API via the url given in the environment variables
+            try {
+                URL url = new URL(apiURL);
 
-        InternetAddress[] addressTo = new InternetAddress[recipients.size()];
-        Properties props = setupMailProps();
-        Session session = Session.getDefaultInstance(props, null);
-        try {
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(from));
+                HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
+                httpConnection.setRequestMethod("POST");
+                httpConnection.setRequestProperty("Content-Type", "application/json");
 
-            for (int i = 0; i < recipients.size(); i++) {
-                addressTo[i] = new InternetAddress(recipients.get(i));
-            }
+                httpConnection.setDoOutput(true);
 
-            message.setRecipients(Message.RecipientType.TO, addressTo);
-            message.setSubject(subject);
-            message.setSentDate(new Date());
+                // Format the attachment text properly for JSON
+                attachmentText = attachmentText.replace("\n", "\\n").replace("\"", "\\\"");
 
-            //
-            // Set the email message text.
-            //
-            MimeBodyPart messagePart = new MimeBodyPart();
-            messagePart.setText(bodyText);
+                // Include the summary as text since AWS SNS doesn't support email attachments
+                // Add both the subject and the body to the request in JSON format
+                String jsonRequest =
+                    "{" +
+                        "\"body\": \"" + bodyText + "\\n\\n" + attachmentText + "\"," +
+                        "\"subject\": \""+ subject + "\"" +
+                    "}";
 
-            //
-            // Set the email attachment file
-            //
-            MimeBodyPart attachmentPart = new MimeBodyPart();
-            FileDataSource fileDataSource = new FileDataSource(filename) {
+                DataOutputStream requestStream = new DataOutputStream(httpConnection.getOutputStream());
+                requestStream.writeBytes(jsonRequest);
+                requestStream.flush();
+                requestStream.close();
 
-                @Override
-                public String getContentType() {
-                    return "application/octet-stream";
+                InputStream content = (InputStream) httpConnection.getContent();
+                StringBuilder response = new StringBuilder();
+                int nextChar = content.read();
+
+                while (nextChar >= 0) {
+                    response.append((char) nextChar);
+                    nextChar = content.read();
                 }
-            };
-            attachmentPart.setDataHandler(new DataHandler(fileDataSource));
-            attachmentPart.setFileName(fileDataSource.getName());
 
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(messagePart);
-            multipart.addBodyPart(attachmentPart);
+                logger.log(Level.INFO, response.toString());
+                logHelper.log("INFO", response.toString());
+            }
+            catch (IOException e) {
+                logger.log(Level.WARNING, String.format("Connection error: %1$s",  e.getMessage()));
+                logHelper.log("ERROR", "Connection error: " + e.getMessage());
+            }
+            finally {
+                success = true;
+            }
+        } else {
+            InternetAddress[] addressTo = new InternetAddress[recipients.size()];
+            Properties props = setupMailProps();
+            Session session = Session.getDefaultInstance(props, null);
+            try {
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(from));
 
-            message.setContent(multipart);
+                for (int i = 0; i < recipients.size(); i++) {
+                    addressTo[i] = new InternetAddress(recipients.get(i));
+                }
 
-            logHelper.log("INFO", "Sending summary email .....");
-            Transport.send(message);
+                message.setRecipients(Message.RecipientType.TO, addressTo);
+                message.setSubject(subject);
+                message.setSentDate(new Date());
 
-            logger.log(Level.INFO, "Summary e-mail sent.");
-            
-        } catch (MessagingException e) {
-            logger.log(Level.WARNING, String.format("Email error: %1$s",  e.getMessage()));
-            logHelper.log("ERROR", "Email error: " + e.getMessage());
-        } finally {
-            success = true;
+                //
+                // Set the email message text.
+                //
+                MimeBodyPart messagePart = new MimeBodyPart();
+                messagePart.setText(bodyText);
+
+                //
+                // Set the email attachment file
+                //
+                MimeBodyPart attachmentPart = new MimeBodyPart();
+                FileDataSource fileDataSource = new FileDataSource(filename) {
+
+                    @Override
+                    public String getContentType() {
+                        return "application/octet-stream";
+                    }
+                };
+                attachmentPart.setDataHandler(new DataHandler(fileDataSource));
+                attachmentPart.setFileName(fileDataSource.getName());
+
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(messagePart);
+                multipart.addBodyPart(attachmentPart);
+
+                message.setContent(multipart);
+
+                logHelper.log("INFO", "Sending summary email .....");
+                Transport.send(message);
+
+                logger.log(Level.INFO, "Summary e-mail sent.");
+                
+            } catch (MessagingException e) {
+                logger.log(Level.WARNING, String.format("Email error: %1$s",  e.getMessage()));
+                logHelper.log("ERROR", "Email error: " + e.getMessage());
+            } finally {
+                success = true;
+            }
         }
 
         return success;
