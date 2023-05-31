@@ -62,6 +62,13 @@ public class EmailComponent implements IBatchComponent {
         boolean isCloudDeployed = Boolean.valueOf((String) context.getProperty(BatchConstants.IS_CLOUD_DEPLOYED));
 
         String apiURL = (String) context.getProperty(BatchConstants.AWS_API_URL);
+        apiURL = apiURL.replace(" ", "");
+
+        // Check if the api url property is a reference to an environment variable
+        // of the form ${ENV=VARIABLE_NAME} (after spaces are removed)
+        if (apiURL.startsWith("${ENV=")) {
+            apiURL = System.getenv(apiURL.substring(6, apiURL.length() - 1));
+        }
 
         boolean success = false;
         String from = (String) context.getProperty(BatchConstants.MAIL_FROM);
