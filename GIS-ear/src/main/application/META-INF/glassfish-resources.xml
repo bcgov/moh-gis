@@ -28,11 +28,11 @@
     
     <custom-resource res-type="java.util.Properties" jndi-name="gis/oidc_properties"
                      factory-class="org.glassfish.resources.custom.factory.PropertiesFactory">
-        <property name="providerUri" value="https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/"/>
+        <property name="providerUri" value="${ENV=PROVIDER_URI}"/>
         <property name="clientId" value="GIS"/>
         <property name="clientSecret" value="${ENV=gis_keycloak_client_secret}"/>
         <property name="redirectUri" value="${ENV=REDIRECT_URI}"/>
-        <property value="https://logontest7.gov.bc.ca/clp-cgi/logoff.cgi" name="siteminderLogoutUri"/>
+        <property value="${ENV=SITEMINDER_URI}" name="siteminderLogoutUri"/>
         <property name="scope" value="openid"/>
         <property name="callerGroupsClaim" value="gis_role"/>
         <property name="callerNameClaim" value="preferred_username"/>
