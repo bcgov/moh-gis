@@ -28,11 +28,11 @@
     
     <custom-resource res-type="java.util.Properties" jndi-name="gis/oidc_properties"
                      factory-class="org.glassfish.resources.custom.factory.PropertiesFactory">
-        <property name="providerUri" value="${ENV=GIS_PROVIDER_URI}"/>
+        <property name="providerUri" value="${ENV=PROVIDER_URI}"/>
         <property name="clientId" value="GIS"/>
         <property name="clientSecret" value="${ENV=gis_keycloak_client_secret}"/>
-        <property name="redirectUri" value="${ENV=GIS_REDIRECT_URI}"/>
-        <property value="${ENV=GIS_SITEMINDER_URI}" name="siteminderLogoutUri"/>
+        <property name="redirectUri" value="${ENV=REDIRECT_URI}"/>
+        <property value="${ENV=SITEMINDER_URI}" name="siteminderLogoutUri"/>
         <property name="scope" value="openid"/>
         <property name="callerGroupsClaim" value="gis_role"/>
         <property name="callerNameClaim" value="preferred_username"/>
