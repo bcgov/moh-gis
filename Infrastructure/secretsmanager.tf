@@ -45,3 +45,13 @@ resource "aws_secretsmanager_secret_version" "gis_redirect_uri" {
   secret_id     = aws_secretsmanager_secret.gis_redirect_uri.id
   secret_string = "changeme"
 }
+
+resource "aws_secretsmanager_secret_version" "gis_provider_uri" {
+  secret_id     = aws_secretsmanager_secret.gis_provider_uri.id
+  secret_string = "changeme"
+}
+
+resource "aws_secretsmanager_secret_version" "gis_siteminder_uri" {
+  secret_id     = aws_secretsmanager_secret.gis_siteminder_uri.id
+  secret_string = "changeme"
+}
