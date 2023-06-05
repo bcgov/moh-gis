@@ -58,12 +58,6 @@ jobs:
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v2
-        
-      - name: Set up Known Hosts and ID RSA
-        run: |
-          echo "${{ secrets.ID_RSA_DEV }}" > ./id_rsa
-          echo "${{ secrets.KNOWN_HOSTS_DEV }}" > ./known_hosts
-          chmod 644 id_rsa known_hosts
 
       - name: Build and push
         id: docker_build
@@ -75,8 +69,8 @@ jobs:
           push: true
           tags: ${{ env.IMAGE_ID  }}:latest
           build-args: |
-            ID_RSA=./id_rsa
-            KNOWN_HOSTS=./known_hosts
+            ID_RSA=${{ secrets.ID_RSA_DEV }}
+            KNOWN_HOSTS=${{ secrets.KNOWN_HOSTS_DEV }}
 
       - name: Cleanup files
         run: |
