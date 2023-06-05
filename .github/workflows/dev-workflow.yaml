@@ -63,7 +63,7 @@ jobs:
         run: |
           echo "${{ secrets.ID_RSA_DEV }}" > id_rsa
           echo "${{ secrets.KNOWN_HOSTS_DEV }}" > known_hosts
-          chmod 600 id_rsa known_hosts
+          chmod 644 id_rsa known_hosts
 
       - name: Build and push
         id: docker_build
