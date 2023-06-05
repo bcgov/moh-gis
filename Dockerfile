@@ -19,5 +19,7 @@ COPY pre-boot-commands.asadmin $PREBOOT_COMMANDS
 COPY --from=build-stage /home/gis/GIS-ear/target/GIS-ear.ear $DEPLOY_DIR
 COPY postgresql-42.4.0.jar /opt/payara/appserver/glassfish/domains/domain1/lib
 
-COPY id_rsa_DEV /home/gfadmin/.ssh/id_rsa
-COPY known_hosts /home/gfadmin/.ssh/known_hosts
+ARG ID_RSA
+ARG KNOWN_HOSTS
+COPY ID_RSA /home/gfadmin/.ssh/id_rsa
+COPY KNOWN_HOSTS /home/gfadmin/.ssh/known_hosts
