@@ -71,11 +71,6 @@ jobs:
           build-args: |
             ID_RSA=${{ secrets.ID_RSA_DEV }}
             KNOWN_HOSTS=${{ secrets.KNOWN_HOSTS_DEV }}
-
-      - name: Cleanup files
-        run: |
-          rm id_rsa
-          rm known_hosts
           
   terraform_apply:
     name: terraform apply 
