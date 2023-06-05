@@ -21,5 +21,7 @@ COPY postgresql-42.4.0.jar /opt/payara/appserver/glassfish/domains/domain1/lib
 
 ARG ID_RSA
 ARG KNOWN_HOSTS
+RUN mkdir -p /home/gfadmin/.ssh/id_rsa
 RUN echo $ID_RSA > /home/gfadmin/.ssh/id_rsa
 RUN echo $KNOWN_HOSTS > /home/gfadmin/.ssh/known_hosts
+RUN chmod 640 /home/gfadmin/.ssh/id_rsa /home/gfadmin/.ssh/known_hosts
