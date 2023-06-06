@@ -61,3 +61,54 @@ resource "aws_iam_role_policy_attachment" "secret_role" {
   policy_arn = aws_iam_policy.get_secret.arn
   
 }
+
+resource "aws_iam_role" "api_execution_role" {
+  name = "api-execution-role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "apigateway.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "execution_policy" {
+  name        = "execution-policy"
+  policy      = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "execute-api:Invoke",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Deny",
+      "Action": "execute-api:Invoke",
+      "Resource": "*",
+      "Condition": {
+        "NotIpAddress": {
+          "aws:SourceIp": "204.107.153.66/32"
+        }
+      }
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "api_execution_attachment" {
+  role       = aws_iam_role.api_execution_role.name
+  policy_arn = aws_iam_policy.execution_policy.arn
+}
