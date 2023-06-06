@@ -14,6 +14,14 @@ resource "aws_secretsmanager_secret" "gis_redirect_uri"{
   name = "${var.application}_redirect_uri"
 }
 
+resource "aws_secretsmanager_secret" "gis_provider_uri"{ 
+  name = "${var.application}_provider_uri"
+}
+
+resource "aws_secretsmanager_secret" "gis_siteminder_uri"{ 
+  name = "${var.application}_siteminder_uri"
+}
+
 resource "aws_secretsmanager_secret_version" "gis_jdbc_setting" {
   secret_id     = aws_secretsmanager_secret.gis_jdbc_setting.id
   secret_string = "changeme"
