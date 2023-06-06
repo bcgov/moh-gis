@@ -55,7 +55,7 @@ resource "aws_ecs_task_definition" "gis_td" {
          {"name": "REDIRECT_URI",
          "valueFrom": "${aws_secretsmanager_secret_version.gis_redirect_uri.arn}"},
          {"name": "SITEMINDER_URI",
-         "valueFrom": "${aws_secretsmanager_secret_version.gis_siteminder_uri.arn}"}
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_siteminder_uri.arn}"},
          {"name": "PROVIDER_URI",
          "valueFrom": "${aws_secretsmanager_secret_version.gis_provider_uri.arn}"}
       ]
