@@ -15,13 +15,14 @@ resource "aws_api_gateway_method" "gis-method" {
   authorization = "NONE"
 }
 
-resource "aws_api_gateway_integration" "example" {
+resource "aws_api_gateway_integration" "gis-integration" {
   rest_api_id             = aws_api_gateway_rest_api.gis-api.id
   resource_id             = aws_api_gateway_resource.gis-gateway.id
   http_method             = aws_api_gateway_method.gis-method.http_method
   type                    = "AWS"
   integration_http_method = "POST"
-  uri                     = aws_sns_topic.gis-sns.arn
+  uri = "arn:aws:apigateway:ca-central-1:sns:action/Publish"
+  credentials = aws_iam_role.api_execution_role.arn
 }
 
 resource "aws_api_gateway_method_response" "gis-response" {
@@ -29,25 +30,35 @@ resource "aws_api_gateway_method_response" "gis-response" {
   resource_id = aws_api_gateway_resource.gis-gateway.id
   http_method = aws_api_gateway_method.gis-method.http_method
   status_code = "200"
-  response_models = {
-    "Content-Type" = "application/x-form-urlencoded"
-  }
 }
 
-resource "aws_api_gateway_integration_response" "example" {
+resource "aws_api_gateway_integration_response" "gis-int-reponse" {
   rest_api_id    = aws_api_gateway_rest_api.gis-api.id
   resource_id    = aws_api_gateway_resource.gis-gateway.id
   http_method    = aws_api_gateway_method.gis-method.http_method
   status_code    = aws_api_gateway_method_response.gis-response.status_code
+
+  depends_on = [ 
+    aws_api_gateway_integration.gis-integration
+   ]
+}
+resource "aws_api_gateway_deployment" "gis_deploy" {
+  rest_api_id = aws_api_gateway_rest_api.gis-api.id
+}
+
+resource "aws_api_gateway_stage" "gis-stage" {
+  deployment_id = aws_api_gateway_deployment.gis_deploy.id
+  rest_api_id   = aws_api_gateway_rest_api.gis-api.id
+  stage_name    = "gis-stage"
 }
 
 resource "aws_api_gateway_method_settings" "gis-settings" {
   rest_api_id = aws_api_gateway_rest_api.gis-api.id
-  stage_name  = "gis-dev"
+  stage_name  = aws_api_gateway_stage.gis-stage.stage_name
   method_path = "${aws_api_gateway_resource.gis-gateway.path_part}/${aws_api_gateway_method.gis-method.http_method}"
 
   settings {
-    metrics_enabled = true
-    logging_level   = "INFO"
+    #metrics_enabled = false
+    #Slogging_level   = "INFO"
   }
 }
