@@ -51,7 +51,7 @@
     <jdbc-connection-pool name="GIS-DB-Internal_Proxy_user" is-isolation-level-guaranteed="false"
                           datasource-classname="org.postgresql.ds.PGSimpleDataSource"
                           sql-trace-listeners="" res-type="javax.sql.DataSource">
-        <property name="URL" value="${ENV=GIS_JDBC_SETTING}"></property>
+        <property name="URL" value="${ENV=JDBC_SETTING}"></property>
         <property name="Password" value="${ENV=PG_PASSWORD}"></property>
         <property name="driverClass" value="org.postgresql.Driver"/>
         <property name="User" value="${ENV=PG_USER}"></property>
