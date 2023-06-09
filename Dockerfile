@@ -20,7 +20,7 @@ RUN echo $KNOWN_HOSTS > /home/gfadmin/.ssh/known_hosts
 RUN chmod 640 /home/gfadmin/.ssh/id_rsa /home/gfadmin/.ssh/known_hosts
 
 FROM payara/server-full:5.2022.4-jdk11
-RUN mkdir -p /home/gfadmin/.ssh
+RUN mkdir -p /opt/payara/.ssh
 COPY pre-boot-commands.asadmin $PREBOOT_COMMANDS
 #COPY post-boot-commands.asadmin $POSTBOOT_COMMANDS
 
