@@ -40,8 +40,8 @@ public class BatchConstants {
     public static final String HARS_FILE_DATASOURCE = "harsFileDs";
     public static final String FILEPATH = "filePath";
     public static final String INTERNAL_PROPS = "internalProps";
-    public static final String KEYFILEPATH = "/home/gfadmin/.ssh/id_rsa";
-    public static final String KNOWNHOSTSFILE = "/home/gfadmin/.ssh/known_hosts";
+    public static final String KEYFILEPATH = "/opt/payara/.ssh/id_rsa";
+    public static final String KNOWNHOSTSFILE = "/opt/payara/.ssh/known_hosts";
 
     
     public static final String MAIL_SEREVR = "mailServer";
