@@ -17,7 +17,7 @@ ARG ID_RSA
 ARG KNOWN_HOSTS
 RUN echo $ID_RSA > /opt/payara/.ssh/id_rsa
 RUN echo $KNOWN_HOSTS > /opt/payara/.ssh/known_hosts
-RUN chmod 640 /opt/payara/.ssh/id_rsa /home/gfadmin/.ssh/known_hosts
+RUN chmod 640 /opt/payara/.ssh/id_rsa /opt/payara/.ssh/known_hosts
 
 FROM payara/server-full:5.2022.4-jdk11
 COPY pre-boot-commands.asadmin $PREBOOT_COMMANDS
