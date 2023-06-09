@@ -5,7 +5,7 @@
     <!-- Custom Resources -->
     <custom-resource factory-class="org.glassfish.resources.custom.factory.PropertiesFactory" jndi-name="gis/batch_properties" res-type="java.util.Properties">
         <property value="/archive/" name="archiveFileUploadLocation"/>
-        <property value="*/5 * * * *" name="batch-auto-start-schedule"/>
+        <property value="5 * * * *" name="batch-auto-start-schedule"/>
         <property value="30000" name="bufferSize"/>
         <property value="giswar.batch.DataComponent,giswar.batch.DataLoadComponent,giswar.batch.HarsFileCreatorComponent,giswar.batch.ArchiverComponent,giswar.batch.EmailComponent,giswar.batch.CleanupComponent" name="chainItems"/>
         <property value="false" name="createImmediateScheduler"/>
