@@ -1,6 +1,6 @@
 FROM maven:3.8.6-openjdk-11-slim as build-stage
 RUN mkdir -p /home/gis
-RUN mkdir -p /home/gfadmin/.ssh
+RUN mkdir -p /opt/payara/.ssh
 COPY errorhandler-1.0.jar /home/gis
 COPY HNSharedCode-5.0.0.jar /home/gis
 COPY HNSharedCode-5.0.0.pom /home/gis
@@ -15,9 +15,9 @@ RUN mvn -f /home/gis/pom.xml clean package -Dmaven.wagon.http.ssl.allowall=true 
 
 ARG ID_RSA
 ARG KNOWN_HOSTS
-RUN echo $ID_RSA > /home/gfadmin/.ssh/id_rsa
-RUN echo $KNOWN_HOSTS > /home/gfadmin/.ssh/known_hosts
-RUN chmod 640 /home/gfadmin/.ssh/id_rsa /home/gfadmin/.ssh/known_hosts
+RUN echo $ID_RSA > /opt/payara/.ssh/id_rsa
+RUN echo $KNOWN_HOSTS > /opt/payara/.ssh/known_hosts
+RUN chmod 640 /opt/payara/.ssh/id_rsa /home/gfadmin/.ssh/known_hosts
 
 FROM payara/server-full:5.2022.4-jdk11
 COPY pre-boot-commands.asadmin $PREBOOT_COMMANDS
