@@ -57,7 +57,9 @@ resource "aws_ecs_task_definition" "gis_td" {
          {"name": "SITEMINDER_URI",
          "valueFrom": "${aws_secretsmanager_secret_version.gis_siteminder_uri.arn}"},
          {"name": "PROVIDER_URI",
-         "valueFrom": "${aws_secretsmanager_secret_version.gis_provider_uri.arn}"}
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_provider_uri.arn}"},
+         {"name": "AWS_API_URL",
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_api_uri.arn}"}
       ]
       environment = [
         {"name": "XMX_DEV",
