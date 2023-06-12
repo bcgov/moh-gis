@@ -27,6 +27,11 @@ resource "aws_secretsmanager_secret_version" "gis_jdbc_setting" {
   secret_string = "changeme"
 }
 
+resource "aws_secretsmanager_secret_version" "gis_api_uri" {
+  secret_id     = aws_secretsmanager_secret.gis_api_uri.id
+  secret_string = "changeme"
+}
+
 resource "aws_secretsmanager_secret_version" "rds_credentials" {
   secret_id     = aws_secretsmanager_secret.gis_proxy_user.id
   secret_string = <<EOF
