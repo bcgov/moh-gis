@@ -117,4 +117,4 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
-          target: ${{ secrets.APPLICATION_URL }}
+          target: ${{ vars.APPLICATION_URL }}
