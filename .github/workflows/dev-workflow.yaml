@@ -3,7 +3,7 @@ on:
    workflow_dispatch:
      inputs:
         environment:
-         description: 'Environment to run tests against' 
+         description: 'Environment to deploy to' 
          type: environment 
          required: true
         version:
@@ -14,16 +14,17 @@ on:
 #       - main
 #   pull_request:
   
-concurrency: dev
+concurrency: ${{ github.event.inputs.environment }}
 
 env:
 #  APP_IMAGE: ${{ secrets.APP_IMAGE }} 
   IMAGE_ID: ${{ secrets.AWS_ECR_URI_DEV }}
-  IMAGE_NAME: gisdev
+  IMAGE_NAME: gis
   TF_VERSION: 1.2.2
   TG_VERSION: 0.37.1
+  UBUNTU_VERSION: ubuntu-22.04
   TG_SRC_PATH: Terraform
-  TFC_WORKSPACE: dev
+  TFC_WORKSPACE: ${{ github.event.inputs.environment }}
   
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -32,8 +33,8 @@ permissions:
 jobs:
   docker_push:
     name: docker push
-    environment:  dev
-    runs-on: ubuntu-22.04
+    environment:  ${{ github.event.inputs.environment }}
+    runs-on: UBUNTU_VERSION
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -74,8 +75,8 @@ jobs:
           
   terraform_apply:
     name: terraform apply 
-    environment: dev
-    runs-on: ubuntu-22.04
+    environment: ${{ github.event.inputs.environment }}
+    runs-on: UBUNTU_VERSION
     needs: docker_push
     steps:
     
@@ -108,7 +109,7 @@ jobs:
             echo "Environment variable: '${{ github.event.inputs.environment }}' " 
             terragrunt run-all apply --terragrunt-non-interactive
   zap_scan:
-    runs-on: ubuntu-latest
+    runs-on: UBUNTU_VERSION
     permissions: write-all
     name: Scan the webapplication
     needs: terraform_apply
@@ -116,4 +117,4 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
-          target: 'https://gisd.hlth.gov.bc.ca'
+          target: ${{ secrets.APPLICATION_URL }}
