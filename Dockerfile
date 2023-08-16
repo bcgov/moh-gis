@@ -14,10 +14,12 @@ COPY pom.xml /home/gis
 RUN mvn -f /home/gis/pom.xml clean package -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.insecure=true
 
 # the two lines below can't be used in the github workflow because the files don't exist
+# uncomment them for local development, but leave them commented in the repo
 # COPY id_rsa_DEV /home/gfadmin/.ssh/id_rsa
 # COPY known_hosts /home/gfadmin/.ssh/known_hosts
 
-# use these five lines instead to pull the keys from github secrets
+# use these five lines instead to get the keys from build args
+# the github workflow needs these lines, comment them out for local development
 ARG ID_RSA
 ARG KNOWN_HOSTS
 RUN echo $ID_RSA | base64 -d > /home/gfadmin/.ssh/id_rsa
