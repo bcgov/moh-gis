@@ -14,10 +14,10 @@
         <property value="GIS Dev Data load Summary" name="emailSubject"/>
         <property value="gisd" name="fedFileHostUserId"/>
         <property value="/" name="fedFileLocation"/>
-        <property value="***" name="fedFilehost"/>
+        <property value="${ENV=FED_FILE_SERVER}" name="fedFilehost"/>
         <property value="HARGISUser" name="harsFileHostUserId"/>
         <property value="/dev/" name="harsFileUploadLocation"/>
-        <property value="***" name="harsFilehost"/>
+        <property value="${ENV=HARS_FILE_SERVER}" name="harsFilehost"/>
         <property value="***" name="mailFrom"/>
         <property value="***" name="mailTo"/>
         <property value="true" name="run-batch-job"/>
