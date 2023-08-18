@@ -16,6 +16,9 @@ import java.util.Properties;
  */
 public class StartupListener implements ServletContextListener {
 
+    public static final String ENV_PREFIX = "${ENV=";
+    public static final String ENV_SUFFIX = "}";
+
     @Resource(lookup = "java:app/jdbc/gis")
     private DataSource ds;
 
@@ -33,8 +36,8 @@ public class StartupListener implements ServletContextListener {
             // Check if the property contains a reference to an environment
             // variable of the form ${ENV=VARIABLE_NAME}
             value = value.replace(" ", "");
-            if (value.startsWith("${ENV=")) {
-                value = System.getenv(value.substring(6, value.length() - 1));
+            if (value.startsWith(ENV_PREFIX) && value.endsWith(ENV_SUFFIX)) {
+                value = System.getenv(value.substring(ENV_PREFIX.length(), value.length() - ENV_SUFFIX.length()));
                 batchProperties.setProperty(property, value);
             }
         }
