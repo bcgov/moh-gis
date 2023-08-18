@@ -76,24 +76,10 @@ public class BatchTaskImpl extends Task implements IBatchTask {
         String bufferSize = (String) config.get(BatchConstants.BUFFER_SIZE);
         int dbBatchSize = Integer.parseInt((String) config.get(BatchConstants.DB_BATCH_SIZE));
 
-        // Check if the host address property is a reference to an environment variable
-        // of the form ${ENV=VARIABLE_NAME} (after spaces are removed)
-        host = host.replace(" ", "");
-        if (host.startsWith("${ENV=")) {
-            host = System.getenv(host.substring(6, host.length() - 1));
-        }
-
         IData fedDs = new SFTPDatasource(host, user, privateKeyPath, bufferSize, knownHostsFile);
 
         host = (String) config.get(BatchConstants.HARS_FILE_HOST);
         user = (String) config.get(BatchConstants.HARS_FILE_HOST_USER_ID);
-
-        // Check if the host address property is a reference to an environment variable
-        // of the form ${ENV=VARIABLE_NAME} (after spaces are removed)
-        host = host.replace(" ", "");
-        if (host.startsWith("${ENV=")) {
-            host = System.getenv(host.substring(6, host.length() - 1));
-        }
 
         IData harsDS = new SFTPDatasource(host, user, privateKeyPath, bufferSize, knownHostsFile);
 

@@ -27,6 +27,18 @@ public class StartupListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
 
+        for (String property : batchProperties.stringPropertyNames()) {
+            String value = batchProperties.getProperty(property);
+
+            // Check if the property contains a reference to an environment
+            // variable of the form ${ENV=VARIABLE_NAME}
+            value = value.replace(" ", "");
+            if (value.startsWith("${ENV=")) {
+                value = System.getenv(value.substring(6, value.length() - 1));
+                batchProperties.setProperty(property, value);
+            }
+        }
+
         try {
             batchJobAutoStarter = new BatchJobAutoStarter(ds, batchProperties);
             
