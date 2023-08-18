@@ -59,7 +59,11 @@ resource "aws_ecs_task_definition" "gis_td" {
          {"name": "PROVIDER_URI",
          "valueFrom": "${aws_secretsmanager_secret_version.gis_provider_uri.arn}"},
          {"name": "AWS_API_URL",
-         "valueFrom": "${aws_secretsmanager_secret_version.gis_api_uri.arn}"}
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_api_uri.arn}"},
+         {"name": "FED_FILE_HOST",
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_fed_file_host.arn}"},
+         {"name": "HARS_FILE_HOST",
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_hars_file_host.arn}"}
       ]
       environment = [
         {"name": "XMX_DEV",
