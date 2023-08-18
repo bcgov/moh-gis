@@ -42,6 +42,31 @@ resource "aws_secretsmanager_secret_version" "gis_hars_file_host" {
   secret_string = "changeme"
 }
 
+resource "aws_secretsmanager_secret_version" "gis_create_immediate_scheduler" {
+  secret_id     = aws_secretsmanager_secret.gis_create_immediate_scheduler.id
+  secret_string = "changeme"
+}
+
+resource "aws_secretsmanager_secret_version" "gis_email_subject" {
+  secret_id     = aws_secretsmanager_secret.gis_email_subject.id
+  secret_string = "changeme"
+}
+
+resource "aws_secretsmanager_secret_version" "gis_fed_file_host_user_id" {
+  secret_id     = aws_secretsmanager_secret.gis_fed_file_host_user_id.id
+  secret_string = "changeme"
+}
+
+resource "aws_secretsmanager_secret_version" "gis_hars_file_upload_location" {
+  secret_id     = aws_secretsmanager_secret.gis_hars_file_upload_location.id
+  secret_string = "changeme"
+}
+
+resource "aws_secretsmanager_secret_version" "gis_schedule" {
+  secret_id     = aws_secretsmanager_secret.gis_schedule.id
+  secret_string = "changeme"
+}
+
 resource "aws_secretsmanager_secret_version" "rds_credentials" {
   secret_id     = aws_secretsmanager_secret.gis_proxy_user.id
   secret_string = <<EOF

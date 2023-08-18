@@ -63,7 +63,17 @@ resource "aws_ecs_task_definition" "gis_td" {
          {"name": "FED_FILE_HOST",
          "valueFrom": "${aws_secretsmanager_secret_version.gis_fed_file_host.arn}"},
          {"name": "HARS_FILE_HOST",
-         "valueFrom": "${aws_secretsmanager_secret_version.gis_hars_file_host.arn}"}
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_hars_file_host.arn}"},
+         {"name": "CREATE_IMMEDIATE_SCHEDULER",
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_create_immediate_scheduler.arn}"},
+         {"name": "EMAIL_SUBJECT",
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_email_subject.arn}"},
+         {"name": "FED_FILE_HOST_USER_ID",
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_fed_file_host_user_id.arn}"},
+         {"name": "HARS_FILE_UPLOAD_LOCATION",
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_hars_file_upload_location.arn}"},
+         {"name": "SCHEDULE",
+         "valueFrom": "${aws_secretsmanager_secret_version.gis_schedule.arn}"}
       ]
       environment = [
         {"name": "XMX_DEV",
