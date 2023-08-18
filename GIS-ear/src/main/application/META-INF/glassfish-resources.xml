@@ -4,26 +4,26 @@
 
     <!-- Custom Resources -->
     <custom-resource factory-class="org.glassfish.resources.custom.factory.PropertiesFactory" jndi-name="gis/batch_properties" res-type="java.util.Properties">
-        <property value="/archive/" name="archiveFileUploadLocation"/>
-        <property value="5 * * * *" name="batch-auto-start-schedule"/>
-        <property value="30000" name="bufferSize"/>
-        <property value="giswar.batch.DataComponent,giswar.batch.DataLoadComponent,giswar.batch.HarsFileCreatorComponent,giswar.batch.ArchiverComponent,giswar.batch.EmailComponent,giswar.batch.CleanupComponent" name="chainItems"/>
-        <property value="false" name="createImmediateScheduler"/>
-        <property value="5000" name="dbBatchSize"/>
-        <property value="Please find attached summary for the last GIS data load" name="emailBody"/>
-        <property value="GIS Dev Data load Summary" name="emailSubject"/>
-        <property value="gisd" name="fedFileHostUserId"/>
-        <property value="/" name="fedFileLocation"/>
-        <property value="${ENV=FED_FILE_SERVER}" name="fedFilehost"/>
-        <property value="HARGISUser" name="harsFileHostUserId"/>
-        <property value="/dev/" name="harsFileUploadLocation"/>
-        <property value="${ENV=HARS_FILE_SERVER}" name="harsFilehost"/>
-        <property value="***" name="mailFrom"/>
-        <property value="***" name="mailTo"/>
-        <property value="true" name="run-batch-job"/>
-        <property value="9 0 * * *" name="schedule"/>
-        <property value="true" name="is-cloud-deployed"/>
-        <property value="${ENV=AWS_API_URL}" name="aws-api-url"/>
+        <property name="archiveFileUploadLocation" value="/archive/"/>
+        <property name="batch-auto-start-schedule" value="5 * * * *"/>
+        <property name="bufferSize" value="30000"/>
+        <property name="chainItems" value="giswar.batch.DataComponent,giswar.batch.DataLoadComponent,giswar.batch.HarsFileCreatorComponent,giswar.batch.ArchiverComponent,giswar.batch.EmailComponent,giswar.batch.CleanupComponent"/>
+        <property name="createImmediateScheduler" value="false"/>
+        <property name="dbBatchSize" value="5000"/>
+        <property name="emailBody" value="Please find attached summary for the last GIS data load"/>
+        <property name="emailSubject" value="GIS Dev Data load Summary"/>
+        <property name="fedFileHostUserId" value="gisd"/>
+        <property name="fedFileLocation" value="/"/>
+        <property name="fedFilehost" value="${ENV=FED_FILE_SERVER}"/>
+        <property name="harsFileHostUserId" value="HARGISUser"/>
+        <property name="harsFileUploadLocation" value="/dev/"/>
+        <property name="harsFilehost" value="${ENV=HARS_FILE_SERVER}"/>
+        <property name="mailFrom" value="***"/>
+        <property name="mailTo" value="***"/>
+        <property name="run-batch-job" value="true"/>
+        <property name="schedule" value="9 0 * * *"/>
+        <property name="is-cloud-deployed" value="true"/>
+        <property name="aws-api-url" value="${ENV=AWS_API_URL}"/>
     </custom-resource>
     
     <custom-resource res-type="java.util.Properties" jndi-name="gis/oidc_properties"
@@ -32,7 +32,7 @@
         <property name="clientId" value="GIS"/>
         <property name="clientSecret" value="${ENV=gis_keycloak_client_secret}"/>
         <property name="redirectUri" value="${ENV=REDIRECT_URI}"/>
-        <property value="${ENV=SITEMINDER_URI}" name="siteminderLogoutUri"/>
+        <property name="siteminderLogoutUri" value="${ENV=SITEMINDER_URI}"/>
         <property name="scope" value="openid"/>
         <property name="callerGroupsClaim" value="gis_role"/>
         <property name="callerNameClaim" value="preferred_username"/>
@@ -49,6 +49,5 @@
         <property name="User" value="${ENV=PG_USER}"></property>
         <property name="CurrentSchema" value="gis"></property>
     </jdbc-connection-pool>
-
 
 </resources>
