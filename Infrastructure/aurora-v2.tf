@@ -68,8 +68,8 @@ module "aurora_postgresql_v2" {
   apply_immediately   = true
   skip_final_snapshot = true
 
-  db_parameter_group_name         = aws_db_parameter_group.gis_postgresql13.id
-  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.gis_postgresql13.id
+  db_parameter_group_name         = aws_db_parameter_group.gis_postgresql14.id
+  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.gis_postgresql14.id
 
   serverlessv2_scaling_configuration = {
     min_capacity = 0.5
@@ -89,25 +89,25 @@ module "aurora_postgresql_v2" {
   enabled_cloudwatch_logs_exports = ["postgresql"]
 }
 
-resource "aws_db_parameter_group" "gis_postgresql13" {
+resource "aws_db_parameter_group" "gis_postgresql14" {
   name        = "${var.gis_cluster_name}-parameter-group"
   family      = "aurora-postgresql14"
   description = "${var.gis_cluster_name}-parameter-group"
   tags = {
     managed-by = "terraform"
   }
-  parameter {
-    name  = "timezone"
-    value = "America/Vancouver"
-  }
 }
 
-resource "aws_rds_cluster_parameter_group" "gis_postgresql13" {
+resource "aws_rds_cluster_parameter_group" "gis_postgresql14" {
   name        = "${var.gis_cluster_name}-cluster-parameter-group"
   family      = "aurora-postgresql14"
   description = "${var.gis_cluster_name}-cluster-parameter-group"
   tags = {
     managed-by = "terraform"
+  }
+  parameter {
+    name  = "timezone"
+    value = "America/Vancouver"
   }
 }
 
