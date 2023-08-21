@@ -2,4 +2,4 @@ create-jvm-options ${ENV=JVM_XMX}
 create-jvm-options ${ENV=JVM_XMS}
 delete-jvm-options \-XX\:NewRatio=2
 create-jvm-options \-XX\:NewRatio=3
-set configs.config.server-config.http-service.virtual-server.server.default-web-module=gis
+set configs.config.server-config.http-service.virtual-server.server.default-web-module=GIS-ear#GIS-war-3.3.1.war
