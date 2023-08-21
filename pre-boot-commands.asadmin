@@ -1,5 +1,5 @@
-create-jvm-options \-Xmx1024m
-create-jvm-options \-Xms512m
+create-jvm-options ${ENV=JVM_XMX}
+create-jvm-options ${ENV=JVM_XMS}
 delete-jvm-options \-XX\:NewRatio=2
 create-jvm-options \-XX\:NewRatio=3
 set configs.config.server-config.http-service.virtual-server.server.default-web-module=gis

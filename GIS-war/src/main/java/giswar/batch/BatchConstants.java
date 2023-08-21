@@ -25,9 +25,9 @@ public class BatchConstants {
     public static final String CONFIG = "java:app/gis/batch_properties";
     public static final String JNDI = "JNDI";
     public static final String PROPERTIES_FILE = "FILE";
-    public static final String FED_FILE_HOST = "fedFilehost";
+    public static final String FED_FILE_HOST = "fedFileHost";
     public static final String FED_FILE_HOST_USER_ID = "fedFileHostUserId";
-    public static final String HARS_FILE_HOST = "harsFilehost";
+    public static final String HARS_FILE_HOST = "harsFileHost";
     public static final String HARS_FILE_HOST_USER_ID = "harsFileHostUserId";
     public static final String REMOTE_FED_FILE_DIR = "fedFileLocation";
     public static final String BUFFER_SIZE = "bufferSize";
