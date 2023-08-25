@@ -39,7 +39,6 @@
     </custom-resource>
 
     <!-- JDBC Connections -->
-    <jdbc-resource jndi-name="jdbc/gis" pool-name="GISPool"></jdbc-resource>
     <jdbc-connection-pool name="GISPool" res-type="javax.sql.DataSource" datasource-classname="org.postgresql.ds.PGSimpleDataSource" is-isolation-level-guaranteed="false" sql-trace-listeners="">
         <property name="URL" value="${ENV=JDBC_SETTING}"></property>
         <property name="User" value="${ENV=PG_USER}"></property>
@@ -47,5 +46,6 @@
         <property name="CurrentSchema" value="gis"></property>
         <property name="driverClass" value="org.postgresql.Driver"/>
     </jdbc-connection-pool>
+    <jdbc-resource jndi-name="jdbc/gis" pool-name="GISPool"></jdbc-resource>
 
 </resources>
