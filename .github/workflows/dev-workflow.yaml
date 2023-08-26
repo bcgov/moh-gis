@@ -18,7 +18,6 @@ concurrency: ${{ github.event.inputs.environment }}
 
 env:
 #  APP_IMAGE: ${{ secrets.APP_IMAGE }} 
-  APPLICATION_URL: ${{ vars.APPLICATION_URL }}
   IMAGE_ID: ${{ secrets.AWS_ECR_URI }}
   IMAGE_NAME: gis
   TFC_WORKSPACE: ${{ github.event.inputs.environment }}
@@ -32,7 +31,7 @@ permissions:
   
 jobs:
   docker_push:
-    name: docker push
+    name: Docker Push
     environment:  ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
     steps:
@@ -76,12 +75,11 @@ jobs:
             KNOWN_HOSTS=${{ secrets.KNOWN_HOSTS_DEV_BASE_64 }}
           
   terraform_apply:
-    name: terraform apply 
+    name: Terraform Apply
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
     needs: docker_push
     steps:
-    
       - name: Check out the repo
         uses: actions/checkout@v3
         with:
@@ -111,12 +109,13 @@ jobs:
             echo "Environment variable: '${{ github.event.inputs.environment }}' " 
             terragrunt run-all apply --terragrunt-non-interactive
   zap_scan:
+    name: Run ZAP Scan
+    environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
-    permissions: write-all
-    name: Scan the webapplication
     needs: terraform_apply
+    permissions: write-all
     steps:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
-          target: ${{ env.APPLICATION_URL }}
+          target: ${{ vars.APPLICATION_URL }}
