@@ -96,10 +96,6 @@ resource "aws_db_parameter_group" "gis_postgresql13" {
   tags = {
     managed-by = "terraform"
   }
-  parameter {
-    name  = "timezone"
-    value = "America/Vancouver"
-  }
 }
 
 resource "aws_rds_cluster_parameter_group" "gis_postgresql13" {
@@ -108,6 +104,10 @@ resource "aws_rds_cluster_parameter_group" "gis_postgresql13" {
   description = "${var.gis_cluster_name}-cluster-parameter-group"
   tags = {
     managed-by = "terraform"
+  }
+  parameter {
+    name  = "timezone"
+    value = "America/Vancouver"
   }
 }
 
