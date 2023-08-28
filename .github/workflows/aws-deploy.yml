@@ -1,4 +1,4 @@
-name: Dev-Workflow
+name: AWS Deploy
 on:
   workflow_dispatch:
     inputs:
@@ -75,8 +75,8 @@ jobs:
           push: true
           tags: ${{ env.IMAGE_ID  }}:latest
           build-args: |
-            ID_RSA=${{ secrets.ID_RSA_DEV_BASE_64 }}
-            KNOWN_HOSTS=${{ secrets.KNOWN_HOSTS_DEV_BASE_64 }}
+            ID_RSA=${{ secrets.ID_RSA_BASE64 }}
+            KNOWN_HOSTS=${{ secrets.KNOWN_HOSTS_BASE64 }}
 
   terraform_apply:
     name: Terraform Apply
