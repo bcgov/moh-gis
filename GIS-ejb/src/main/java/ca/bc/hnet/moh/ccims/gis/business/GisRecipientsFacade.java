@@ -176,7 +176,7 @@ public class GisRecipientsFacade
                 "SPOUSE_ACT_ID," +
                 "SPOUSE_GIVEN_NAME," +
                 "MAR_STATUS_DESCRIPTION," +
-                " ROW_NUMBER() OVER (order by ID ) AS row_num" +
+                " ROW_NUMBER() OVER (order by ID ) AS rownum" +
                 " from(" +
                 "SELECT" +
                 " GR.ID," +

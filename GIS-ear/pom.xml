@@ -23,7 +23,7 @@
                 <configuration>
                     <version>8</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
-                    <outputFileNameMapping>@{artifactId}@-${project.parent.version}.@{extension}@</outputFileNameMapping>
+                    <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>
                     <modules>
                         <webModule>
                             <groupId>${project.groupId}</groupId>
