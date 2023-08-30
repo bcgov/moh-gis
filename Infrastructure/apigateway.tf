@@ -1,5 +1,5 @@
 resource "aws_api_gateway_rest_api" "gis-api" {
-  name        = "gis-dev-sns"
+  name = "gis-dev-sns"
 }
 
 resource "aws_api_gateway_resource" "gis-gateway" {
@@ -21,8 +21,8 @@ resource "aws_api_gateway_integration" "gis-integration" {
   http_method             = aws_api_gateway_method.gis-method.http_method
   type                    = "AWS"
   integration_http_method = "POST"
-  uri = "arn:aws:apigateway:ca-central-1:sns:action/Publish"
-  credentials = aws_iam_role.api_execution_role.arn
+  uri                     = "arn:aws:apigateway:ca-central-1:sns:action/Publish"
+  credentials             = aws_iam_role.api_execution_role.arn
 }
 
 resource "aws_api_gateway_method_response" "gis-response" {
@@ -33,14 +33,14 @@ resource "aws_api_gateway_method_response" "gis-response" {
 }
 
 resource "aws_api_gateway_integration_response" "gis-int-reponse" {
-  rest_api_id    = aws_api_gateway_rest_api.gis-api.id
-  resource_id    = aws_api_gateway_resource.gis-gateway.id
-  http_method    = aws_api_gateway_method.gis-method.http_method
-  status_code    = aws_api_gateway_method_response.gis-response.status_code
+  rest_api_id = aws_api_gateway_rest_api.gis-api.id
+  resource_id = aws_api_gateway_resource.gis-gateway.id
+  http_method = aws_api_gateway_method.gis-method.http_method
+  status_code = aws_api_gateway_method_response.gis-response.status_code
 
-  depends_on = [ 
+  depends_on = [
     aws_api_gateway_integration.gis-integration
-   ]
+  ]
 }
 resource "aws_api_gateway_deployment" "gis_deploy" {
   rest_api_id = aws_api_gateway_rest_api.gis-api.id

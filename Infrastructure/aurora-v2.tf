@@ -42,7 +42,7 @@ data "aws_rds_engine_version" "postgresql" {
 }
 
 module "aurora_postgresql_v2" {
-  source = "terraform-aws-modules/rds-aurora/aws"
+  source  = "terraform-aws-modules/rds-aurora/aws"
   version = "7.7.1"
 
   name              = "${var.gis_cluster_name}-${var.target_env}"
@@ -133,7 +133,7 @@ resource "aws_secretsmanager_secret_version" "gis_mastercreds_secret_version" {
    }
   EOF
   lifecycle {
-  ignore_changes = [ secret_string  ]
+    ignore_changes = [secret_string]
   }
 }
 
@@ -173,6 +173,6 @@ resource "aws_secretsmanager_secret_version" "gis_apicreds_secret_version" {
    }
   EOF
   lifecycle {
-  ignore_changes = [ secret_string  ]
+    ignore_changes = [secret_string]
   }
 }

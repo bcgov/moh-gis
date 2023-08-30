@@ -21,22 +21,22 @@ data "aws_iam_policy_document" "ec2_assume_role_policy" {
 }
 
 resource "aws_iam_policy" "get_secret" {
-  name        = "GIS_ECS_GetSecret"
+  name = "GIS_ECS_GetSecret"
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
   policy = jsonencode(
     {
-    "Version": "2012-10-17",
-    "Statement": [
+      "Version" : "2012-10-17",
+      "Statement" : [
         {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": "secretsmanager:GetSecretValue",
-            "Resource": "*"
+          "Sid" : "VisualEditor0",
+          "Effect" : "Allow",
+          "Action" : "secretsmanager:GetSecretValue",
+          "Resource" : "*"
         }
-    ]
-}
+      ]
+    }
   )
 }
 
@@ -52,14 +52,14 @@ resource "aws_iam_role" "ecs_task_execution_role" {
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-  
+
 }
 
 # GetSecret role policy attachment
 resource "aws_iam_role_policy_attachment" "secret_role" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = aws_iam_policy.get_secret.arn
-  
+
 }
 
 resource "aws_iam_role" "api_execution_role" {
@@ -83,8 +83,8 @@ EOF
 }
 
 resource "aws_iam_policy" "execution_policy" {
-  name        = "execution-policy"
-  policy      = <<EOF
+  name   = "execution-policy"
+  policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [

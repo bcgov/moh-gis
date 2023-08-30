@@ -25,12 +25,12 @@ variable "fargate_memory" {
 variable "gis_cluster_name" {
   description = "Name for the FAM database cluster -- must be unique"
   type        = string
-  default     = "gis-cluster" 
+  default     = "gis-cluster"
 }
 
-variable "cluster_name" { 
-  description = "Name for ECS cluster (with underscore)" 
-  type        = string 
+variable "cluster_name" {
+  description = "Name for ECS cluster (with underscore)"
+  type        = string
   default     = "gis_cluster"
 }
 
@@ -58,7 +58,7 @@ variable "alb_name" {
 }
 
 variable "acl_value" {
-    default = "private"
+  default = "private"
 }
 
 variable "app_port" {
@@ -79,11 +79,11 @@ variable "app_count" {
 
 variable "fam_console_idp_name" {
   description = "Identifies which version of IDIR to use (DEV, TEST, or PROD)"
-  type = string
+  type        = string
 }
 
 variable "application" {
- description = "Application that is being deployed"
+  description = "Application that is being deployed"
 }
 
 variable "db_instance_identifier" {
