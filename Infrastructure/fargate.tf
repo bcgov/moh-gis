@@ -84,6 +84,8 @@ resource "aws_ecs_task_definition" "gis_td" {
         "value" : "\\-Xmx1024m" },
         { "name" : "JVM_XMS",
         "value" : "\\-Xms512m" },
+        { "name" : "TZ",
+        "value" : "America/Vancouver" },
       ]
       #change awslog group
       logConfiguration = {
