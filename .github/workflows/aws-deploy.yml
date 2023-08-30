@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to deploy to' 
-        type: environment 
+        description: 'Environment to deploy to'
+        type: environment
         required: true
       version:
         description: 'Version Number'
@@ -13,26 +13,25 @@ on:
         description: 'Run ZAP Scan'
         type: boolean
         required: false
-#   push: 
+#   push:
 #     branches:
 #       - main
 #   pull_request:
-  
+
 concurrency: ${{ github.event.inputs.environment }}
 
 env:
-#  APP_IMAGE: ${{ secrets.APP_IMAGE }} 
   IMAGE_ID: ${{ secrets.AWS_ECR_URI }}
   IMAGE_NAME: gis
   TFC_WORKSPACE: ${{ github.event.inputs.environment }}
   TF_VERSION: 1.2.2
   TG_SRC_PATH: Terraform
   TG_VERSION: 0.37.1
-  
+
 permissions:
   id-token: write # This is required for requesting the JWT
   contents: read  # This is required for actions/checkout
-  
+
 jobs:
   docker_push:
     name: Docker Push
@@ -41,26 +40,26 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-        
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.TERRAFORM_DEPLOY_ROLE_ARN }}
           aws-region: ca-central-1
-          
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
           mask-password: 'true'
-        
+
       - uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-            
+
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v2
@@ -72,6 +71,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+          file: gis/Dockerfile
           push: true
           tags: ${{ env.IMAGE_ID  }}:latest
           build-args: |
@@ -88,29 +88,29 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
-          
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.TERRAFORM_DEPLOY_ROLE_ARN }}
           aws-region: ca-central-1
-          
+
       - uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: ${{ env.TF_VERSION }}
-          
+
       - uses: autero1/action-terragrunt@v1.3.1
         with:
           terragrunt_version: ${{ env.TG_VERSION }}
-            
+
       - name: Terragrunt Apply
         working-directory: ${{ env.TG_SRC_PATH }}/${{env.TFC_WORKSPACE }}
         env:
           app_image: ${{ env.IMAGE_ID }}:${{ github.sha }}
           LICENSE_PLATE: ${{ secrets.MY_LICENSE_PLATE }}
         run: |
-            echo "repository variable : '${{ vars.ENVIRONMENT }}' " 
-            echo "Environment variable: '${{ github.event.inputs.environment }}' " 
+            echo "Repository variable : '${{ vars.ENVIRONMENT }}' "
+            echo "Environment variable: '${{ github.event.inputs.environment }}' "
             terragrunt run-all apply --terragrunt-non-interactive
 
   zap_scan:
