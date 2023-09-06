@@ -8,6 +8,7 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><ui:insert name="title" /></title>
+        <link rel="shortcut icon" href="#{facesContext.externalContext.requestContextPath}/resources/template-images/favicon.ico" type="image/x-icon" />
     </h:head>
     <h:body styleClass="home">
 
@@ -50,7 +51,7 @@
                                         </h:outputLink>
                                     </li>
                                     <li>
-                                        <h:commandLink action="#{Logout.logout()}" styleClass="logout"
+                                        <h:commandLink action="#{Logout.logout}" styleClass="logout"
                                                        title="Sign Out" onclick="return confirmExit()">
                                             Log out
                                         </h:commandLink>
@@ -60,12 +61,11 @@
                         </div>
                     </div>
                 </div>
+                <p:growl id="timeoutWarningGrowl" for="timeoutMessages" widgetVar="timeoutWarning" showDetail="true" sticky="true" />
+                <p:remoteCommand name="extendSession" global="false" actionListener="#{SessionTimeout.extendSession}" />
+                <p:remoteCommand name="endSession" global="false" actionListener="#{SessionTimeout.endSession}" />
             </h:form>
         </header>
-
-        <p:growl id="timeoutWarningGrowl" for="timeoutMessages" widgetVar="timeoutWarning" showDetail="true" sticky="true"/>
-        <p:remoteCommand name="extendSession" global="false" actionListener="#{SessionTimeout.extendSession}"/>
-        <p:remoteCommand name="endSession" global="false" actionListener="#{SessionTimeout.endSession}"/>
 
         <div class="container" style="min-height: calc(100vh - 285px); padding-bottom: 20px;">
             <ui:insert name="content">Content</ui:insert>

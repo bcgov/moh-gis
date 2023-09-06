@@ -1,11 +1,6 @@
 FROM maven:3.8.6-openjdk-11-slim as build-stage
 RUN mkdir -p /home/gis
 RUN mkdir -p /home/gfadmin/.ssh
-COPY gis/errorhandler-1.0.jar /home/gis
-COPY gis/HNSharedCode-5.0.0.jar /home/gis
-COPY gis/HNSharedCode-5.0.0.pom /home/gis
-RUN mvn install:install-file -Dfile=/home/gis/errorhandler-1.0.jar -DgroupId=com.cgi.gis -DartifactId=errorhandler -Dversion=1.0 -Dpackaging=jar -DgeneratePom=true
-RUN mvn install:install-file -Dfile=/home/gis/HNSharedCode-5.0.0.jar -DpomFile=/home/gis/HNSharedCode-5.0.0.pom -DgroupId=ca.bc.gov.health -DartifactId=HNSharedCode -Dversion=5.0.0 -Dpackaging=jar
 COPY gis/GIS-ear /home/gis/GIS-ear
 COPY gis/GIS-ejb /home/gis/GIS-ejb
 COPY gis/GIS-war /home/gis/GIS-war

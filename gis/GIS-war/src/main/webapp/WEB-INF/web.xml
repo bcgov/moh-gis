@@ -1,69 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-    <context-param>
-        <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Production</param-value>
-    </context-param>
-    <security-constraint>
-        <display-name>GisUserAccess</display-name>
-        <web-resource-collection>
-            <web-resource-name>UserResources</web-resource-name>
-            <url-pattern>/secure/*</url-pattern>
-            <url-pattern>/error/error.xhtml</url-pattern>
-            <url-pattern>/error/SessionExpired.html</url-pattern>
-            <url-pattern>/javax.faces.resource/*</url-pattern>            
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>GISUSER</role-name>
-        </auth-constraint>
-    </security-constraint>
+    
+    <!-- Define javax.faces.PROJECT_STAGE in glassfish-resources.xml and reference via JNDI instead of web.xml -->
+    <resource-ref>
+        <res-ref-name>jsf/ProjectStage</res-ref-name>
+        <res-type>java.lang.String</res-type>
+        <mapped-name>java:app/jsf/ProjectStage</mapped-name>
+    </resource-ref>
+
     <listener>
         <description>ServletContextListener</description>
         <listener-class>giswar.listener.StartupListener</listener-class>
     </listener>
+    
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <servlet>
-        <servlet-name>ExceptionHandlerServlet</servlet-name>
-        <!-- <servlet-class>javax.faces.context.ExceptionHandler</servlet-class> -->
-        <servlet-class>com.sun.errorhandler.ExceptionHandler</servlet-class>
-        <init-param>
-            <param-name>errorHost</param-name>
-            <param-value>localhost</param-value>
-        </init-param>
-        <init-param>
-            <param-name>errorPort</param-name>
-            <param-value>24444</param-value>
-        </init-param>
-    </servlet>
+    
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ExceptionHandlerServlet</servlet-name>
-        <url-pattern>/error/ExceptionHandler</url-pattern>
-    </servlet-mapping>
+    
     <!-- Set to Keycloak's SSO Session Idle (30) + Time to account for the user login process (3) -->
     <session-config>
         <session-timeout>33</session-timeout>
     </session-config>
+    
     <welcome-file-list>
         <welcome-file>secure/Search.xhtml</welcome-file>
     </welcome-file-list>
+    
+    <security-constraint>
+        <display-name>PublicAccess</display-name>
+        <web-resource-collection>
+            <web-resource-name>PublicResources</web-resource-name>
+            <url-pattern>/callback</url-pattern>
+            <url-pattern>/accessDenied.xhtml</url-pattern>
+            <url-pattern>/error.xhtml</url-pattern>
+            <url-pattern>/pageNotFound.xhtml</url-pattern>
+            <url-pattern>/sessionExpired.xhtml</url-pattern>
+            <url-pattern>/javax.faces.resource/*</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
+    
+    <security-constraint>
+        <display-name>GisUserAccess</display-name>
+        <web-resource-collection>
+            <web-resource-name>UserResources</web-resource-name>
+            <url-pattern>/secure/Search.xhtml</url-pattern>
+            <url-pattern>/secure/detailedResult.xhtml</url-pattern>
+            <url-pattern>/secure/searchResults.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>GISUSER</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
     <error-page>
-        <exception-type>java.io.IOException</exception-type>
-        <location>/error/ExceptionHandler</location>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/sessionExpired.xhtml</location>
     </error-page>
+    
     <error-page>
-        <exception-type>javax.faces.FacesException</exception-type>
-        <location>/error/ExceptionHandler</location>
+        <error-code>403</error-code>
+        <location>/accessDenied.xhtml</location>
     </error-page>
+    
     <error-page>
-        <exception-type>javax.servlet.ServletException</exception-type>
-        <location>/error/ExceptionHandler</location>
+        <error-code>404</error-code>
+        <location>/pageNotFound.xhtml</location>
     </error-page>
+    
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error.xhtml</location>
+    </error-page>
+    
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error.xhtml</location>
+    </error-page>
+
+    <!-- Necessary to avoid "Warning:   JSF1091: No mime type could be found for file *filename.xxx*" -->
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>eot?#iefix</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+    
+    <mime-mapping>
+        <extension>otf</extension>
+        <mime-type>font/otf</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>font/ttf</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>font/woff</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>woff2</extension>
+        <mime-type>font/woff2</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>svg</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>
+    
 </web-app>

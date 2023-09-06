@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:h="http://java.sun.com/jsf/html" 
+                template="/WEB-INF/templates/gisTemplate.xhtml">
+    <ui:define name="title">Error</ui:define>
+    <ui:define name="content">
+        <ui:fragment rendered="#{facesContext.application.projectStage eq 'Production'}">
+            <p>Oops! An error has occurred contact <a href="mailto:HLTH.Helpdesk@gov.bc.ca">HLTH.Helpdesk@gov.bc.ca</a> for assistance</p>
+        </ui:fragment>
+        <ui:fragment rendered="#{facesContext.application.projectStage ne 'Production'}">
+            <p>Exception #{pfExceptionHandler.type} occurred!</p>
+            <p>Message: #{pfExceptionHandler.message}</p>
+            <p>StackTrace: <h:outputText value="#{pfExceptionHandler.formattedStackTrace}" escape="false" /></p>
+        </ui:fragment>
+    </ui:define>
+</ui:composition>

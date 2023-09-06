@@ -6,6 +6,10 @@ resource "aws_secretsmanager_secret" "gis_proxy_user" {
   name = "${var.application}_user"
 }
 
+resource "aws_secretsmanager_secret" "gis_project_stage" {
+  name = "${var.application}_project_stage"
+}
+
 resource "aws_secretsmanager_secret" "gis_keycloak_client_secret" {
   name = "${var.application}_keycloak_client_secret"
 }
@@ -64,6 +68,11 @@ resource "aws_secretsmanager_secret" "gis_schedule" {
 
 resource "aws_secretsmanager_secret_version" "gis_jdbc_setting" {
   secret_id     = aws_secretsmanager_secret.gis_jdbc_setting.id
+  secret_string = "changeme"
+}
+
+resource "aws_secretsmanager_secret_version" "gis_project_stage" {
+  secret_id     = aws_secretsmanager_secret.gis_project_stage.id
   secret_string = "changeme"
 }
 
