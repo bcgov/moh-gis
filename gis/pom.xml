@@ -13,14 +13,6 @@
         <module>${project.artifactId}-ear</module>
     </modules>
 
-    <repositories>
-        <repository>
-            <id>cgi-mvn-release</id>
-            <name>CGI Maven Repository</name>
-            <url>https://artifactory.hlth.gov.bc.ca/artifactory/cgi-mvn-release</url>
-        </repository>
-    </repositories>
-
     <build>
         <plugins>
             <plugin>
@@ -41,11 +33,6 @@
             <artifactId>javaee-api</artifactId>
             <version>8.0</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.cgi.gis</groupId>
-            <artifactId>errorhandler</artifactId>
-            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.jcraft</groupId>

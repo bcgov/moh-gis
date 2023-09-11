@@ -50,6 +50,8 @@ resource "aws_ecs_task_definition" "gis_td" {
         "valueFrom" : "${aws_secretsmanager_secret_version.rds_credentials.arn}:password::" },
         { "name" : "JDBC_SETTING",
         "valueFrom" : "${aws_secretsmanager_secret_version.gis_jdbc_setting.arn}" },
+        { "name" : "PROJECT_STAGE",
+        "valueFrom" : "${aws_secretsmanager_secret_version.gis_project_stage.arn}" },
         { "name" : "KEYCLOAK_CLIENT_SECRET",
         "valueFrom" : "${aws_secretsmanager_secret_version.gis_keycloak_client_secret.arn}" },
         { "name" : "PROVIDER_URI",
@@ -104,7 +106,7 @@ resource "aws_ecs_service" "main" {
   name            = "${var.application}-${var.target_env}-service"
   cluster         = aws_ecs_cluster.gis_cluster.arn
   task_definition = aws_ecs_task_definition.gis_td.arn
-  desired_count   = 2
+  desired_count   = 1
   #Health Check need to go up?
   health_check_grace_period_seconds = 60
   wait_for_steady_state             = false
