@@ -1,6 +1,7 @@
 resource "aws_cloudwatch_log_group" "ecs_monitoring" {
   name              = "ecs-${var.application}-monitoring"
   retention_in_days = 90
+  lifecycle {    prevent_destroy = true  }
 }
 
 resource "aws_ecs_cluster" "gis_cluster" {
