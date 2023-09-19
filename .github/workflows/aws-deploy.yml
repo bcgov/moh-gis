@@ -35,7 +35,7 @@ permissions:
 jobs:
   docker_push:
     name: Docker Push
-    environment:  ${{ github.event.inputs.environment }}
+    environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -71,7 +71,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           file: gis/Dockerfile
           push: true
-          tags: ${{ env.IMAGE_ID  }}:latest
+          tags: ${{ env.IMAGE_ID }}:latest
           build-args: |
             ID_RSA=${{ secrets.ID_RSA_BASE64 }}
             KNOWN_HOSTS=${{ secrets.KNOWN_HOSTS_BASE64 }}
@@ -104,13 +104,11 @@ jobs:
           terragrunt_version: ${{ env.TG_VERSION }}
 
       - name: Terragrunt Apply
-        working-directory: ${{ env.TG_SRC_PATH }}/${{env.TFC_WORKSPACE }}
+        working-directory: ${{ env.TG_SRC_PATH }}/${{ env.TFC_WORKSPACE }}
         env:
           app_image: ${{ env.IMAGE_ID }}:${{ github.sha }}
           LICENSE_PLATE: ${{ secrets.MY_LICENSE_PLATE }}
         run: |
-            echo "Repository variable : '${{ vars.ENVIRONMENT }}' "
-            echo "Environment variable: '${{ github.event.inputs.environment }}' "
             terragrunt run-all apply --terragrunt-non-interactive
 
   zap_scan:
