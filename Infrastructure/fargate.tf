@@ -1,6 +1,6 @@
 resource "aws_cloudwatch_log_group" "ecs_monitoring" {
   name              = "ecs-${var.application}-monitoring"
-  retention_in_days = "90"
+  retention_in_days = 90
 }
 
 resource "aws_ecs_cluster" "gis_cluster" {
@@ -103,11 +103,10 @@ resource "aws_ecs_task_definition" "gis_td" {
 }
 
 resource "aws_ecs_service" "main" {
-  name            = "${var.application}-${var.target_env}-service"
-  cluster         = aws_ecs_cluster.gis_cluster.arn
-  task_definition = aws_ecs_task_definition.gis_td.arn
-  desired_count   = 1
-  #Health Check need to go up?
+  name                              = "${var.application}-${var.target_env}-service"
+  cluster                           = aws_ecs_cluster.gis_cluster.arn
+  task_definition                   = aws_ecs_task_definition.gis_td.arn
+  desired_count                     = 1
   health_check_grace_period_seconds = 60
   wait_for_steady_state             = false
 

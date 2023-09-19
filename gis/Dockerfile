@@ -5,7 +5,7 @@ COPY gis/GIS-ejb /home/gis/GIS-ejb
 COPY gis/GIS-war /home/gis/GIS-war
 COPY gis/pom.xml /home/gis
 
-RUN mvn -f /home/gis/pom.xml clean package -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.insecure=true
+RUN mvn -f /home/gis/pom.xml clean package
 
 FROM payara/server-full:5.2022.4-jdk11
 RUN mkdir -p /opt/payara/.ssh
