@@ -69,10 +69,10 @@ resource "aws_api_gateway_method_settings" "gis-settings" {
 #  most_recent = true
 #}
 
-resource "aws_cloudwatch_log_group" "gis_api_access_logs" {
-  name              = "gis-${var.target_env}-api-gateway"
-  retention_in_days = 90
-}
+#resource "aws_cloudwatch_log_group" "gis_api_access_logs" {
+#  name              = "gis-${var.target_env}-api-gateway"
+#  retention_in_days = 90
+#}
 
 module "api_gateway" {
   source  = "terraform-aws-modules/apigateway-v2/aws"
