@@ -84,8 +84,8 @@ module "api_gateway" {
   create_api_domain_name = false
 
   #domain_name                              = "gis-${var.target_env}.api.hlth.gov.bc.ca"
-  #domain_name_certificate_arn              = data.aws_acm_certificate.bcer_api_certificate.arn
-  default_stage_access_log_destination_arn = aws_cloudwatch_log_group.bcer_api_access_logs.arn
+  #domain_name_certificate_arn              = data.aws_acm_certificate.gis_api_certificate.arn
+  default_stage_access_log_destination_arn = aws_cloudwatch_log_group.gis_api_access_logs.arn
 
   #   default_route_settings = {
   #     detailed_metrics_enabled = true
