@@ -63,14 +63,14 @@ resource "aws_api_gateway_method_settings" "gis-settings" {
   }
 }
 
-data "aws_acm_certificate" "bcer_api_certificate" {
-  domain      = "bcer-${var.target_env}.api.hlth.gov.bc.ca"
-  statuses    = ["ISSUED"]
-  most_recent = true
-}
+#data "aws_acm_certificate" "bcer_api_certificate" {
+#  domain      = "bcer-${var.target_env}.api.hlth.gov.bc.ca"
+#  statuses    = ["ISSUED"]
+#  most_recent = true
+#}
 
-resource "aws_cloudwatch_log_group" "bcer_api_access_logs" {
-  name              = "bcer-${var.target_env}-api-gateway"
+resource "aws_cloudwatch_log_group" "gis_api_access_logs" {
+  name              = "gis-${var.target_env}-api-gateway"
   retention_in_days = 90
 }
 
