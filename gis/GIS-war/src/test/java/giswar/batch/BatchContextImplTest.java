@@ -14,14 +14,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package giswar.batch;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Properties;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 /**
  *
@@ -38,7 +37,7 @@ public class BatchContextImplTest {
     @Test
     public void testInit() throws Exception {
 
-        Map<String, Object> config = mock(Map.class);
+        Properties config = mock(Properties.class);
         BatchContextImpl instance = new BatchContextImpl(config);
 
         instance.init();
@@ -54,7 +53,7 @@ public class BatchContextImplTest {
         String key = "key";
         String value = "value";
 
-        Map<String, Object> config = new HashMap<String, Object>();
+        Properties config = new Properties();
         IBatchContext instance = new BatchContextImpl(config);
         instance.addProperty(key, value);
 
@@ -71,7 +70,7 @@ public class BatchContextImplTest {
         String key = "key";
         String value = "value";
 
-        Map<String, Object> config = new HashMap<String, Object>();
+        Properties config = new Properties();
         IBatchContext instance = new BatchContextImpl(config);
         instance.addProperty(key, value);
 
@@ -79,14 +78,13 @@ public class BatchContextImplTest {
         assertEquals(value, result);
     }
 
-
-     /**
+    /**
      * Test of addProperty method, of class BatchContextImpl.
      */
-    @Test(expected=IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void testShutdown() throws Exception {
 
-        Map<String, Object> config = mock(Map.class);
+        Properties config = mock(Properties.class);
         BatchContextImpl instance = new BatchContextImpl(config);
         instance.destroy();
         instance.execute();
@@ -95,10 +93,10 @@ public class BatchContextImplTest {
     /**
      * Test of addProperty method, of class BatchContextImpl.
      */
-    @Test(expected=IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void testRunAfterShutdown() throws Exception {
 
-        Map<String, Object> config = mock(Map.class);
+        Properties config = mock(Properties.class);
         BatchContextImpl instance = new BatchContextImpl(config);
         instance.destroy();
         instance.execute();
@@ -107,10 +105,10 @@ public class BatchContextImplTest {
     /**
      * Test of addProperty method, of class BatchContextImpl.
      */
-    @Test(expected=IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void testInitAfterShutdown() throws Exception {
 
-        Map<String, Object> config = mock(Map.class);
+        Properties config = mock(Properties.class);
         BatchContextImpl instance = new BatchContextImpl(config);
         instance.destroy();
         instance.init();

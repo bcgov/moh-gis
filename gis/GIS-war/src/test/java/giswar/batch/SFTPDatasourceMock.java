@@ -32,7 +32,7 @@ public class SFTPDatasourceMock extends SFTPDatasource {
     private File fedFile;
 
     public SFTPDatasourceMock() throws Exception {
-        super("localhost", "test", "test-pwd", "1");
+        super("localhost", "test", BatchConstants.KEYFILEPATH, "1", BatchConstants.KNOWNHOSTSFILE);
         fedFile = File.createTempFile("TEST-FED-FILE", ".txt");
     }
 
@@ -61,9 +61,9 @@ public class SFTPDatasourceMock extends SFTPDatasource {
 
     @Override
     public List<String> filesInDir(String dirPath) throws Exception {
-        List<String> files = new ArrayList<String>();
+        List<String> files = new ArrayList<>();
         files.add(fedFile.getName());
-        
+
         return files;
     }
 

@@ -3,7 +3,7 @@
  *                                                                             *
  * All rights reserved.                                                        *
  *                                                                             *
- * File:                        BatchComponentMock1.java                       *
+ * File:                        BatchComponentMock2.java                       *
  * Date of Last Commit: $Date::                                              $ *
  * Revision Number:      $Rev::                                              $ *
  * Last Commit by:    $Author::                                              $ *
@@ -20,23 +20,18 @@ package giswar.batch;
  *
  * @author adebiyi.kuseju
  */
-public class BatchComponentMock1 implements IBatchComponent {
+public class BatchComponentMock2 implements IBatchComponent {
 
-    private boolean isDestroyed = false;
-
+    @Override
     public void init(IBatchContext context) {
     }
 
+    @Override
     public boolean execute() throws BatchException {
         return false;
     }
 
+    @Override
     public void destroy() {
-        isDestroyed = true;
     }
-
-    public boolean isDestroyed() {
-        return isDestroyed;
-    }
-   
 }

@@ -18,7 +18,6 @@ package giswar.batch;
 
 import giswar.batch.util.ILogHelper;
 import javax.sql.DataSource;
-import java.sql.DriverManager;
 import giswar.batch.util.MiscellaneousHelper;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -26,12 +25,11 @@ import java.util.Properties;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.refEq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  *
@@ -53,8 +51,6 @@ public class HarsFileCreatorComponentTest {
     @Test
     public void testExecute() throws Exception {
 
-        //Connection con = DriverManager.getConnection("jalapeno.hlth.gov.bc.ca:1522", "gisd", "gisdev");
-        
         IData ds = mock(IData.class);
         IDatabase db = mock(IDatabase.class);
         DataSource dds = mock(DataSource.class);
@@ -63,7 +59,7 @@ public class HarsFileCreatorComponentTest {
         Properties props = new Properties();
         props.put(BatchConstants.DB_DATASOURCE, dds);
         props.put(BatchConstants.QUERY, HARS_DATA_QUERY);
-        props.put(BatchConstants.STATEMENT_TYPE, IDatabase.STATEMENT_TYPE.SELECT);     
+        props.put(BatchConstants.STATEMENT_TYPE, IDatabase.STATEMENT_TYPE.SELECT);
 
         Properties response = new Properties();
         response.put(BatchConstants.RESULTSET, getSampleData());
@@ -71,7 +67,7 @@ public class HarsFileCreatorComponentTest {
 
         when(db.execute(refEq(props))).thenReturn(response);
 
-        Map<String, Object> config = new HashMap<String, Object>();
+        Properties config = new Properties();
         config.put(BatchConstants.DATASBASE, db);
         config.put(BatchConstants.HARS_FILE_DATASOURCE, ds);
         config.put(BatchConstants.HARS_FILE_UPLOAD_LOCATION, "/NRTWebDev/");
@@ -100,15 +96,13 @@ public class HarsFileCreatorComponentTest {
         br = null;
 
         // Clean up
-        //harsFile.delete();
+        harsFile.delete();
     }
 
     private List<String[]> getSampleData() {
 
-        List<String[]> sampleData = new ArrayList<String[]>();
-        /*for (int i = 0; i < 12257; i++ ) {
-            sampleData.add(new String[]{"102102", "Doe", "John", "201206", "201205", "Address Line 1", "Address Line 2", "Address Line 3", "Address Line 4", "Post Code"});
-        }*/
+        List<String[]> sampleData = new ArrayList<>();
+
         sampleData.add(new String[]{"102102", "Doe", "John", "201206", "201205", "Address Line 1", "Address Line 2", "Address Line 3", "Address Line 4", "Post Code"});
         sampleData.add(new String[]{"102178", "Perkins", "Joe", "201201", "201208", "Address Line 1", "Address Line 2", "Address Line 3", "Address Line 4", "Post Code"});
 
