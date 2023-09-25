@@ -45,24 +45,14 @@ variable "alb_name" {
   type        = string
 }
 
-variable "acl_value" {
-  default = "private"
-}
-
 variable "app_port" {
   description = "Port exposed by the docker image to redirect traffic to"
   default     = 8181
 }
 
-variable "app_image" {
-  description = "Docker image to run in the ECS cluster. _Note_: there is a blank default value, which will cause service and task resource creation to be supressed unless an image is specified."
-  type        = string
-  default     = ""
-}
-
 variable "app_count" {
   description = "Number of docker containers to run"
-  default     = 2
+  default     = 1
 }
 
 variable "fam_console_idp_name" {

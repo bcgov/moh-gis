@@ -88,7 +88,6 @@ resource "aws_ecs_task_definition" "gis_td" {
       logConfiguration = {
         "logDriver" : "awslogs",
         "options" : {
-          awslogs-create-group  = "true"
           awslogs-group         = "/ecs/${var.application}"
           awslogs-region        = var.aws_region
           awslogs-stream-prefix = "ecs"
@@ -102,7 +101,7 @@ resource "aws_ecs_service" "main" {
   name                              = "${var.application}-${var.target_env}-service"
   cluster                           = aws_ecs_cluster.gis_cluster.arn
   task_definition                   = aws_ecs_task_definition.gis_td.arn
-  desired_count                     = 1
+  desired_count                     = var.app_count
   health_check_grace_period_seconds = 60
   wait_for_steady_state             = false
   force_new_deployment              = true
