@@ -28,18 +28,6 @@ variable "gis_cluster_name" {
   default     = "gis-cluster"
 }
 
-variable "cluster_name" {
-  description = "Name for ECS cluster (with underscore)"
-  type        = string
-  default     = "gis_cluster"
-}
-
-variable "ecs_service_name" {
-  description = "Name for the ECS service name"
-  type        = string
-  default     = "gis-dev-service"
-}
-
 variable "common_tags" {
   description = "Common tags for created resources"
   default = {
