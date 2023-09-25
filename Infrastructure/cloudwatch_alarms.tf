@@ -6,8 +6,8 @@ resource "aws_sns_topic" "alerts" {
 ######## CloudWatch Alarm for ECS ########
 ##########################################
 
-resource "aws_cloudwatch_metric_alarm" "ecs_cpu_utilization_alarm" {
-  alarm_name          = "ecs-cpu-utilization-alarm"
+resource "aws_cloudwatch_metric_alarm" "ecs_cpu_utilization" {
+  alarm_name          = "ecs-cpu-utilization-${var.application}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "CPUUtilization"
@@ -20,8 +20,8 @@ resource "aws_cloudwatch_metric_alarm" "ecs_cpu_utilization_alarm" {
 
 
   dimensions = {
-    ClusterName = var.cluster_name
-    ServiceName = var.ecs_service_name
+    ClusterName = aws_ecs_cluster.gis_cluster.name
+    ServiceName = aws_ecs_service.main.name
   }
 
   alarm_actions = [
@@ -31,7 +31,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_cpu_utilization_alarm" {
 
 
 resource "aws_cloudwatch_metric_alarm" "ecs_memory_utilization" {
-  alarm_name          = "ecs-memory-utilization-alarm"
+  alarm_name          = "ecs-memory-utilization-${var.application}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "MemoryUtilization"
@@ -44,8 +44,8 @@ resource "aws_cloudwatch_metric_alarm" "ecs_memory_utilization" {
 
 
   dimensions = {
-    ClusterName = var.cluster_name
-    ServiceName = var.ecs_service_name
+    ClusterName = aws_ecs_cluster.gis_cluster.name
+    ServiceName = aws_ecs_service.main.name
   }
 
   alarm_actions = [
@@ -55,7 +55,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_memory_utilization" {
 
 
 resource "aws_cloudwatch_metric_alarm" "ecs_service_status" {
-  alarm_name          = "ecs-service-status"
+  alarm_name          = "ecs-service-status-${var.application}"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "ServiceState"
@@ -67,8 +67,8 @@ resource "aws_cloudwatch_metric_alarm" "ecs_service_status" {
 
 
   dimensions = {
-    ClusterName = var.cluster_name
-    ServiceName = var.ecs_service_name
+    ClusterName = aws_ecs_cluster.gis_cluster.name
+    ServiceName = aws_ecs_service.main.name
   }
 
   alarm_description = "Alarm for Amazon ECS service status"
@@ -80,7 +80,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_service_status" {
 
 
 resource "aws_cloudwatch_metric_alarm" "ecs_network_traffic" {
-  alarm_name          = "ecs-network-traffic"
+  alarm_name          = "ecs-network-traffic-${var.application}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "NetworkIn"
@@ -92,8 +92,8 @@ resource "aws_cloudwatch_metric_alarm" "ecs_network_traffic" {
 
 
   dimensions = {
-    ClusterName = var.cluster_name
-    ServiceName = var.ecs_service_name
+    ClusterName = aws_ecs_cluster.gis_cluster.name
+    ServiceName = aws_ecs_service.main.name
   }
 
   alarm_description = "Alarm for Amazon ECS Network Traffic"
@@ -105,7 +105,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_network_traffic" {
 
 
 resource "aws_cloudwatch_metric_alarm" "ecs_disk_usage" {
-  alarm_name          = "ecs-disk-usage"
+  alarm_name          = "ecs-disk-usage-${var.application}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "TaskFilesystemUtilization"
@@ -117,8 +117,8 @@ resource "aws_cloudwatch_metric_alarm" "ecs_disk_usage" {
 
 
   dimensions = {
-    ClusterName = var.cluster_name
-    ServiceName = var.ecs_service_name
+    ClusterName = aws_ecs_cluster.gis_cluster.name
+    ServiceName = aws_ecs_service.main.name
   }
 
   alarm_description = "Alarm for Amazon ECS task filesystem utilization"
@@ -129,7 +129,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_disk_usage" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "ecs_task_failures" {
-  alarm_name          = "ecs-task-failures"
+  alarm_name          = "ecs-task-failures-${var.application}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "TaskFailures"
@@ -141,7 +141,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_task_failures" {
 
 
   dimensions = {
-    ClusterName = var.cluster_name
+    ClusterName = aws_ecs_cluster.gis_cluster.name
   }
 
   alarm_description = "Alarm for Amazon ECS task failures"
@@ -157,8 +157,8 @@ resource "aws_cloudwatch_metric_alarm" "ecs_task_failures" {
 ##########################################
 
 
-resource "aws_cloudwatch_metric_alarm" "aurora_cpu_alarm" {
-  alarm_name          = "aurora-cpu-utilization"
+resource "aws_cloudwatch_metric_alarm" "aurora_cpu_utilization" {
+  alarm_name          = "aurora-cpu-utilization-${var.application}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "3"
   metric_name         = "CPUUtilization"
@@ -179,8 +179,8 @@ resource "aws_cloudwatch_metric_alarm" "aurora_cpu_alarm" {
 }
 
 
-resource "aws_cloudwatch_metric_alarm" "db_connections_alarm" {
-  alarm_name          = "aurora-db-connections-alarm"
+resource "aws_cloudwatch_metric_alarm" "aurora_db_connections" {
+  alarm_name          = "aurora-db-connections-${var.application}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 2
   metric_name         = "DatabaseConnections"
@@ -200,8 +200,8 @@ resource "aws_cloudwatch_metric_alarm" "db_connections_alarm" {
 }
 
 
-resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_alarm" {
-  alarm_name          = "aurora-disk-queue-depth-alarm"
+resource "aws_cloudwatch_metric_alarm" "aurora_disk_queue_depth" {
+  alarm_name          = "aurora-disk-queue-depth-${var.application}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 2
   metric_name         = "DiskQueueDepth"
@@ -224,8 +224,8 @@ resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_alarm" {
 ###### CloudWatch Alarm for Billing #######
 ##########################################
 
-resource "aws_cloudwatch_metric_alarm" "billing_alarm" {
-  alarm_name          = "Billing Alert"
+resource "aws_cloudwatch_metric_alarm" "billing" {
+  alarm_name          = "billing-${var.application}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
   metric_name         = "EstimatedCharges"
