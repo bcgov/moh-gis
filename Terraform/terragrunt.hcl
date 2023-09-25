@@ -1,8 +1,7 @@
 terraform {
-  source = "../..//Infrastructure"
+  source = "../../Infrastructure"
 }
  locals {
-    #tfc_hostname        = "app.terraform.io"
     project             = get_env("LICENSE_PLATE")
     environment         = reverse(split("/", get_terragrunt_dir()))[0]
     app_image           = get_env("app_image", "")
@@ -33,7 +32,8 @@ generate "tfvars" {
   contents          = <<-EOF
     app_image  = "${local.app_image}"
     target_env = "${local.environment}"
-    application = "gis"   
+    application = "gis"
+    license = "${local.project}"
 EOF
 }
 
