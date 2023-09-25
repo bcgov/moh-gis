@@ -50,6 +50,12 @@ variable "app_port" {
   default     = 8181
 }
 
+variable "app_image" {
+  description = "Docker image to run in the ECS cluster. _Note_: there is a blank default value, which will cause service and task resource creation to be supressed unless an image is specified."
+  type        = string
+  default     = ""
+}
+
 variable "app_count" {
   description = "Number of docker containers to run"
   default     = 1
