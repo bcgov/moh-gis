@@ -8,10 +8,6 @@ environment = "dev"
 
 locals {
   project = get_env("LICENSE_PLATE")
-#   commontags = [
-#     environment = "dev",
-#     application = "fmdb"
-#   ]
 }
 
 generate "dev_tfvars" {
@@ -23,5 +19,6 @@ generate "dev_tfvars" {
   fargate_memory = 1024
   app_port = 8181
   fam_console_idp_name = "DEV-IDIR"
+  alb_origin_id = "gisd.hlth.gov.bc.ca"
   EOF
 }

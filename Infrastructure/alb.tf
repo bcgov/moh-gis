@@ -52,7 +52,7 @@ resource "aws_lb_listener_rule" "host_based_weighted_routing" {
   #figure out what to place here
   condition {
     host_header {
-      values = ["gis.ynr9ed-dev.nimbus.cloud.gov.bc.ca"]
+      values = ["${var.alb_origin_id}"]
     }
   }
 }

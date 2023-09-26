@@ -3,11 +3,7 @@ include {
 }
 
 locals {
-  #project = get_env("LICENSE_PLATE")
-#   commontags = [
-#     environment = "prod",
-#     application = "fmdb"
-#   ]
+  project = get_env("LICENSE_PLATE")
 }
 
 generate "prod_tfvars" {
@@ -20,5 +16,6 @@ generate "prod_tfvars" {
   fargate_memory = 1024
   app_port = 8181
   fam_console_idp_name = "PROD-IDIR"
+  alb_origin_id = "gis.ynr9ed-prod.nimbus.cloud.gov.bc.ca"
   EOF
 }
