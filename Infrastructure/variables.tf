@@ -70,6 +70,10 @@ variable "application" {
   description = "Application that is being deployed"
 }
 
+variable "alb_origin_id" {
+  description = "Domain name of OCIO Perimeter loadbalancer"
+}
+
 variable "db_instance_identifier" {
   description = "Identifies the cluster ID of aurora_rds_v2"
   default     = "gis-cluster"
