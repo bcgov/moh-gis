@@ -2,6 +2,7 @@ resource "aws_sns_topic" "alerts" {
   name = "cloudwatch_alarms"
 }
 
+
 ##########################################
 ######## CloudWatch Alarm for ECS ########
 ##########################################
@@ -18,7 +19,6 @@ resource "aws_cloudwatch_metric_alarm" "ecs_cpu_utilization" {
   alarm_description   = "This metric checks the CPU utilization of the ECS service"
   tags                = local.common_tags
 
-
   dimensions = {
     ClusterName = aws_ecs_cluster.gis_cluster.name
     ServiceName = aws_ecs_service.main.name
@@ -28,7 +28,6 @@ resource "aws_cloudwatch_metric_alarm" "ecs_cpu_utilization" {
     aws_sns_topic.alerts.arn
   ]
 }
-
 
 resource "aws_cloudwatch_metric_alarm" "ecs_memory_utilization" {
   alarm_name          = "ecs-memory-utilization-${var.application}"
@@ -42,7 +41,6 @@ resource "aws_cloudwatch_metric_alarm" "ecs_memory_utilization" {
   alarm_description   = "Alarm for ECS memory utilization exceeding 80%"
   tags                = local.common_tags
 
-
   dimensions = {
     ClusterName = aws_ecs_cluster.gis_cluster.name
     ServiceName = aws_ecs_service.main.name
@@ -52,7 +50,6 @@ resource "aws_cloudwatch_metric_alarm" "ecs_memory_utilization" {
     aws_sns_topic.alerts.arn
   ]
 }
-
 
 resource "aws_cloudwatch_metric_alarm" "ecs_service_status" {
   alarm_name          = "ecs-service-status-${var.application}"
@@ -64,7 +61,6 @@ resource "aws_cloudwatch_metric_alarm" "ecs_service_status" {
   statistic           = "Minimum"
   threshold           = "1"
   tags                = local.common_tags
-
 
   dimensions = {
     ClusterName = aws_ecs_cluster.gis_cluster.name
@@ -78,7 +74,6 @@ resource "aws_cloudwatch_metric_alarm" "ecs_service_status" {
   ]
 }
 
-
 resource "aws_cloudwatch_metric_alarm" "ecs_network_traffic" {
   alarm_name          = "ecs-network-traffic-${var.application}"
   comparison_operator = "GreaterThanThreshold"
@@ -89,7 +84,6 @@ resource "aws_cloudwatch_metric_alarm" "ecs_network_traffic" {
   statistic           = "Sum"
   threshold           = "100000"
   tags                = local.common_tags
-
 
   dimensions = {
     ClusterName = aws_ecs_cluster.gis_cluster.name
@@ -103,7 +97,6 @@ resource "aws_cloudwatch_metric_alarm" "ecs_network_traffic" {
   ]
 }
 
-
 resource "aws_cloudwatch_metric_alarm" "ecs_disk_usage" {
   alarm_name          = "ecs-disk-usage-${var.application}"
   comparison_operator = "GreaterThanThreshold"
@@ -114,7 +107,6 @@ resource "aws_cloudwatch_metric_alarm" "ecs_disk_usage" {
   statistic           = "Average"
   threshold           = "80"
   tags                = local.common_tags
-
 
   dimensions = {
     ClusterName = aws_ecs_cluster.gis_cluster.name
@@ -139,7 +131,6 @@ resource "aws_cloudwatch_metric_alarm" "ecs_task_failures" {
   threshold           = "1"
   tags                = local.common_tags
 
-
   dimensions = {
     ClusterName = aws_ecs_cluster.gis_cluster.name
   }
@@ -156,7 +147,6 @@ resource "aws_cloudwatch_metric_alarm" "ecs_task_failures" {
 ###### CloudWatch Alarm for Aurora #######
 ##########################################
 
-
 resource "aws_cloudwatch_metric_alarm" "aurora_cpu_utilization" {
   alarm_name          = "aurora-cpu-utilization-${var.application}"
   comparison_operator = "GreaterThanThreshold"
@@ -172,12 +162,10 @@ resource "aws_cloudwatch_metric_alarm" "aurora_cpu_utilization" {
     aws_sns_topic.alerts.arn
   ]
 
-
   dimensions = {
     DBInstanceIdentifier = "${var.db_instance_identifier}-${var.target_env}"
   }
 }
-
 
 resource "aws_cloudwatch_metric_alarm" "aurora_db_connections" {
   alarm_name          = "aurora-db-connections-${var.application}"
@@ -198,7 +186,6 @@ resource "aws_cloudwatch_metric_alarm" "aurora_db_connections" {
     DBInstanceIdentifier = "${var.db_instance_identifier}-${var.target_env}"
   }
 }
-
 
 resource "aws_cloudwatch_metric_alarm" "aurora_disk_queue_depth" {
   alarm_name          = "aurora-disk-queue-depth-${var.application}"

@@ -24,8 +24,8 @@ variable "fargate_memory" {
 
 variable "gis_cluster_name" {
   description = "Name for the FAM database cluster -- must be unique"
-  type        = string
   default     = "gis-cluster"
+  type        = string
 }
 
 variable "common_tags" {
@@ -52,8 +52,8 @@ variable "app_port" {
 
 variable "app_image" {
   description = "Docker image to run in the ECS cluster. _Note_: there is a blank default value, which will cause service and task resource creation to be supressed unless an image is specified."
-  type        = string
   default     = ""
+  type        = string
 }
 
 variable "app_count" {
@@ -73,4 +73,10 @@ variable "application" {
 variable "db_instance_identifier" {
   description = "Identifies the cluster ID of aurora_rds_v2"
   default     = "gis-cluster"
+}
+
+variable "timezone" {
+  description = "Default timezone to use for containers + database"
+  default     = "America/Vancouver"
+  type        = string
 }

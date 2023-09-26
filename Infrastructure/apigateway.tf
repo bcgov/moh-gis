@@ -37,7 +37,6 @@ resource "aws_api_gateway_integration_response" "gis-int-reponse" {
   resource_id = aws_api_gateway_resource.gis-gateway.id
   http_method = aws_api_gateway_method.gis-method.http_method
   status_code = aws_api_gateway_method_response.gis-response.status_code
-
   depends_on = [
     aws_api_gateway_integration.gis-integration
   ]
@@ -94,7 +93,6 @@ module "api_gateway" {
   #   }
 
   integrations = {
-
     "ANY /{proxy+}" = {
       connection_type    = "VPC_LINK"
       vpc_link           = "gis-vpc"

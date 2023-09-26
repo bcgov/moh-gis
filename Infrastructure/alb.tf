@@ -25,7 +25,6 @@ resource "aws_alb_target_group" "app" {
   }
   stickiness {
     type = "lb_cookie"
-
   }
 
   health_check {

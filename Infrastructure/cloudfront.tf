@@ -2,7 +2,6 @@
 #   alb_origin_id = "fmdb.ynr9ed-dev.nimbus.cloud.gov.bc.ca"
 # }
 
-
 # provider "aws" {
 #   alias = "us-east-1"
 #   region = "us-east-1"
@@ -14,7 +13,6 @@
 #   statuses = ["ISSUED"]
 #   most_recent = true
 # }
-
 
 # data "aws_cloudfront_cache_policy" "CachingDisabled" {
 #   name = "Managed-CachingDisabled"
