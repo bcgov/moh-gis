@@ -84,3 +84,13 @@ variable "timezone" {
   default     = "America/Vancouver"
   type        = string
 }
+
+variable "aurora_acu_min" {
+  description = "Minimum Aurora Capacity Units (ACUs), from 0.5 to 128 in increments of 0.5"
+  default     = 0.5
+}
+
+variable "aurora_acu_max" {
+  description = "Maximum Aurora Capacity Units (ACUs), from 1 to 128 in increments of 0.5"
+  default     = 1
+}
