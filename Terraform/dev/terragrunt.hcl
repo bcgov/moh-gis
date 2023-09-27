@@ -2,10 +2,6 @@ include {
   path = find_in_parent_folders()
 }
 
-inputs = {
-  environment = "dev"
-}
-
 locals {
   project = get_env("LICENSE_PLATE")
 }
@@ -20,5 +16,7 @@ generate "dev_tfvars" {
   app_port = 8181
   fam_console_idp_name = "DEV-IDIR"
   alb_origin_id = "gisd.hlth.gov.bc.ca"
+  aurora_acu_min = 0.5
+  aurora_acu_max = 1
   EOF
 }
