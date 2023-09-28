@@ -27,7 +27,7 @@ import it.sauronsoftware.cron4j.Task;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import javax.sql.DataSource;
 
 /**

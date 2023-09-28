@@ -1,9 +1,9 @@
 package giswar.security;
 
 import java.io.IOException;
-import javax.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 @RequestScoped
 @Named("SessionTimeout")

@@ -1,7 +1,7 @@
 package com.cgi.assm.faces.utils;
 
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class UserDetails {
 

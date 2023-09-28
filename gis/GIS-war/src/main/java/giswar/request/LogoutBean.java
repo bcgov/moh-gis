@@ -5,11 +5,11 @@ import fish.payara.security.openid.api.OpenIdContext;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URLEncoder;
-import javax.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.servlet.ServletException;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.servlet.ServletException;
 
 /**
  * Logout bean
@@ -31,7 +31,7 @@ public class LogoutBean implements Serializable {
     /**
      * Method to invalidate user session
      *
-     * @throws javax.servlet.ServletException
+     * @throws jakarta.servlet.ServletException
      * @throws java.io.IOException
      */
     public void logout() throws ServletException, IOException {

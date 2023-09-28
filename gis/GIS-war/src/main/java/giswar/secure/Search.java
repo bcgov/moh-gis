@@ -12,11 +12,11 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 
 /**
