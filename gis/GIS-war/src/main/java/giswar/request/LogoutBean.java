@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.URLEncoder;
 import jakarta.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.servlet.ServletException;

@@ -14,8 +14,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
-import javax.faces.model.SelectItem;
-import javax.faces.view.ViewScoped;
+import jakarta.faces.model.SelectItem;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
 

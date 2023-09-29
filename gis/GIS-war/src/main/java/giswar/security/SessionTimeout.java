@@ -2,7 +2,7 @@ package giswar.security;
 
 import java.io.IOException;
 import jakarta.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
 @RequestScoped

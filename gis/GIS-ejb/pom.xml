@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>${project.parent.artifactId}-ejb</artifactId>
+    <artifactId>GIS-ejb</artifactId>
     <packaging>ejb</packaging>
 
     <build>
@@ -19,11 +19,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ejb-plugin</artifactId>
-                <!-- <version>3.0.1</version> -->
-                <version>3.2.1</version>
+                <version>3.0.1</version>
                 <configuration>
-                    <!-- <ejbVersion>3.2</ejbVersion> -->
-                    <ejbVersion>4.0</ejbVersion>
+                    <ejbVersion>3.2</ejbVersion>
                 </configuration>
             </plugin>
         </plugins>
