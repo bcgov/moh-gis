@@ -5,7 +5,6 @@ import ca.bc.hnet.moh.ccims.gis.business.GisRecipientsFacadeLocal;
 import ca.bc.hnet.moh.ccims.gis.entity.GisAccessLog;
 import ca.bc.hnet.moh.ccims.gis.entity.GisRecipients;
 import com.cgi.assm.faces.utils.UserDetails;
-import org.primefaces.event.SelectEvent;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -64,7 +63,7 @@ public class Search implements Serializable {
 
     // this is a hacky workout around to deal with the fact primefaces calendar breaks on dates with out all of day,month,year
     // we set a second input to a second birthdate field that is formatted and hide the actual calendar field
-    public void onDateSelect(SelectEvent event) {
+    public void onDateSelect(Object event) {
         this.birthdate = DateTimeFormatter.ofPattern("yyyy-MM").format(birthdateCal);
     }
 
