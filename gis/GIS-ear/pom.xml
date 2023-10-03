@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>GIS-ear</artifactId>
+    <artifactId>${project.parent.artifactId}-ear</artifactId>
     <packaging>ear</packaging>
 
     <build>

@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>GIS-war</artifactId>
+    <artifactId>${project.parent.artifactId}-war</artifactId>
     <packaging>war</packaging>
 
     <build>
@@ -51,6 +51,12 @@
             <artifactId>primefaces</artifactId>
             <version>10.0.0</version>
             <classifier>jakarta</classifier>
+        </dependency>
+        <dependency>
+            <groupId>fish.payara.api</groupId>
+            <artifactId>payara-api</artifactId>
+            <version>6.2023.8</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

@@ -51,6 +51,18 @@
             <version>0.1.55</version>
             <type>jar</type>
         </dependency>
+        <!--
+            Match this version to what is included with the Payara server to
+            deploy to. Version information can be found under "Compile
+            Dependencies" for the appropriate version of the Payara api at
+            https://mvnrepository.com/artifact/fish.payara.api/payara-api
+        -->
+        <dependency>
+            <groupId>fish.payara.security.connectors</groupId>
+            <artifactId>security-connector-oidc-client</artifactId>
+            <version>3.0.alpha6</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <properties>
