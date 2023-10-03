@@ -5,14 +5,14 @@
  */
 package giswar.security;
 
-import jakarta.security.enterprise.authentication.mechanism.http.openid.ClaimsDefinition;
-import jakarta.security.enterprise.authentication.mechanism.http.OpenIdAuthenticationMechanismDefinition;
+import fish.payara.security.annotations.ClaimsDefinition;
+import fish.payara.security.annotations.OpenIdAuthenticationDefinition;
 
 /**
  *
  * @author nathaniel.coster
  */
-@OpenIdAuthenticationMechanismDefinition(
+@OpenIdAuthenticationDefinition(
         providerURI = "#{oidcConfig.providerUri}",
         clientId = "#{oidcConfig.clientId}",
         clientSecret = "#{oidcConfig.clientSecret}",

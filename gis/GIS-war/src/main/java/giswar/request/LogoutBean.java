@@ -1,7 +1,7 @@
 package giswar.request;
 
 import ca.bc.hnet.moh.ccims.gis.security.OidcConfig;
-import jakarta.security.enterprise.identitystore.openid.OpenIdContext;
+import fish.payara.security.openid.api.OpenIdContext;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URLEncoder;
