@@ -157,7 +157,7 @@ public class SFTPDatasource implements IData {
             int totalRead = 0;
 
             while ((read = fis.read(buffer, 0, buffer.length)) != -1) {
-                handle.write(buffer, totalRead, 0);
+                handle.write(buffer);
                 //client.write(handle, totalRead, buffer, 0, read);
                 totalRead += read;
             }
