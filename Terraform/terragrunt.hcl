@@ -19,7 +19,6 @@ terraform {
     dynamodb_table = "terraform-remote-state-lock-${local.project}"
     region         = "ca-central-1"
     encrypt        = true
-    
   }
 }
 EOF
@@ -33,7 +32,6 @@ generate "tfvars" {
     app_image  = "${local.app_image}"
     target_env = "${local.environment}"
     application = "gis"
-    license = "${local.project}"
 EOF
 }
 
