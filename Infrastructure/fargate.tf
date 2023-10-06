@@ -71,8 +71,6 @@ resource "aws_ecs_task_definition" "gis_td" {
         valueFrom = aws_secretsmanager_secret_version.gis_hars_file_host.arn },
         { name = "HARS_FILE_HOST_USER_ID",
         valueFrom = aws_secretsmanager_secret_version.gis_hars_file_host_user_id.arn },
-        { name = "HARS_FILE_UPLOAD_LOCATION",
-        valueFrom = aws_secretsmanager_secret_version.gis_hars_file_upload_location.arn },
         { name = "SCHEDULE",
         valueFrom = aws_secretsmanager_secret_version.gis_schedule.arn },
       ]
