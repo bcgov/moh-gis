@@ -21,7 +21,7 @@
         <property name="fedFileLocation" value="/"/>
         <property name="harsFileHost" value="${ENV=HARS_FILE_HOST}"/>
         <property name="harsFileHostUserId" value="${ENV=HARS_FILE_HOST_USER_ID}"/>
-        <property name="harsFileUploadLocation" value="${ENV=HARS_FILE_UPLOAD_LOCATION}"/>
+        <property name="harsFileUploadLocation" value="/"/>
         <property name="mailFrom" value="***"/>
         <property name="mailTo" value="***"/>
         <property name="run-batch-job" value="true"/>
