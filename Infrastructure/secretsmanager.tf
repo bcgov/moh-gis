@@ -58,10 +58,6 @@ resource "aws_secretsmanager_secret" "gis_hars_file_host_user_id" {
   name = "${var.application}_hars_file_host_user_id"
 }
 
-resource "aws_secretsmanager_secret" "gis_hars_file_upload_location" {
-  name = "${var.application}_hars_file_upload_location"
-}
-
 resource "aws_secretsmanager_secret" "gis_schedule" {
   name = "${var.application}_schedule"
 }
@@ -133,11 +129,6 @@ resource "aws_secretsmanager_secret_version" "gis_hars_file_host" {
 
 resource "aws_secretsmanager_secret_version" "gis_hars_file_host_user_id" {
   secret_id     = aws_secretsmanager_secret.gis_hars_file_host_user_id.id
-  secret_string = "changeme"
-}
-
-resource "aws_secretsmanager_secret_version" "gis_hars_file_upload_location" {
-  secret_id     = aws_secretsmanager_secret.gis_hars_file_upload_location.id
   secret_string = "changeme"
 }
 
