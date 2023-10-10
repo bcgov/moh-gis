@@ -66,7 +66,7 @@
         <maven.compiler.version>3.8.0</maven.compiler.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <maven.surefire.version>2.22.2</maven.surefire.version>
+        <maven.surefire.version>3.1.2</maven.surefire.version>
 
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
