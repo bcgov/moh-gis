@@ -8,9 +8,9 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
-        <module>${project.artifactId}-ejb</module>
-        <module>${project.artifactId}-war</module>
-        <module>${project.artifactId}-ear</module>
+        <module>GIS-ejb</module>
+        <module>GIS-war</module>
+        <module>GIS-ear</module>
     </modules>
 
     <build>

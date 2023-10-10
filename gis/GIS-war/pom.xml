@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>${project.parent.artifactId}-war</artifactId>
+    <artifactId>GIS-war</artifactId>
     <packaging>war</packaging>
 
     <build>

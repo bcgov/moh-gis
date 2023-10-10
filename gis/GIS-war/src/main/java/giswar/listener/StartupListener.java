@@ -57,7 +57,7 @@ public class StartupListener implements ServletContextListener {
         String value = oldValue;
         String newValue = oldValue.replace(" ", "");
 
-        // Check if the property contains a reference to an environment variable of the form ${ENV=VARIABLE_NAME}
+        // Check if the value contains a reference to an environment variable of the form ${ENV=VARIABLE_NAME}
         if (newValue.startsWith(ENV_PREFIX) && newValue.endsWith(ENV_SUFFIX)) {
             // Remove the prefix and suffix
             String varName = newValue.substring(ENV_PREFIX.length(), newValue.length() - ENV_SUFFIX.length());
@@ -65,7 +65,7 @@ public class StartupListener implements ServletContextListener {
             // Get the value of the environment variable
             newValue = System.getenv(varName);
 
-            // Set the value of the property only if the env var is defined
+            // Set the value to return only if the env var is defined
             if (newValue != null) {
                 value = newValue;
             }
