@@ -6,10 +6,6 @@
 version: 2
 updates:
   - package-ecosystem: "maven" # See documentation for possible values
-    directory: "/module1" # Location of package manifests
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "maven" # See documentation for possible values
-    directory: "/module2" # Location of package manifests
+    directory: "/gis" # Location of package manifests
     schedule:
       interval: "weekly"
