@@ -62,6 +62,7 @@ public class SFTPDatasource implements IData {
         }
     }
 
+    @Override
     public Properties getData(Properties props) throws Exception {
 
         Session session = null;
@@ -133,6 +134,7 @@ public class SFTPDatasource implements IData {
         return response;
     }
 
+    @Override
     public void uploadData(Properties props) throws Exception {
 
         File tempFile = new File(props.getProperty(BatchConstants.FILEPATH));
@@ -157,8 +159,7 @@ public class SFTPDatasource implements IData {
             int totalRead = 0;
 
             while ((read = fis.read(buffer, 0, buffer.length)) != -1) {
-                handle.write(buffer);
-                //client.write(handle, totalRead, buffer, 0, read);
+                handle.write(buffer, 0, read);
                 totalRead += read;
             }
             handle.close();
@@ -185,7 +186,7 @@ public class SFTPDatasource implements IData {
     }
 
     public List<String> filesInDir(String dirPath) throws Exception {
-        List<String> files = new ArrayList<String>();
+        List<String> files = new ArrayList<>();
 
         Session session = null;
         ChannelSftp client = null;
