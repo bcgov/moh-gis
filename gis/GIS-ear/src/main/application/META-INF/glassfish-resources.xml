@@ -4,7 +4,7 @@
 
     <!-- Custom Resources -->
     <custom-resource jndi-name="jsf/ProjectStage" res-type="java.lang.String" factory-class="org.glassfish.resources.custom.factory.PrimitivesAndStringFactory">
-        <property name="value" value="${ENV=PROJECT_STAGE}"/>
+        <property name="value" value="Production"/>
     </custom-resource>
 
     <custom-resource jndi-name="gis/batch_properties" res-type="java.util.Properties" factory-class="org.glassfish.resources.custom.factory.PropertiesFactory">

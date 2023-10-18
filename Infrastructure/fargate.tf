@@ -45,8 +45,6 @@ resource "aws_ecs_task_definition" "gis_td" {
         valueFrom = "${aws_secretsmanager_secret_version.rds_credentials.arn}:password::" },
         { name = "JDBC_SETTING",
         valueFrom = aws_secretsmanager_secret_version.gis_jdbc_setting.arn },
-        { name = "PROJECT_STAGE",
-        valueFrom = aws_secretsmanager_secret_version.gis_project_stage.arn },
         { name = "KEYCLOAK_CLIENT_SECRET",
         valueFrom = aws_secretsmanager_secret_version.gis_keycloak_client_secret.arn },
         { name = "PROVIDER_URI",
