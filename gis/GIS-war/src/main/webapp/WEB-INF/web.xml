@@ -58,7 +58,26 @@
             <role-name>GISUSER</role-name>
         </auth-constraint>
     </security-constraint>
-    
+
+    <!--Fix for exposed referer Session ID-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Protected Pages</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <http-header>
+        <description>Set Referrer-Policy header</description>
+        <display-name>Referrer-Policy</display-name>
+        <header-name>Referrer-Policy</header-name>
+        <header-value>no-referrer</header-value>
+    </http-header>
+    <!--Fix for exposed referer Session ID-->
+        
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/sessionExpired.xhtml</location>
@@ -119,5 +138,11 @@
         <extension>svg</extension>
         <mime-type>image/svg+xml</mime-type>
     </mime-mapping>
+
+    <!--Fix lack of CSP-->
+    <context-param>
+        <param-name>primefaces.CSP</param-name>
+        <param-value>true</param-value>
+    </context-param>
     
 </web-app>
