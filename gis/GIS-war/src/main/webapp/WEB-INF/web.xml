@@ -120,7 +120,6 @@
         <mime-type>image/svg+xml</mime-type>
     </mime-mapping>
 
-    <!--Fix lack of CSP-->
     <context-param>
         <param-name>primefaces.CSP</param-name>
         <param-value>true</param-value>
