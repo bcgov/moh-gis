@@ -58,7 +58,7 @@
             <role-name>GISUSER</role-name>
         </auth-constraint>
     </security-constraint>
-    
+        
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/sessionExpired.xhtml</location>
@@ -119,5 +119,10 @@
         <extension>svg</extension>
         <mime-type>image/svg+xml</mime-type>
     </mime-mapping>
+
+    <context-param>
+        <param-name>primefaces.CSP</param-name>
+        <param-value>true</param-value>
+    </context-param>
     
 </web-app>
