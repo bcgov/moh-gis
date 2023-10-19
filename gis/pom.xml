@@ -45,11 +45,11 @@
             <version>8.0.1</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Fork of com.jcraft.jsch which has since been abandoned -->
         <dependency>
-            <groupId>com.jcraft</groupId>
+            <groupId>com.github.mwiede</groupId>
             <artifactId>jsch</artifactId>
-            <version>0.1.55</version>
-            <type>jar</type>
+            <version>0.2.11</version>
         </dependency>
         <!-- Match this version to what is included with the Payara server to deploy to -->
         <dependency>

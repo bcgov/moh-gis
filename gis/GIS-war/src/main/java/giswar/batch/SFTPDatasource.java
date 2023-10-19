@@ -18,6 +18,7 @@ package giswar.batch;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.ChannelSftp.LsEntry;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
@@ -31,6 +32,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -194,7 +196,7 @@ public class SFTPDatasource implements IData {
             session = getSftpSession();
             client = getSftpChannel(session);
 
-            List<String> v = client.ls(dirPath);
+            Vector<LsEntry> v = client.ls(dirPath);
             Iterator it = v.iterator();
             ChannelSftp.LsEntry dirEntry = null;
             while (it.hasNext()) {
@@ -236,6 +238,9 @@ public class SFTPDatasource implements IData {
         Session session;
         try {
             session = jsch.getSession(user, host);
+            // MoH SFTP server still proposes using ssh-rsa
+            session.setConfig("server_host_key", session.getConfig("server_host_key") + ",ssh-rsa");
+            session.setConfig("PubkeyAcceptedAlgorithms", session.getConfig("PubkeyAcceptedAlgorithms") + ",ssh-rsa");
             session.connect();
         } catch (JSchException sfe) {
 
