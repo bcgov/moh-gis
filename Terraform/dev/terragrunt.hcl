@@ -4,6 +4,7 @@ include {
 
 locals {
   project = get_env("LICENSE_PLATE")
+  timestamp = strftime("%Y-%m-%d-%H-%M-%S", timestamp())
 }
 
 generate "dev_tfvars" {
@@ -18,5 +19,6 @@ generate "dev_tfvars" {
   alb_origin_id = "gisd.hlth.gov.bc.ca"
   aurora_acu_min = 0.5
   aurora_acu_max = 1
+  timestamp = "${local.timestamp}"
   EOF
 }
