@@ -83,7 +83,7 @@ jobs:
     needs: docker_push
     steps:
       - name: Set Timestamp for ECS image deployment
-        run: echo "::set-env name=TF_VAR_TIMESTAMP::"$( date --rfc-3339=seconds )""
+        run: echo "TF_VAR_TIMESTAMP=$( date --rfc-3339=seconds )" >> $TF_VAR_TIMESTAMP
     
       - name: Checkout
         uses: actions/checkout@v3
