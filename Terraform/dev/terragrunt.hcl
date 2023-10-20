@@ -18,6 +18,6 @@ generate "dev_tfvars" {
   alb_origin_id = "gisd.hlth.gov.bc.ca"
   aurora_acu_min = 0.5
   aurora_acu_max = 1
-  timestamp = "$(date)"
+  timestamp = $(date)
   EOF
 }
