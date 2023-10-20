@@ -84,7 +84,7 @@ jobs:
     steps:
     
       - name: Set TF_VAR_TIMESTAMP
-        run: echo "TF_VAR_TIMESTAMP=$(date --rfc-3339=seconds)" >> &GITHUB_ENV
+        run: echo "TF_VAR_TIMESTAMP=$(date --rfc-3339=seconds)" >> $GITHUB_ENV
         
       - name: Echo Timestamp
         run: echo $TF_VAR_TIMESTAMP
