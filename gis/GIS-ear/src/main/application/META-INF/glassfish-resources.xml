@@ -3,6 +3,7 @@
 <resources>
 
     <!-- Custom Resources -->
+    <!-- This is a test comment to test image deployment -->
     <custom-resource jndi-name="jsf/ProjectStage" res-type="java.lang.String" factory-class="org.glassfish.resources.custom.factory.PrimitivesAndStringFactory">
         <property name="value" value="Production"/>
     </custom-resource>
