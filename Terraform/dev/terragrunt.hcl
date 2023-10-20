@@ -4,6 +4,7 @@ include {
 
 locals {
   project = get_env("LICENSE_PLATE")
+  timestamp = getenv("TF_VAR_TIMESTAMP")
 }
 
 generate "dev_tfvars" {
