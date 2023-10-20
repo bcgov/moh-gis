@@ -84,13 +84,10 @@ jobs:
     steps:
     
       - name: Set TF_VAR_TIMESTAMP
-        env:
-          TF_VAR_TIMESTAMP: ${{ steps.timestamp.outputs.timestamp }}
-        run: echo $TF_VAR_TIMESTAMP
+        run: echo "TF_VAR_TIMESTAMP=$(date --rfc-3339=seconds)" >> &GITHUB_ENV
         
-      - name: Get Timestamp
-        id: timestamp
-        run: echo "::set-output name=timestamp::$(date --rfc-3339=seconds)"
+      - name: Echo Timestamp
+        run: echo $TF_VAR_TIMESTAMP
         
       - name: Checkout
         uses: actions/checkout@v3
