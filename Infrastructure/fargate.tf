@@ -104,7 +104,7 @@ resource "aws_ecs_service" "main" {
   force_new_deployment              = true
 
   triggers = {
-    redeployment = var.application
+    redeployment = "${var.timestamp}"
   }
 
   network_configuration {
