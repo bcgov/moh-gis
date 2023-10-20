@@ -96,6 +96,6 @@ variable "aurora_acu_max" {
 }
 
 variable "timestamp" {
-  type = string
-  default = ""
+  description = "A timestamp variable"
+  default     = getenv("TF_VAR_TIMESTAMP")
 }
