@@ -4,7 +4,7 @@ terraform {
 
 locals {
   project     = get_env("LICENSE_PLATE")
-  timestamp   = getenv("TF_VAR_TIMESTAMP")
+  timestamp   = get_env("TF_VAR_TIMESTAMP")
   environment = reverse(split("/", get_terragrunt_dir()))[0]
   app_image   = get_env("app_image", "")
 }
