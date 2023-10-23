@@ -1,7 +1,3 @@
-locals {
-  timestamp = terragrunt.output.get("timestamp")
-}
-
 resource "aws_ecs_cluster" "gis_cluster" {
   name = "${var.application}_cluster"
 }
