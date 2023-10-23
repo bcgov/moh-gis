@@ -21,3 +21,8 @@ generate "dev_tfvars" {
   aurora_acu_max = 1
   EOF
 }
+
+output "timestamp" {
+  description = "The timestamp value"
+  value       = local.timestamp
+}
