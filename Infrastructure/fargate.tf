@@ -1,3 +1,7 @@
+locals {
+  timestamp = terragrunt.output.get("timestamp")
+}
+
 resource "aws_ecs_cluster" "gis_cluster" {
   name = "${var.application}_cluster"
 }
@@ -104,7 +108,7 @@ resource "aws_ecs_service" "main" {
   force_new_deployment              = true
 
   triggers = {
-    redeployment = var.timestamp
+    redeployment = terragrunt.output.get("timestamp")
   }
 
   network_configuration {
