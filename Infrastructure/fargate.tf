@@ -108,7 +108,7 @@ resource "aws_ecs_service" "main" {
   force_new_deployment              = true
 
   triggers = {
-    redeployment = terragrunt.output.get("timestamp")
+    redeployment = var.timestamp
   }
 
   network_configuration {
