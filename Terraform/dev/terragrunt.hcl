@@ -22,7 +22,6 @@ generate "dev_tfvars" {
   EOF
 }
 
-output "timestamp" {
-  description = "The timestamp value"
-  value       = local.timestamp
+inputs = {
+  timestamp = local.timestamp
 }
