@@ -94,7 +94,3 @@ variable "aurora_acu_max" {
   description = "Maximum Aurora Capacity Units (ACUs), from 1 to 128 in increments of 0.5"
   default     = 1
 }
-
-variable "timestamp" {
-  description = "A timestamp variable"
-}
