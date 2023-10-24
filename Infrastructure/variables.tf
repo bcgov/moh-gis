@@ -96,5 +96,6 @@ variable "aurora_acu_max" {
 }
 
 variable "timestamp" {
+  description = "Used to trigger ECS to redeploy builds when no task changes are present"
   type = string
 }

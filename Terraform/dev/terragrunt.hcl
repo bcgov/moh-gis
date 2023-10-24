@@ -4,7 +4,6 @@ include {
 
 locals {
   project = get_env("LICENSE_PLATE")
-  timestamp = get_env("TF_VAR_TIMESTAMP")
 }
 
 generate "dev_tfvars" {
@@ -20,8 +19,4 @@ generate "dev_tfvars" {
   aurora_acu_min = 0.5
   aurora_acu_max = 1
   EOF
-}
-
-inputs = {
-  timestamp = local.timestamp
 }

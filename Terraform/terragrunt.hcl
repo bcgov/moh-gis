@@ -45,3 +45,7 @@ provider "aws" {
 }
 EOF
 }
+
+inputs = {
+  timestamp = local.timestamp
+}
