@@ -13,7 +13,6 @@ resource "aws_api_gateway_method" "gis-method" {
   resource_id   = aws_api_gateway_resource.gis-gateway.id
   http_method   = "POST"
   authorization = "NONE"
-  api_key_required = true
 }
 
 resource "aws_api_gateway_integration" "gis-integration" {
