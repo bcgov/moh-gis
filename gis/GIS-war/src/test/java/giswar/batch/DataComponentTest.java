@@ -3,7 +3,7 @@
  *                                                                             *
  * All rights reserved.                                                        *
  *                                                                             *
- * File:                        ArchiverComponentTest.java                     *
+ * File:                        DataComponentTest.java                         *
  * Date of Last Commit: $Date::                                              $ *
  * Revision Number:      $Rev::                                              $ *
  * Last Commit by:    $Author::                                              $ *
@@ -16,24 +16,23 @@
  */
 package giswar.batch;
 
-import java.io.BufferedWriter;
+import giswar.batch.util.ILogHelper;
 import java.io.File;
-import java.io.FileWriter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 /**
  *
  * @author adebiyi.kuseju
  */
-public class ArchiverComponentTest {
+public class DataComponentTest {
 
-    private static final Logger logger = Logger.getLogger(ArchiverComponentTest.class.getName());
+    private static final Logger logger = Logger.getLogger(DataComponentTest.class.getName());
 
-    public ArchiverComponentTest() {
+    public DataComponentTest() {
     }
 
     /**
@@ -41,33 +40,25 @@ public class ArchiverComponentTest {
      */
     @Test
     public void testExecute() throws Exception {
-        IData ds = mock(SFTPDatasource.class);
-        
-        String tempir = System.getProperty("java.io.tmpdir");
-        File file = new File(tempir + "dataFileMock.txt");
+        IData ds = new SFTPDatasourceMock();
+        ILogHelper logHelper = mock(ILogHelper.class);
 
-        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-
-        for (int i = 0; i < 500; i++) {
-            bw.write("This is a mock data file for testing.\n");
-        }
-
-        bw.close();
-        bw = null;
-
-        Map<String, Object> config = new HashMap<String, Object>();
+        Properties config = new Properties();
         config.put(BatchConstants.FED_FILE_DATASOURCE, ds);
-        config.put(BatchConstants.CHAIN_ITEMS, "giswar.batch.ArchiverComponent");
-        config.put(BatchConstants.FILEPATH, file.getAbsolutePath());
-        config.put(BatchConstants.ARCHIVE_FILE_UPLOAD_LOCATION, "/Dummy/");
+        config.put(BatchConstants.CHAIN_ITEMS, "giswar.batch.DataComponent");
+        config.put(BatchConstants.REMOTE_FED_FILE_DIR, "/NRTWebDev/");
         config.put(BatchConstants.BUFFER_SIZE, "30000");
-        
 
         IBatchContext context = new BatchContextImpl(config);
+        context.addProperty(BatchConstants.LOG_HELPER, logHelper);
         context.init();
         context.execute();
 
+        logger.log(Level.INFO, String.format("Downloaded file is located at: %1$s", context.getProperty(BatchConstants.FILEPATH)));
+        File file = new File((String) context.getProperty(BatchConstants.FILEPATH));
         file.delete();
+        logger.log(Level.INFO, String.format("Downloaded file %1$s deleted", context.getProperty(BatchConstants.FILEPATH)));
 
     }
+
 }

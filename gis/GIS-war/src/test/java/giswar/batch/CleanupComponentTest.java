@@ -18,11 +18,11 @@ package giswar.batch;
 
 import giswar.batch.util.ILogHelper;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Properties;
+import static org.junit.Assert.assertFalse;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  *
@@ -42,7 +42,7 @@ public class CleanupComponentTest {
     @Test
     public void testExecute() throws Exception {
 
-        Map<String, Object> config = new HashMap<String, Object>();
+        Properties config = new Properties();
         config.put(BatchConstants.CHAIN_ITEMS, "giswar.batch.CleanupComponent");
         File file = File.createTempFile("GIS-FED-FILE", ".gis");
         File file2 = File.createTempFile("HARS-FILE", ".txt");
@@ -50,7 +50,6 @@ public class CleanupComponentTest {
 
         SFTPDatasource ds = mock(SFTPDatasource.class);
         ILogHelper logHelper = mock(ILogHelper.class);
-
 
         IBatchContext context = new BatchContextImpl(config);
         context.addProperty(BatchConstants.FILEPATH, file.getAbsolutePath());

@@ -21,7 +21,7 @@ package giswar.batch;
  * @author adebiyi.kuseju
  */
 public class SampleFedFileData {
-      
+
     public static final String RECORD_1_TYPE_1 = "109732026000ZHONGGUO G ZHONG"
             + "                               "
             + "3700100000{071100000{000007120                         "

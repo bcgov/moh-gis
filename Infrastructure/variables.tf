@@ -24,20 +24,8 @@ variable "fargate_memory" {
 
 variable "gis_cluster_name" {
   description = "Name for the FAM database cluster -- must be unique"
-  type        = string
   default     = "gis-cluster"
-}
-
-variable "cluster_name" {
-  description = "Name for ECS cluster (with underscore)"
   type        = string
-  default     = "gis_cluster"
-}
-
-variable "ecs_service_name" {
-  description = "Name for the ECS service name"
-  type        = string
-  default     = "gis-dev-service"
 }
 
 variable "common_tags" {
@@ -57,10 +45,6 @@ variable "alb_name" {
   type        = string
 }
 
-variable "acl_value" {
-  default = "private"
-}
-
 variable "app_port" {
   description = "Port exposed by the docker image to redirect traffic to"
   default     = 8181
@@ -68,13 +52,13 @@ variable "app_port" {
 
 variable "app_image" {
   description = "Docker image to run in the ECS cluster. _Note_: there is a blank default value, which will cause service and task resource creation to be supressed unless an image is specified."
-  type        = string
   default     = ""
+  type        = string
 }
 
 variable "app_count" {
   description = "Number of docker containers to run"
-  default     = 2
+  default     = 1
 }
 
 variable "fam_console_idp_name" {
@@ -86,7 +70,32 @@ variable "application" {
   description = "Application that is being deployed"
 }
 
+variable "alb_origin_id" {
+  description = "Domain name of OCIO Perimeter loadbalancer"
+}
+
 variable "db_instance_identifier" {
   description = "Identifies the cluster ID of aurora_rds_v2"
   default     = "gis-cluster"
+}
+
+variable "timezone" {
+  description = "Default timezone to use for containers + database"
+  default     = "America/Vancouver"
+  type        = string
+}
+
+variable "aurora_acu_min" {
+  description = "Minimum Aurora Capacity Units (ACUs), from 0.5 to 128 in increments of 0.5"
+  default     = 0.5
+}
+
+variable "aurora_acu_max" {
+  description = "Maximum Aurora Capacity Units (ACUs), from 1 to 128 in increments of 0.5"
+  default     = 1
+}
+
+variable "timestamp" {
+  description = "Used to trigger ECS to redeploy builds when no task changes are present"
+  type        = string
 }
