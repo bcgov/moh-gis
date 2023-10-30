@@ -58,6 +58,10 @@ resource "aws_secretsmanager_secret" "gis_schedule" {
   name = "${var.application}_schedule"
 }
 
+resource "aws_secretsmanager_secret" "gis_batch_schedule" {
+  name = "${var.application}_batch_schedule"
+}
+
 resource "aws_secretsmanager_secret_version" "gis_jdbc_setting" {
   secret_id     = aws_secretsmanager_secret.gis_jdbc_setting.id
   secret_string = "changeme"
@@ -132,7 +136,6 @@ resource "aws_secretsmanager_secret_version" "gis_batch_schedule" {
   secret_id     = aws_secretsmanager_secret.gis_batch_schedule.id
   secret_string = "changeme"
 }
-
 
 resource "aws_secretsmanager_secret_version" "rds_credentials" {
   secret_id     = aws_secretsmanager_secret.gis_proxy_user.id
