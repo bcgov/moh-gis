@@ -128,6 +128,12 @@ resource "aws_secretsmanager_secret_version" "gis_schedule" {
   secret_string = "changeme"
 }
 
+resource "aws_secretsmanager_secret_version" "gis_batch_schedule" {
+  secret_id     = aws_secretsmanager_secret.gis_batch_schedule.id
+  secret_string = "changeme"
+}
+
+
 resource "aws_secretsmanager_secret_version" "rds_credentials" {
   secret_id     = aws_secretsmanager_secret.gis_proxy_user.id
   secret_string = <<EOF

@@ -71,6 +71,8 @@ resource "aws_ecs_task_definition" "gis_td" {
         valueFrom = aws_secretsmanager_secret_version.gis_hars_file_host_user_id.arn },
         { name = "SCHEDULE",
         valueFrom = aws_secretsmanager_secret_version.gis_schedule.arn },
+        { name = "BATCH_SCHEDULE",
+        valueFrom = aws_secretsmanager_secret_version.gis_batch_schedule.arn },
       ]
       environment = [
         { name = "JVM_XMX",
