@@ -124,5 +124,11 @@
         <param-name>primefaces.CSP</param-name>
         <param-value>true</param-value>
     </context-param>
+
+    <!-- Override PrimeFaces default CSP Policy (script-src 'self') -->
+    <context-param>
+        <param-name>primefaces.CSP_POLICY</param-name>
+        <param-value>form-action 'self'; frame-ancestors 'self'; script-src 'self'</param-value>
+    </context-param>
     
 </web-app>
