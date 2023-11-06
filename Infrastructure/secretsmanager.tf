@@ -62,6 +62,10 @@ resource "aws_secretsmanager_secret" "gis_batch_schedule" {
   name = "${var.application}_batch_schedule"
 }
 
+resource "aws_secretsmanager_secret" "gis_sns_email" {
+  name = "${var.application}_sns_email"
+}
+
 resource "aws_secretsmanager_secret_version" "gis_jdbc_setting" {
   secret_id     = aws_secretsmanager_secret.gis_jdbc_setting.id
   secret_string = "changeme"
@@ -134,6 +138,11 @@ resource "aws_secretsmanager_secret_version" "gis_schedule" {
 
 resource "aws_secretsmanager_secret_version" "gis_batch_schedule" {
   secret_id     = aws_secretsmanager_secret.gis_batch_schedule.id
+  secret_string = "changeme"
+}
+
+resource "aws_secretsmanager_secret_version" "gis_sns_email" {
+  secret_id     = aws_secretsmanager_secret.gis_sns_email.id
   secret_string = "changeme"
 }
 
