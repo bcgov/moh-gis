@@ -58,7 +58,7 @@
             <role-name>GISUSER</role-name>
         </auth-constraint>
     </security-constraint>
-        
+    
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/sessionExpired.xhtml</location>
@@ -128,7 +128,7 @@
     <!-- Override PrimeFaces default CSP Policy (script-src 'self') -->
     <context-param>
         <param-name>primefaces.CSP_POLICY</param-name>
-        <param-value>base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-src 'self'; frame-ancestors 'self'; img-src 'self'; manifest-src 'none'; media-src 'none'; object-src 'none'; require-trusted-types-for 'script'; script-src 'self' 'unsafe-inline'</param-value>
+        <param-value>base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-src 'self'; frame-ancestors 'self'; img-src 'self'; manifest-src 'none'; media-src 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'</param-value>
     </context-param>
     
 </web-app>
