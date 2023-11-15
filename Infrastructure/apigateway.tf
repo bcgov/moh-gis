@@ -63,7 +63,7 @@ resource "aws_api_gateway_method_settings" "gis-settings" {
 }
 
 data "aws_acm_certificate" "gis_certificate" {
-  domain      = "gist.hlth.gov.bc.ca"
+  domain      = "gis${substr(var.target_env,0,1)}.hlth.gov.bc.ca"
   statuses    = ["ISSUED"]
   most_recent = true
 }
@@ -77,7 +77,7 @@ module "api_gateway" {
   protocol_type          = "HTTP"
   create_api_domain_name = false
 
-  domain_name                              = "gist.hlth.gov.bc.ca"
+  domain_name                              = "gis${substr(var.target_env,0,1)}.hlth.gov.bc.ca"
   domain_name_certificate_arn              = data.aws_acm_certificate.gis_certificate.arn
 
   integrations = {
