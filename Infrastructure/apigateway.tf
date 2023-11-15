@@ -62,16 +62,11 @@ resource "aws_api_gateway_method_settings" "gis-settings" {
   }
 }
 
-#data "aws_acm_certificate" "bcer_api_certificate" {
-#  domain      = "bcer-${var.target_env}.api.hlth.gov.bc.ca"
-#  statuses    = ["ISSUED"]
-#  most_recent = true
-#}
-
-#resource "aws_cloudwatch_log_group" "gis_api_access_logs" {
-#  name              = "gis-${var.target_env}-api-gateway"
-#  retention_in_days = 90
-#}
+data "aws_acm_certificate" "bcer_api_certificate" {
+  domain      = "gist.hlth.gov.bc.ca"
+  statuses    = ["ISSUED"]
+  most_recent = true
+}
 
 module "api_gateway" {
   source  = "terraform-aws-modules/apigateway-v2/aws"
@@ -82,15 +77,8 @@ module "api_gateway" {
   protocol_type          = "HTTP"
   create_api_domain_name = false
 
-  #domain_name                              = "gis-${var.target_env}.api.hlth.gov.bc.ca"
-  #domain_name_certificate_arn              = data.aws_acm_certificate.gis_api_certificate.arn
-  #default_stage_access_log_destination_arn = aws_cloudwatch_log_group.gis_api_access_logs.arn
-
-  #   default_route_settings = {
-  #     detailed_metrics_enabled = true
-  #     throttling_burst_limit   = 100
-  #     throttling_rate_limit    = 100
-  #   }
+  domain_name                              = "gist.hlth.gov.bc.ca"
+  domain_name_certificate_arn              = data.aws_acm_certificate.gis_api_certificate.arn
 
   integrations = {
     "ANY /{proxy+}" = {
