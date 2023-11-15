@@ -78,7 +78,7 @@ module "api_gateway" {
   create_api_domain_name = false
 
   domain_name                              = "gist.hlth.gov.bc.ca"
-  domain_name_certificate_arn              = data.aws_acm_certificate.gis_api_certificate.arn
+  domain_name_certificate_arn              = data.aws_acm_certificate.gis_certificate.arn
 
   integrations = {
     "ANY /{proxy+}" = {
