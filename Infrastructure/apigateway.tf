@@ -62,7 +62,7 @@ resource "aws_api_gateway_method_settings" "gis-settings" {
   }
 }
 
-data "aws_acm_certificate" "bcer_api_certificate" {
+data "aws_acm_certificate" "gis_certificate" {
   domain      = "gist.hlth.gov.bc.ca"
   statuses    = ["ISSUED"]
   most_recent = true
