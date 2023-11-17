@@ -7,7 +7,7 @@ COPY gis/pom.xml /home/gis
 
 RUN mvn -f /home/gis/pom.xml clean package
 
-FROM payara/server-full:6.2023.8
+FROM payara/server-full:6.2023.9
 RUN mkdir -p /opt/payara/.ssh
 RUN chmod 700 /opt/payara/.ssh
 

@@ -60,7 +60,7 @@
         <dependency>
             <groupId>fish.payara.security.connectors</groupId>
             <artifactId>security-connector-oidc-client</artifactId>
-            <version>3.0.alpha6</version>
+            <version>3.0.alpha7</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
