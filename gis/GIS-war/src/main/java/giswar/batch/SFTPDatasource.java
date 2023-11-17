@@ -18,6 +18,7 @@ package giswar.batch;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.ChannelSftp.LsEntry;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
@@ -31,6 +32,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,6 +64,7 @@ public class SFTPDatasource implements IData {
         }
     }
 
+    @Override
     public Properties getData(Properties props) throws Exception {
 
         Session session = null;
@@ -133,6 +136,7 @@ public class SFTPDatasource implements IData {
         return response;
     }
 
+    @Override
     public void uploadData(Properties props) throws Exception {
 
         File tempFile = new File(props.getProperty(BatchConstants.FILEPATH));
@@ -157,8 +161,7 @@ public class SFTPDatasource implements IData {
             int totalRead = 0;
 
             while ((read = fis.read(buffer, 0, buffer.length)) != -1) {
-                handle.write(buffer, totalRead, 0);
-                //client.write(handle, totalRead, buffer, 0, read);
+                handle.write(buffer, 0, read);
                 totalRead += read;
             }
             handle.close();
@@ -185,7 +188,7 @@ public class SFTPDatasource implements IData {
     }
 
     public List<String> filesInDir(String dirPath) throws Exception {
-        List<String> files = new ArrayList<String>();
+        List<String> files = new ArrayList<>();
 
         Session session = null;
         ChannelSftp client = null;
@@ -193,7 +196,7 @@ public class SFTPDatasource implements IData {
             session = getSftpSession();
             client = getSftpChannel(session);
 
-            List<String> v = client.ls(dirPath);
+            Vector<LsEntry> v = client.ls(dirPath);
             Iterator it = v.iterator();
             ChannelSftp.LsEntry dirEntry = null;
             while (it.hasNext()) {
@@ -235,6 +238,9 @@ public class SFTPDatasource implements IData {
         Session session;
         try {
             session = jsch.getSession(user, host);
+            // MoH SFTP server still proposes using ssh-rsa
+            session.setConfig("server_host_key", session.getConfig("server_host_key") + ",ssh-rsa");
+            session.setConfig("PubkeyAcceptedAlgorithms", session.getConfig("PubkeyAcceptedAlgorithms") + ",ssh-rsa");
             session.connect();
         } catch (JSchException sfe) {
 

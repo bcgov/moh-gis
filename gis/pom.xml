@@ -8,9 +8,9 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
-        <module>${project.artifactId}-ejb</module>
-        <module>${project.artifactId}-war</module>
-        <module>${project.artifactId}-ear</module>
+        <module>GIS-ejb</module>
+        <module>GIS-war</module>
+        <module>GIS-ear</module>
     </modules>
 
     <build>
@@ -45,11 +45,11 @@
             <version>10.0.0</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Fork of com.jcraft.jsch which has since been abandoned -->
         <dependency>
-            <groupId>com.jcraft</groupId>
+            <groupId>com.github.mwiede</groupId>
             <artifactId>jsch</artifactId>
-            <version>0.1.55</version>
-            <type>jar</type>
+            <version>0.2.11</version>
         </dependency>
         <!--
             Match this version to what is included with the Payara server to
@@ -71,7 +71,7 @@
         <maven.compiler.version>3.8.0</maven.compiler.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <maven.surefire.version>2.22.2</maven.surefire.version>
+        <maven.surefire.version>3.1.2</maven.surefire.version>
 
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

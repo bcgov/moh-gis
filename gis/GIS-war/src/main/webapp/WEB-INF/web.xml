@@ -119,5 +119,16 @@
         <extension>svg</extension>
         <mime-type>image/svg+xml</mime-type>
     </mime-mapping>
+
+    <context-param>
+        <param-name>primefaces.CSP</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <!-- Override PrimeFaces default CSP Policy (script-src 'self') -->
+    <context-param>
+        <param-name>primefaces.CSP_POLICY</param-name>
+        <param-value>base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-src 'self'; frame-ancestors 'self'; img-src 'self'; manifest-src 'none'; media-src 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'</param-value>
+    </context-param>
     
 </web-app>

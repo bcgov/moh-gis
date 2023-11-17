@@ -2,10 +2,6 @@ include {
   path = find_in_parent_folders()
 }
 
-locals {
-  project = get_env("LICENSE_PLATE")
-}
-
 generate "test_tfvars" {
   path              = "test.auto.tfvars"
   if_exists         = "overwrite"
@@ -15,7 +11,7 @@ generate "test_tfvars" {
   fargate_memory = 1024
   app_port = 8181
   fam_console_idp_name = "TEST-IDIR"
-  alb_origin_id = "gis.ynr9ed-test.nimbus.cloud.gov.bc.ca"
+  alb_origin_id = "gist.hlth.gov.bc.ca"
   aurora_acu_min = 0.5
   aurora_acu_max = 4
   EOF

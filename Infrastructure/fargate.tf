@@ -45,8 +45,6 @@ resource "aws_ecs_task_definition" "gis_td" {
         valueFrom = "${aws_secretsmanager_secret_version.rds_credentials.arn}:password::" },
         { name = "JDBC_SETTING",
         valueFrom = aws_secretsmanager_secret_version.gis_jdbc_setting.arn },
-        { name = "PROJECT_STAGE",
-        valueFrom = aws_secretsmanager_secret_version.gis_project_stage.arn },
         { name = "KEYCLOAK_CLIENT_SECRET",
         valueFrom = aws_secretsmanager_secret_version.gis_keycloak_client_secret.arn },
         { name = "PROVIDER_URI",
@@ -71,10 +69,10 @@ resource "aws_ecs_task_definition" "gis_td" {
         valueFrom = aws_secretsmanager_secret_version.gis_hars_file_host.arn },
         { name = "HARS_FILE_HOST_USER_ID",
         valueFrom = aws_secretsmanager_secret_version.gis_hars_file_host_user_id.arn },
-        { name = "HARS_FILE_UPLOAD_LOCATION",
-        valueFrom = aws_secretsmanager_secret_version.gis_hars_file_upload_location.arn },
         { name = "SCHEDULE",
         valueFrom = aws_secretsmanager_secret_version.gis_schedule.arn },
+        { name = "BATCH_SCHEDULE",
+        valueFrom = aws_secretsmanager_secret_version.gis_batch_schedule.arn },
       ]
       environment = [
         { name = "JVM_XMX",
@@ -106,6 +104,10 @@ resource "aws_ecs_service" "main" {
   health_check_grace_period_seconds = 60
   wait_for_steady_state             = false
   force_new_deployment              = true
+
+  triggers = {
+    redeployment = var.timestamp
+  }
 
   network_configuration {
     security_groups  = [data.aws_security_group.app.id]

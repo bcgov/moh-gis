@@ -8,7 +8,6 @@ import jakarta.servlet.ServletContextListener;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-
 /**
  * Web application lifecycle listener.
  *
@@ -24,19 +23,18 @@ public class StartupListener implements ServletContextListener {
 
     @Resource(lookup = "java:app/gis/batch_properties")
     private Properties batchProperties;
-    
+
     private BatchJobAutoStarter batchJobAutoStarter;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
 
         for (String property : batchProperties.stringPropertyNames()) {
-            String value = batchProperties.getProperty(property);
 
+            String value = batchProperties.getProperty(property);
             String newValue = value.replace(" ", "");
 
-            // Check if the property contains a reference to an environment
-            // variable of the form ${ENV=VARIABLE_NAME}
+            // Check if the value contains a reference to an environment variable of the form ${ENV=VARIABLE_NAME}
             if (newValue.startsWith(ENV_PREFIX) && newValue.endsWith(ENV_SUFFIX)) {
                 // Remove the prefix and suffix
                 String varName = newValue.substring(ENV_PREFIX.length(), newValue.length() - ENV_SUFFIX.length());
@@ -53,7 +51,6 @@ public class StartupListener implements ServletContextListener {
 
         try {
             batchJobAutoStarter = new BatchJobAutoStarter(ds, batchProperties);
-            
         } catch (ConfigException e) {
             throw new RuntimeException(e);
         }

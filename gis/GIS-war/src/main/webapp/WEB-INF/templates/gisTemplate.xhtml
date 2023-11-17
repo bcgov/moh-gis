@@ -36,7 +36,7 @@
                                 <h1 class="page-title">Guaranteed Income Supplement</h1>
                             </h:commandLink>
                         </div>
-                        <div class="col-sm-30 pull-right navbar-links-container ">
+                        <div class="col-sm-30 pull-right navbar-links-container">
                             <div class="pull-right navbar-links">
                                 <ul class="menu nav">
                                     <li>
@@ -51,10 +51,7 @@
                                         </h:outputLink>
                                     </li>
                                     <li>
-                                        <h:commandLink action="#{Logout.logout}" styleClass="logout"
-                                                       title="Sign Out" onclick="return confirmExit()">
-                                            Log out
-                                        </h:commandLink>
+                                        <p:commandLink id="logoutLink" styleClass="logout" action="#{Logout.logout}" value="Log out" onstart="return confirmExit();" />
                                     </li>
                                 </ul>
                             </div>
