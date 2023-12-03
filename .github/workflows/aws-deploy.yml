@@ -108,5 +108,4 @@ jobs:
           app_image: ${{ env.IMAGE_ID }}:${{ github.sha }}
           LICENSE_PLATE: ${{ secrets.MY_LICENSE_PLATE }}
         run: |
-          terragrunt run-all plan --terragrunt-non-interactive
-#            terragrunt run-all apply --terragrunt-non-interactive
+            terragrunt run-all apply --terragrunt-non-interactive
