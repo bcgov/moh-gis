@@ -77,16 +77,16 @@ resource "aws_lambda_function" "rotation_lambda" {
   role          = aws_iam_role.secret_rotation_role.arn
   handler       = "multiuser.lambda_handler"
   runtime       = "python3.9"
-  timeout = 30
+  timeout       = 30
   vpc_config {
     security_group_ids = [data.aws_security_group.data.id]
-    subnet_ids = data.aws_subnets.data.ids
+    subnet_ids         = data.aws_subnets.data.ids
   }
   environment {
     variables = {
-        SECRETS_MANAGER_ENDPOINT = "https://secretsmanager.ca-central-1.amazonaws.com"
+      SECRETS_MANAGER_ENDPOINT = "https://secretsmanager.ca-central-1.amazonaws.com"
     }
-    
+
   }
   depends_on = [aws_iam_role_policy_attachment.rotation_attachment]
 }
@@ -96,7 +96,7 @@ resource "aws_lambda_permission" "allow_secret_manager" {
   action        = "lambda:InvokeFunction"
   function_name = "multiuser-secret-rotation-lambda"
   principal     = "secretsmanager.amazonaws.com"
-  
+
 }
 
 #Fargate Force New Deployment
@@ -177,10 +177,10 @@ resource "aws_lambda_function" "force_deploy_lambda" {
   role          = aws_iam_role.force_deploy_role.arn
   handler       = "index.handler"
   runtime       = "nodejs18.x"
-  timeout = 30
+  timeout       = 30
   vpc_config {
     security_group_ids = [data.aws_security_group.app.id]
-    subnet_ids = data.aws_subnets.app.ids
+    subnet_ids         = data.aws_subnets.app.ids
   }
   depends_on = [aws_iam_role_policy_attachment.force_deploy_attachment]
 }
@@ -190,6 +190,6 @@ resource "aws_lambda_permission" "force_deploy_permission" {
   action        = "lambda:InvokeFunction"
   function_name = "ForceNewFargateDeployment"
   principal     = "events.amazonaws.com"
-  source_arn = aws_cloudwatch_event_rule.force_deploy.arn
+  source_arn    = aws_cloudwatch_event_rule.force_deploy.arn
 }
 
