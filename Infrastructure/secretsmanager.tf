@@ -143,13 +143,24 @@ resource "aws_secretsmanager_secret_version" "rds_credentials" {
 {
   "username": "gis_proxy_user",
   "password": "changeme",
-  "engine": "${data.aws_rds_engine_version.postgresql.version}",
+  "engine": "${data.aws_rds_engine_version.postgresql.engine}",
   "host": "${module.aurora_postgresql_v2.cluster_endpoint}",
   "port": ${module.aurora_postgresql_v2.cluster_port},
-  "dbClusterIdentifier": "${module.aurora_postgresql_v2.cluster_id}"
+  "dbClusterIdentifier": "${module.aurora_postgresql_v2.cluster_id}",
+  "dbname": "gis_db",
+  "masterarn": "${aws_secretsmanager_secret_version.gis_apicreds_secret_version.arn}"
 }
 EOF
   lifecycle {
     ignore_changes = [secret_string]
+  }
+}
+
+resource "aws_secretsmanager_secret_rotation" "db_user" {
+  secret_id           = aws_secretsmanager_secret.gis_proxy_user.id
+  rotation_lambda_arn = aws_lambda_function.rotation_lambda.arn
+
+  rotation_rules {
+    automatically_after_days = 45
   }
 }
