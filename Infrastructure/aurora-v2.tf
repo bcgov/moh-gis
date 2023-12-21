@@ -126,7 +126,12 @@ resource "aws_secretsmanager_secret_version" "gis_mastercreds_secret_version" {
   secret_string = <<EOF
    {
     "username": "${var.gis_master_username}",
-    "password": "${random_password.gis_master_password.result}"
+    "password": "${random_password.gis_master_password.result}",
+    "engine": "${data.aws_rds_engine_version.postgresql.engine}",
+    "host": "${module.aurora_postgresql_v2.cluster_endpoint}",
+    "port": ${module.aurora_postgresql_v2.cluster_port},
+    "dbClusterIdentifier": "${module.aurora_postgresql_v2.cluster_id}"
+    "dbname": "gis_db"
    }
   EOF
   lifecycle {
@@ -164,7 +169,11 @@ resource "aws_secretsmanager_secret_version" "gis_apicreds_secret_version" {
   secret_string = <<EOF
    {
     "username": "${var.gis_api_username}",
-    "password": "${random_password.gis_api_password.result}"
+    "password": "${random_password.gis_api_password.result}",
+    "engine": "${data.aws_rds_engine_version.postgresql.version}",
+    "host": "${module.aurora_postgresql_v2.cluster_endpoint}",
+    "port": ${module.aurora_postgresql_v2.cluster_port},
+    "dbClusterIdentifier": "${module.aurora_postgresql_v2.cluster_id}"
    }
   EOF
   lifecycle {
