@@ -36,7 +36,7 @@ variable "common_tags" {
 }
 
 variable "health_check_path" {
-  default = "/"
+  default = "/callback"
 }
 
 variable "alb_name" {
