@@ -161,6 +161,6 @@ resource "aws_secretsmanager_secret_rotation" "db_user" {
   rotation_lambda_arn = aws_lambda_function.rotation_lambda.arn
 
   rotation_rules {
-    automatically_after_days = 45
+    schedule_expression = "cron(0 1 */45 * ? *)"
   }
 }
