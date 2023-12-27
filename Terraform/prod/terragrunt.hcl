@@ -14,6 +14,6 @@ generate "prod_tfvars" {
   alb_origin_id = "gis.ynr9ed-prod.nimbus.cloud.gov.bc.ca"
   application_url = "gis.hlth.gov.bc.ca"
   aurora_acu_min = 0.5
-  aurora_acu_max = 4
+  aurora_acu_max = 4.5
   EOF
 }
