@@ -34,19 +34,14 @@ resource "aws_db_subnet_group" "gis_subnet_group" {
   }
 }
 
-data "aws_rds_engine_version" "postgresql" {
-  engine  = "aurora-postgresql"
-  version = "14.6"
-}
-
 module "aurora_postgresql_v2" {
   source  = "terraform-aws-modules/rds-aurora/aws"
   version = "7.7.1"
 
   name              = "${var.gis_cluster_name}-${var.target_env}"
-  engine            = data.aws_rds_engine_version.postgresql.engine
+  engine            = "aurora-postgresql"
   engine_mode       = "provisioned"
-  engine_version    = data.aws_rds_engine_version.postgresql.version
+  engine_version    = "14.9"
   storage_encrypted = true
   database_name     = var.gis_database_name
 
@@ -127,7 +122,7 @@ resource "aws_secretsmanager_secret_version" "gis_mastercreds_secret_version" {
    {
     "username": "${var.gis_master_username}",
     "password": "${random_password.gis_master_password.result}",
-    "engine": "${data.aws_rds_engine_version.postgresql.engine}",
+    "engine": "14.9",
     "host": "${module.aurora_postgresql_v2.cluster_endpoint}",
     "port": ${module.aurora_postgresql_v2.cluster_port},
     "dbClusterIdentifier": "${module.aurora_postgresql_v2.cluster_id}"
@@ -170,7 +165,7 @@ resource "aws_secretsmanager_secret_version" "gis_apicreds_secret_version" {
    {
     "username": "${var.gis_api_username}",
     "password": "${random_password.gis_api_password.result}",
-    "engine": "${data.aws_rds_engine_version.postgresql.version}",
+    "engine": "14.9",
     "host": "${module.aurora_postgresql_v2.cluster_endpoint}",
     "port": ${module.aurora_postgresql_v2.cluster_port},
     "dbClusterIdentifier": "${module.aurora_postgresql_v2.cluster_id}"
