@@ -2,9 +2,9 @@ package giswar.listener;
 
 import giswar.batch.config.ConfigException;
 import giswar.batch.util.BatchJobAutoStarter;
-import javax.annotation.Resource;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import jakarta.annotation.Resource;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 import javax.sql.DataSource;
 import java.util.Properties;
 
