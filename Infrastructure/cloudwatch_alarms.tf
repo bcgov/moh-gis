@@ -142,6 +142,39 @@ resource "aws_cloudwatch_metric_alarm" "ecs_task_failures" {
   ]
 }
 
+resource "aws_cloudwatch_metric_alarm" "ecs_cpu_util_anomaly" {
+  alarm_name          = "ecs_cpu_util_anomaly-${var.application}"
+  comparison_operator = "GreaterThanUpperThreshold"
+  evaluation_periods  = "1"
+  threshold_metric_id = "e1"
+  tags                = local.common_tags
+  alarm_description   = "Alarm for Amazon ECS CPU Anomaly"
+  alarm_actions = [
+    aws_sns_topic.alerts.arn
+  ]
+
+  metric_query {
+    id          = "e1"
+    expression  = "ANOMALY_DETECTION_BAND(m1)"
+    label       = "CPUUtilization (Expected)"
+    return_data = "true"
+  }
+
+  metric_query {
+    id          = "m1"
+    return_data = "true"
+    metric {
+      metric_name = "CPUUtilization"
+      namespace   = "AWS/ECS"
+      period      = 60
+      stat        = "Average"
+      dimensions = {
+        ClusterName = aws_ecs_cluster.gis_cluster.name
+        ServiceName = aws_ecs_service.main.name
+      }
+    }
+  }
+}
 
 ##########################################
 ###### CloudWatch Alarm for Aurora #######

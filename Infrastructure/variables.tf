@@ -36,7 +36,7 @@ variable "common_tags" {
 }
 
 variable "health_check_path" {
-  default = "/"
+  default = "/callback"
 }
 
 variable "alb_name" {
@@ -72,6 +72,10 @@ variable "application" {
 
 variable "alb_origin_id" {
   description = "Domain name of OCIO Perimeter loadbalancer"
+}
+
+variable "application_url" {
+  description = "Domain name of the live and cutover application"
 }
 
 variable "db_instance_identifier" {

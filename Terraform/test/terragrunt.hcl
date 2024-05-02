@@ -12,6 +12,7 @@ generate "test_tfvars" {
   app_port = 8181
   fam_console_idp_name = "TEST-IDIR"
   alb_origin_id = "gist.hlth.gov.bc.ca"
+  application_url = "gist.hlth.gov.bc.ca"
   aurora_acu_min = 0.5
   aurora_acu_max = 4
   EOF

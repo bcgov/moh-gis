@@ -63,7 +63,7 @@ resource "aws_api_gateway_method_settings" "gis-settings" {
 }
 
 data "aws_acm_certificate" "gis_certificate" {
-  domain      = "gis${substr(var.target_env,0,1)}.hlth.gov.bc.ca"
+  domain      = var.application_url
   statuses    = ["ISSUED"]
   most_recent = true
 }
@@ -77,8 +77,8 @@ module "api_gateway" {
   protocol_type          = "HTTP"
   create_api_domain_name = false
 
-  domain_name                              = "gis${substr(var.target_env,0,1)}.hlth.gov.bc.ca"
-  domain_name_certificate_arn              = data.aws_acm_certificate.gis_certificate.arn
+  domain_name                 = var.application_url
+  domain_name_certificate_arn = data.aws_acm_certificate.gis_certificate.arn
 
   integrations = {
     "ANY /{proxy+}" = {
@@ -87,6 +87,11 @@ module "api_gateway" {
       integration_uri    = data.aws_alb_listener.front_end.arn
       integration_type   = "HTTP_PROXY"
       integration_method = "ANY"
+
+      request_parameters = {
+        "append:header.SourceIp"       = "$request.header.X-Forwarded-For"
+        "append:header.clientSourceIP" = "$context.identity.sourceIp"
+      }
     }
   }
   vpc_links = {
@@ -96,8 +101,4 @@ module "api_gateway" {
       subnet_ids         = data.aws_subnets.web.ids
     }
   }
-
-  #   tags = {
-  #     Name = "test-api-new"
-  #   }
 }
