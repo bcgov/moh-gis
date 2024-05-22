@@ -144,10 +144,10 @@ public class DataLoadComponent implements IBatchComponent {
                     gisEntry = new GisEntry();
 
                     if (havingType2) {  
-                        gisEntry.setEntry(type1Line, type2Line);
+                        gisEntry.setEntry(type1Line, type2Line, db, ds);
                     } else {
                         // if no type2Line then we need to write our previous read type1Line
-                        gisEntry.setEntry(prevLine, null);
+                        gisEntry.setEntry(prevLine, null, db, ds);
                     }
 
                     try {
@@ -155,7 +155,7 @@ public class DataLoadComponent implements IBatchComponent {
                     } catch (IOException io) {
                          logger.log(Level.WARNING, "Cannot write into summary file", io);
                     }
-
+                    System.out.println("GisEntry: " + gisEntry.toString());
                     batch.add(MiscellaneousHelper.makeStringArray(gisEntry));
                     prevLine = read;
                     i++; // increment counter only after doing a write
@@ -165,13 +165,14 @@ public class DataLoadComponent implements IBatchComponent {
                 // because we always wait to see if we have type 2 before we write.
                 if (read == null && prevLine != null && prevLine.startsWith("1")) {
                     gisEntry = new GisEntry();
-                    gisEntry.setEntry(prevLine, null);
+                    gisEntry.setEntry(prevLine, null, db, ds);
 
                     try {
                         validate(gisEntry, bw);
                     } catch (IOException io) {
                          logger.log(Level.WARNING, "Cannot write into summary file", io);
                     }
+                    System.out.println("GisEntry: " + gisEntry.toString());
                     batch.add(MiscellaneousHelper.makeStringArray(gisEntry));
 
                     prevLine = null;
@@ -198,6 +199,7 @@ public class DataLoadComponent implements IBatchComponent {
                         logger.log(Level.SEVERE, String.format("Data load error: %1$s", dbe.getMessage()));
                     }                  
                     batch.clear();
+                    System.out.println("Data added to db!!!!!!!!!!!!!!!!!");
                 } else if (read == null) {
                     if (lastLine != null) {
                         saveType9Data(lastLine, bw);
@@ -260,14 +262,13 @@ public class DataLoadComponent implements IBatchComponent {
 
         }
         //Validate account Id
-        String accountIdPattern = "\\d{9}";  //[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]";
+        String accountIdPattern = "\\d{9,12}";  // Matches any number that is 9 to 12 digits long
         if (!gisEntry.getAccountId().matches(accountIdPattern)) {
             writeMessage("AccountID is invalid: " + gisEntry.getAccountId(), bw);
             writeMessage("Offending Record:" + gisEntry.toString(), "INFO", bw);
         }
 
         //Validate Name
-
         if (gisEntry.getSurname() == null || gisEntry.getSurname().length() == 0) {
             writeMessage("Surname is blank. Account:" + gisEntry.getAccountId(), bw);
             writeMessage("Offending Record:" + gisEntry.toString(), "INFO", bw);
@@ -365,7 +366,7 @@ public class DataLoadComponent implements IBatchComponent {
 
             summary.append(formattedMessage);
             summary.append('\n');
-
+            System.out.println(formattedMessage);
             bw.write(formattedMessage);
             bw.newLine();
             bw.flush();
