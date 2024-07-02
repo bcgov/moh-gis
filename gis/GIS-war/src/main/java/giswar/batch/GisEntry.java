@@ -35,7 +35,7 @@ public class GisEntry{
     private int recordType;
     private String accountId;
     private String givenname;
-    private String middleName;
+    private String middlename;
     private String surname;
     private String brithDate;//yyyymm
     private String accountStatusCode;
@@ -94,12 +94,13 @@ public class GisEntry{
             // need to find db and ds
             Properties prop = new Properties();
             List<String[]> batch = new ArrayList<String[]>(3);
-            batch.add(new String[]{this.givenname, this.surname, this.brithDate});
+            batch.add(new String[]{this.givenname, this.middlename, this.surname, this.brithDate});
             for (String[] arr : batch) {
                 System.out.println("Batch: " + Arrays.toString(arr));
             }
             prop.put(BatchConstants.DB_DATASOURCE, ds);
-            prop.put(BatchConstants.QUERY, "SELECT * FROM gis.gis_recipients WHERE rcpt_givenname=? AND rcpt_surname=? AND birthdate=?");
+            prop.put(BatchConstants.QUERY, 
+                "SELECT * FROM gis.gis_recipients WHERE rcpt_givenname=? AND rcpt_middlename=? AND rcpt_surname=? AND birthdate=?");
             prop.put(BatchConstants.PARAMETERS, batch);
             prop.put(BatchConstants.STATEMENT_TYPE, IDatabase.STATEMENT_TYPE.SELECT);
             
@@ -137,7 +138,7 @@ public class GisEntry{
                     setAccountCode("S");
                 } else {
                     this.accountId = resultSet.get(0)[2];
-                    setAccountCode("I");
+                    setAccountCode("A");
                 }
             } else {
                 //if missing means "000000000" then we can set directly, if missing is anything else then we will need to check and manually set to "000000000"
@@ -156,7 +157,7 @@ public class GisEntry{
      */
     public void setAccountCode(String code) {
         // S for SIN
-        // I for IA Account Number
+        // A for IA Account Number
         // O for OAS Account Number 
         this.accountCode = code;
     }
@@ -228,12 +229,12 @@ public class GisEntry{
         this.givenname = givenname;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public String getMiddlename() {
+        return middlename;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setMiddleName(String middlename) {
+        this.middlename = middlename;
     }
 
     public String getSurname() {
@@ -308,9 +309,9 @@ public class GisEntry{
         this.spouseGivenName = spouseGivenName;
     }
 
-    public void setName(String givenname, String middleName, String surname) {
+    public void setName(String givenname, String middlename, String surname) {
         setGivenname(givenname.trim());
-        setMiddleName(middleName.trim());
+        setMiddleName(middlename.trim());
         setSurname(surname.trim());
     }
 
@@ -373,7 +374,7 @@ public class GisEntry{
     public String toString() {
         return "accountId = " + accountId + ";" +
                 "surname = " + surname + ";" +
-                "middleName = " + middleName + ";" +
+                "middlename = " + middlename + ";" +
                 "givenname = " + givenname + ";" +
                 "brithDate = " + brithDate + ";" +
                 "accountStatusCode = " + accountStatusCode + ";" +

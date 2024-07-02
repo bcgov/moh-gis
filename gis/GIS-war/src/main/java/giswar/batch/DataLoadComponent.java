@@ -44,12 +44,12 @@ public class DataLoadComponent implements IBatchComponent {
     private IDatabase db;
     private ILogHelper logHelper;
     private final String RECIPIENTS_INSERT_QUERY = "insert into GIS_LOAD_DETAILS_SA (  ACCOUNT_ID, "
-            + "RCPT_SURNAME, RCPT_GIVENNAME, BIRTHDATE, ACCOUNT_STATUS_CODE,"
+            + "RCPT_SURNAME, RCPT_MIDDLENAME, RCPT_GIVENNAME, BIRTHDATE, ACCOUNT_STATUS_CODE,"
             + "ACCOUNT_CODE, ENTLMNT_DATE, PAY_DATE, FINAL_PAY_DATE, "
             + "ADDRESS1, ADDRESS2, ADDRESS3, ADDRESS4,"
             + "POSTAL_CODE, MARital_STATUS_CODE, SPOUSE_ACT_ID, "
             + "SPOUSE_GIVEN_NAME, IMS_STRT_DT, LAST_UPDATE_DATE, LAST_MODIFIED_DATETIME) "
-            + " values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+            + " values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
     private DataSource ds;
 
     private StringBuilder summary;
@@ -199,7 +199,6 @@ public class DataLoadComponent implements IBatchComponent {
                         logger.log(Level.SEVERE, String.format("Data load error: %1$s", dbe.getMessage()));
                     }                  
                     batch.clear();
-                    System.out.println("Data added to db!!!!!!!!!!!!!!!!!");
                 } else if (read == null) {
                     if (lastLine != null) {
                         saveType9Data(lastLine, bw);
