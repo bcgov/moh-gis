@@ -6,7 +6,7 @@
     <ui:define name="title">Error</ui:define>
     <ui:define name="content">
         <ui:fragment rendered="#{facesContext.application.projectStage eq 'Production'}">
-            <p>Oops! An error has occurred contact <a href="mailto:HLTH.Helpdesk@gov.bc.ca">HLTH.Helpdesk@gov.bc.ca</a> for assistance</p>
+            <p>Oops! An error has occurred contact <a href="mailto:HLTH.ServiceDesk@gov.bc.ca">HLTH.ServiceDesk@gov.bc.ca</a> for assistance</p>
         </ui:fragment>
         <ui:fragment rendered="#{facesContext.application.projectStage ne 'Production'}">
             <p>Exception #{pfExceptionHandler.type} occurred!</p>
