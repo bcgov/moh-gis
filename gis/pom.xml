@@ -61,9 +61,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0.1</version>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>10.0.0</version>
             <scope>provided</scope>
         </dependency>
         <!-- Fork of com.jcraft.jsch which has since been abandoned -->
@@ -71,13 +71,6 @@
             <groupId>com.github.mwiede</groupId>
             <artifactId>jsch</artifactId>
             <version>0.2.11</version>
-        </dependency>
-        <!-- Match this version to what is included with the Payara server to deploy to -->
-        <dependency>
-            <groupId>fish.payara.security.connectors</groupId>
-            <artifactId>security-connector-oidc-client</artifactId>
-            <version>2.3.0</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
