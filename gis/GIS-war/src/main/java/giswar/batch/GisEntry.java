@@ -91,7 +91,6 @@ public class GisEntry{
         } else {
             System.out.println("SIN not VALID so checking DB for Account ID");
             // query db gis_load_details_sa table for matching client
-            // need to find db and ds
             Properties prop = new Properties();
             List<String[]> batch = new ArrayList<String[]>(3);
             batch.add(new String[]{this.givenname, this.middlename, this.surname, this.brithDate});
@@ -336,7 +335,7 @@ public class GisEntry{
             setAddress2(recordType1.substring(267, 297));
             setAddress3(recordType1.substring(297, 327));
             setAddress4(recordType1.substring(327, 343));
-            setPostalCode(recordType1.substring(343, 348));
+            setPostalCode(recordType1.substring(343, 349));
         }
         
         setMaritalStatusCode(recordType1.substring(383, 384));
