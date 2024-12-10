@@ -237,7 +237,7 @@ body .p-datepicker .ui-datepicker-trigger.ui-button {
 
 /*This has to be changed to the context root of the application */
 .ui-state-default .ui-icon.ui-sortable-column-icon{
-    background-image: url(/gis/faces/javax.faces.resource/images/ui-icons_ffffff_256x240.png?ln=primefaces-aristo);
+    background-image: url(/gis/faces/jakarta.faces.resource/images/ui-icons_ffffff_256x240.png?ln=primefaces-aristo);
 }
 
 .ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
