@@ -364,7 +364,6 @@ public class DataLoadComponent implements IBatchComponent {
 
             summary.append(formattedMessage);
             summary.append('\n');
-            System.out.println(formattedMessage);
             bw.write(formattedMessage);
             bw.newLine();
             bw.flush();
