@@ -42,9 +42,7 @@ public class SFTPDatasourceMock extends SFTPDatasource {
         BufferedWriter bw = new BufferedWriter(new FileWriter(fedFile));
 
         bw.append(SampleFedFileData.RECORD_1_TYPE_1).append("\n\n");
-        bw.append(SampleFedFileData.RECORD_1_TYPE_2).append("\n\n");
         bw.append(SampleFedFileData.RECORD_2_TYPE_1).append("\n\n");
-        bw.append(SampleFedFileData.RECORD_2_TYPE_2).append("\n\n");
         bw.append(SampleFedFileData.LAST_LINE).append("\n\n");
 
         bw.close();

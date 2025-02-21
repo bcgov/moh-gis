@@ -25,6 +25,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
  *
@@ -82,21 +83,15 @@ public class GisEntry{
 
     public void setAccountId(String clientID, String SIN, IDatabase db, DataSource ds) {
         // Populate SIN if it exists
-        System.out.println("SIN:" + SIN);
-        if (!SIN.equals("000000000") /* or whatever the creteria for missing is */){
-            System.out.println("Valid SIN so setting it as Account ID");
+        if (SIN != null && SIN.matches("\\d{9}")){
             this.accountId = SIN;
             setAccountCode("S");
-            
         } else {
-            System.out.println("SIN not VALID so checking DB for Account ID");
-            // query db gis_load_details_sa table for matching client
+            // query db for matching client
             Properties prop = new Properties();
             List<String[]> batch = new ArrayList<String[]>(3);
             batch.add(new String[]{this.givenname, this.middlename, this.surname, this.brithDate});
-            for (String[] arr : batch) {
-                System.out.println("Batch: " + Arrays.toString(arr));
-            }
+
             prop.put(BatchConstants.DB_DATASOURCE, ds);
             prop.put(BatchConstants.QUERY, 
                 "SELECT * FROM gis.gis_recipients WHERE rcpt_givenname=? AND rcpt_middlename=? AND rcpt_surname=? AND birthdate=?");
@@ -115,34 +110,51 @@ public class GisEntry{
                     }
                 }
 
-                System.out.println("Response: " + response);
-
             } catch (DatabaseException dbe) {
                 System.out.println(String.format("Data load error: %1$s", dbe.getMessage()));
             }
 
-            List<String[]> resultSet = (List<String[]>) response.get("resultSet");
-            
+            List<String[]> resultSet = (List<String[]>) response.get("resultSet"); 
             if (resultSet.size() > 0){
-                //TODO: figure out what to do with multiple results
-                for (String[] arr : resultSet) {
-                    System.out.println("resultSet: " + Arrays.toString(arr));
+                // should not get here but added the check just in case
+                if(resultSet.size() > 1){
+                    logger.log(Level.SEVERE, "Multiple users returned when only one should have");
                 }
-
+                // if account code is "O" then its an OAS account
                 if(resultSet.get(0)[7].equals("O")){
-                    this.accountId = clientID;
+                    // set accountId to clientID if it exists else 000000000000
+                    if(clientID != null && clientID.matches("\\d{12}")){
+                        this.accountId = clientID;
+                    } else {
+                        this.accountId = "000000000000";
+                    }
                     setAccountCode("O");
+                // if account code is "S" then its a SIN account
                 } else if(resultSet.get(0)[7].equals("S")){
-                    this.accountId = resultSet.get(0)[2];
+                    // set accountId to SIN if it exists else 000000000
+                    if(resultSet.get(0)[2] != null && resultSet.get(0)[2].matches("\\d{9}")){
+                        this.accountId = resultSet.get(0)[2];
+                    } else {
+                        this.accountId = "000000000";
+                    }
                     setAccountCode("S");
+                // if account code is "A" then its an IA account
                 } else {
-                    this.accountId = resultSet.get(0)[2];
+                    // set accountId to IA account id if it exists else 000000000
+                    if(resultSet.get(0)[2] != null && resultSet.get(0)[2].matches("\\d{9}")){
+                        this.accountId = resultSet.get(0)[2];
+                    } else {
+                        this.accountId = "000000000";
+                    }
                     setAccountCode("A");
                 }
             } else {
-                //if missing means "000000000" then we can set directly, if missing is anything else then we will need to check and manually set to "000000000"
-                // NOT SURE HOW TO KNOW IF clientID is missing
-                this.accountId = clientID;
+                // if no matching client is found then we assume its a new OAS account so we set accountId to clientID if it exists else 000000000000
+                if(clientID != null && clientID.matches("\\d{12}")){
+                    this.accountId = clientID;
+                } else {
+                    this.accountId = "000000000000";
+                }
                 setAccountCode("O");
             }
         }

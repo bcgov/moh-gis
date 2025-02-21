@@ -22,26 +22,20 @@ package giswar.batch;
  */
 public class SampleFedFileData {
 
-    public static final String RECORD_1_TYPE_1 = "109732026000ZHONGGUO G ZHONG"
-            + "                               "
-            + "3700100000{071100000{000007120                         "
-            + "0003                          "
-            + "5142922                                             "
-            + "00732026000QI          "
-            + "7320259780021004312";
-    public static final String RECORD_1_TYPE_2 = "2097320260002222 40TH AVE E"
-            + "               VANCOUVER                                                                   "
-            + "V5P1J500                                                                                                         "
-            + "1";
-    public static final String RECORD_2_TYPE_1 = "109732025978LIANGQI A LIANG                                "
-            + "3700100000{071100000{000007120                         "
-            + "0003                          "
-            + "514-292-2                                           "
-            + "00732025978GUO         "
-            + "7320260000022004505";
-    public static final String RECORD_2_TYPE_2 = "2097320259782222 40TH AVE E               "
-            + "VANCOUVER BC                                                                "
-            + "V5P1J500                                                                                                         "
-            + "2";
-    public static final String LAST_LINE = "909999999999022666406808910454227001867502079891203";
+    public static final String RECORD_1_TYPE_1 = "109121212121216  CHARLOTTE"
+            + "                                                                                                                         "
+            + "LANGILLE                                                         "
+            + "3000100000{092300000{00002505 "
+            + "1ST AVE W                VANCOUVER BC                                                                "
+            + "V6K1G800880095849            "
+            + "000000000 01000195602000000";
+    public static final String RECORD_2_TYPE_1 = "109121212121219  ADAM"
+            + "                                                                                                                              "
+            + "NOSEWORTHY                                                       "
+            + "3000100000{012400000{00002329 "
+            + "WEST MALL                VANCOUVER BC                                                                "
+            + "V6T1Z400824527055VIVA        "
+            + "883751984 04000195901000000";
+
+    public static final String LAST_LINE = "999999999999000001000000000000000000000000000002409";
 }

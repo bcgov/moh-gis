@@ -155,7 +155,7 @@ public class DataLoadComponent implements IBatchComponent {
                     } catch (IOException io) {
                          logger.log(Level.WARNING, "Cannot write into summary file", io);
                     }
-                    System.out.println("GisEntry: " + gisEntry.toString());
+
                     batch.add(MiscellaneousHelper.makeStringArray(gisEntry));
                     prevLine = read;
                     i++; // increment counter only after doing a write

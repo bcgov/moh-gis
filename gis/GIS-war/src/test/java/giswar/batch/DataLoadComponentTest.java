@@ -75,7 +75,6 @@ public class DataLoadComponentTest {
 
         for (int i = 0; i < 5500; i++) {
             bw.append(SampleFedFileData.RECORD_1_TYPE_1).append("\n");
-            bw.append(SampleFedFileData.RECORD_1_TYPE_2).append("\n");
         }
         bw.append(SampleFedFileData.LAST_LINE).append("\n");
 
