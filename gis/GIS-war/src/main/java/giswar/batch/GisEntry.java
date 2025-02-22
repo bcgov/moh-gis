@@ -210,7 +210,6 @@ public class GisEntry{
     }
 
     public void setBrithDate(String brithDate) {
-        // this.brithDate = "19" + brithDate;
         this.brithDate = brithDate;
     }
 
