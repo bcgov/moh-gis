@@ -73,6 +73,7 @@ public class SearchUnit {
             int resultCount = gisRecipientsBean.findCount(
                     searchParams.getAccountId(),
                     searchParams.getRcptSurname(),
+                    searchParams.getRcptMiddlename(),
                     searchParams.getRcptGivenname(),
                     searchParams.getBirthdate(),
                     lastUpdate);
@@ -91,6 +92,7 @@ public class SearchUnit {
             // search parameters
             searchResults = gisRecipientsBean.find(searchParams.getAccountId(),
                     searchParams.getRcptSurname(),
+                    searchParams.getRcptMiddlename(),
                     searchParams.getRcptGivenname(),
                     searchParams.getBirthdate(),
                     lastUpdate);
@@ -119,6 +121,7 @@ public class SearchUnit {
         // if not then throw RuntimeException
         if (notEmpty(clonedSearchParams.getAccountId())
                 || notEmpty(clonedSearchParams.getRcptSurname())
+                || notEmpty(clonedSearchParams.getRcptMiddlename())
                 || notEmpty(clonedSearchParams.getRcptGivenname())
                 || notEmpty(clonedSearchParams.getBirthdate())) {
             return true;

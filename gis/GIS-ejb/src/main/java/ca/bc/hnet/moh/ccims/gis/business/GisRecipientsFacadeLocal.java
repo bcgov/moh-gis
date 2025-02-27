@@ -36,12 +36,12 @@ public interface GisRecipientsFacadeLocal {
     List<GisRecipients> findAll();
     
     List<GisRecipients> find(String sin, 
-            String surName, String givenName, String birthDate, 
+            String surName, String middleName, String givenName, String birthDate, 
             Calendar lastUpdate);
     
     String getLastLoadDate();
 
     int findCount(String sin,
-            String surName, String givenName, String birthDate,
+            String surName, String middleName, String givenName, String birthDate,
             Calendar lastUpdate);
 }

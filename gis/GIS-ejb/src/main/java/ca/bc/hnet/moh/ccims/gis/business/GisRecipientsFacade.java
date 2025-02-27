@@ -52,12 +52,13 @@ public class GisRecipientsFacade
      *
      * @param sin
      * @param surName
+     * @param middleName
      * @param givenName
      * @param birthDate
      * @param lastUpdate
      * @return
      */
-    public int findCount(String sin, String surName,
+    public int findCount(String sin, String surName, String middleName,
             String givenName, String birthDate, Calendar lastUpdate) {
 
         StringBuilder sb = new StringBuilder();
@@ -65,7 +66,7 @@ public class GisRecipientsFacade
 
         sb.append(getStaticSqlForCount());
 
-        setWhereSql(where, sin, surName, givenName, birthDate, lastUpdate);
+        setWhereSql(where, sin, surName, middleName, givenName, birthDate, lastUpdate);
         sb.append(where);
 
         String query = sb.toString();
@@ -102,18 +103,18 @@ public class GisRecipientsFacade
         return result;
     }
 
-    public List<GisRecipients> find(String sin, String surName,
+    public List<GisRecipients> find(String sin, String surName, String middleName,
             String givenName, String birthDate, Calendar lastUpdate) {
 
         StringBuilder sb = new StringBuilder();
         StringBuilder where = new StringBuilder();
 
         //orderBy.append(" order by row_number");
-        String orderBy = " order by rcpt_surname, rcpt_givenname, account_id, load_id desc) recSubquery ";
+        String orderBy = " order by rcpt_surname, rcpt_middlename, rcpt_givenname, account_id, load_id desc) recSubquery ";
 
         sb.append(getStaticSql());
 
-        setWhereSql(where, sin, surName, givenName, birthDate, lastUpdate);
+        setWhereSql(where, sin, surName, middleName, givenName, birthDate, lastUpdate);
         sb.append(where);
         sb.append(orderBy);
 
@@ -169,6 +170,7 @@ public class GisRecipientsFacade
                 "ENTLMNT_DATE," +
                 "FINAL_PAY_DATE," +
                 "RCPT_SURNAME," +
+                "RCPT_MIDDLENAME," +
                 "RCPT_GIVENNAME," +
                 "LAST_UPDATE_DATE," +
                 "PAY_DATE," +
@@ -213,6 +215,7 @@ public class GisRecipientsFacade
                 "GR.ADDRESS4," +
                 "GR.SPOUSE_ACT_ID," +
                 "GR.RCPT_SURNAME," +
+                "GR.RCPT_MIDDLENAME," +
                 "GR.RCPT_GIVENNAME," +
                 "to_char(GR.LAST_UPDATE_DATE, 'YYYY-MM-DD') as LAST_UPDATE_DATE," +
                 "(CASE" +
@@ -242,7 +245,7 @@ public class GisRecipientsFacade
     }
 
     private void setWhereSql(StringBuilder where, String sin, String surName,
-            String givenName, String birthDate, Calendar lastUpdate) {
+        String middleName, String givenName, String birthDate, Calendar lastUpdate) {
 
         if (notEmpty(sin)) {
             applySuffix(where);
@@ -256,6 +259,11 @@ public class GisRecipientsFacade
         if (notEmpty(surName)) {
             applySuffix(where);
             where.append(String.format("GR.RCPT_SURNAME LIKE '%%%s%%'", fixSql(surName.toUpperCase())));
+        }
+
+        if (notEmpty(middleName)) {
+            applySuffix(where);
+            where.append(String.format("GR.RCPT_MIDDLENAME LIKE '%%%s%%'", fixSql(middleName.toUpperCase())));
         }
 
         if (notEmpty(givenName)) {

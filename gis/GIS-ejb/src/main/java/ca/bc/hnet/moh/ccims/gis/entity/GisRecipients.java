@@ -33,7 +33,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "GIS_RECIPIENTS")
-@NamedQueries({@NamedQuery(name = "GisRecipients.findById", query = "SELECT g FROM GisRecipients g WHERE g.id = :id"), @NamedQuery(name = "GisRecipients.findByLoadId", query = "SELECT g FROM GisRecipients g WHERE g.loadId = :loadId"), @NamedQuery(name = "GisRecipients.findByAccountId", query = "SELECT g FROM GisRecipients g WHERE g.accountId = :accountId"), @NamedQuery(name = "GisRecipients.findByRcptSurname", query = "SELECT g FROM GisRecipients g WHERE g.rcptSurname = :rcptSurname"), @NamedQuery(name = "GisRecipients.findByRcptGivenname", query = "SELECT g FROM GisRecipients g WHERE g.rcptGivenname = :rcptGivenname"), @NamedQuery(name = "GisRecipients.findByBirthdate", query = "SELECT g FROM GisRecipients g WHERE g.birthdate = :birthdate"), @NamedQuery(name = "GisRecipients.findByAcntStatusCode", query = "SELECT g FROM GisRecipients g WHERE g.acntStatusCode = :acntStatusCode"), @NamedQuery(name = "GisRecipients.findByAcntCode", query = "SELECT g FROM GisRecipients g WHERE g.acntCode = :acntCode"), @NamedQuery(name = "GisRecipients.findByEntlmntDate", query = "SELECT g FROM GisRecipients g WHERE g.entlmntDate = :entlmntDate"), @NamedQuery(name = "GisRecipients.findByPayDate", query = "SELECT g FROM GisRecipients g WHERE g.payDate = :payDate"), @NamedQuery(name = "GisRecipients.findByFinalPayDate", query = "SELECT g FROM GisRecipients g WHERE g.finalPayDate = :finalPayDate"), @NamedQuery(name = "GisRecipients.findByAddress1", query = "SELECT g FROM GisRecipients g WHERE g.address1 = :address1"), @NamedQuery(name = "GisRecipients.findByAddress2", query = "SELECT g FROM GisRecipients g WHERE g.address2 = :address2"), @NamedQuery(name = "GisRecipients.findByAddress3", query = "SELECT g FROM GisRecipients g WHERE g.address3 = :address3"), @NamedQuery(name = "GisRecipients.findByAddress4", query = "SELECT g FROM GisRecipients g WHERE g.address4 = :address4"), @NamedQuery(name = "GisRecipients.findByPostalCode", query = "SELECT g FROM GisRecipients g WHERE g.postalCode = :postalCode"), @NamedQuery(name = "GisRecipients.findByMarStatusCode", query = "SELECT g FROM GisRecipients g WHERE g.marStatusCode = :marStatusCode"), @NamedQuery(name = "GisRecipients.findBySpouseActId", query = "SELECT g FROM GisRecipients g WHERE g.spouseActId = :spouseActId"), @NamedQuery(name = "GisRecipients.findBySpouseGivenName", query = "SELECT g FROM GisRecipients g WHERE g.spouseGivenName = :spouseGivenName"), @NamedQuery(name = "GisRecipients.findByImsStrtDt", query = "SELECT g FROM GisRecipients g WHERE g.imsStrtDt = :imsStrtDt"), @NamedQuery(name = "GisRecipients.findByLastUpdateDate", query = "SELECT g FROM GisRecipients g WHERE g.lastUpdateDate = :lastUpdateDate")})
+@NamedQueries({@NamedQuery(name = "GisRecipients.findById", query = "SELECT g FROM GisRecipients g WHERE g.id = :id"), @NamedQuery(name = "GisRecipients.findByLoadId", query = "SELECT g FROM GisRecipients g WHERE g.loadId = :loadId"), @NamedQuery(name = "GisRecipients.findByAccountId", query = "SELECT g FROM GisRecipients g WHERE g.accountId = :accountId"), @NamedQuery(name = "GisRecipients.findByRcptSurname", query = "SELECT g FROM GisRecipients g WHERE g.rcptSurname = :rcptSurname"), @NamedQuery(name = "GisRecipients.findByRcptMiddlename", query = "SELECT g FROM GisRecipients g WHERE g.rcptMiddlename = :rcptMiddlename"), @NamedQuery(name = "GisRecipients.findByRcptGivenname", query = "SELECT g FROM GisRecipients g WHERE g.rcptGivenname = :rcptGivenname"), @NamedQuery(name = "GisRecipients.findByBirthdate", query = "SELECT g FROM GisRecipients g WHERE g.birthdate = :birthdate"), @NamedQuery(name = "GisRecipients.findByAcntStatusCode", query = "SELECT g FROM GisRecipients g WHERE g.acntStatusCode = :acntStatusCode"), @NamedQuery(name = "GisRecipients.findByAcntCode", query = "SELECT g FROM GisRecipients g WHERE g.acntCode = :acntCode"), @NamedQuery(name = "GisRecipients.findByEntlmntDate", query = "SELECT g FROM GisRecipients g WHERE g.entlmntDate = :entlmntDate"), @NamedQuery(name = "GisRecipients.findByPayDate", query = "SELECT g FROM GisRecipients g WHERE g.payDate = :payDate"), @NamedQuery(name = "GisRecipients.findByFinalPayDate", query = "SELECT g FROM GisRecipients g WHERE g.finalPayDate = :finalPayDate"), @NamedQuery(name = "GisRecipients.findByAddress1", query = "SELECT g FROM GisRecipients g WHERE g.address1 = :address1"), @NamedQuery(name = "GisRecipients.findByAddress2", query = "SELECT g FROM GisRecipients g WHERE g.address2 = :address2"), @NamedQuery(name = "GisRecipients.findByAddress3", query = "SELECT g FROM GisRecipients g WHERE g.address3 = :address3"), @NamedQuery(name = "GisRecipients.findByAddress4", query = "SELECT g FROM GisRecipients g WHERE g.address4 = :address4"), @NamedQuery(name = "GisRecipients.findByPostalCode", query = "SELECT g FROM GisRecipients g WHERE g.postalCode = :postalCode"), @NamedQuery(name = "GisRecipients.findByMarStatusCode", query = "SELECT g FROM GisRecipients g WHERE g.marStatusCode = :marStatusCode"), @NamedQuery(name = "GisRecipients.findBySpouseActId", query = "SELECT g FROM GisRecipients g WHERE g.spouseActId = :spouseActId"), @NamedQuery(name = "GisRecipients.findBySpouseGivenName", query = "SELECT g FROM GisRecipients g WHERE g.spouseGivenName = :spouseGivenName"), @NamedQuery(name = "GisRecipients.findByImsStrtDt", query = "SELECT g FROM GisRecipients g WHERE g.imsStrtDt = :imsStrtDt"), @NamedQuery(name = "GisRecipients.findByLastUpdateDate", query = "SELECT g FROM GisRecipients g WHERE g.lastUpdateDate = :lastUpdateDate")})
 public class GisRecipients implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,6 +45,8 @@ public class GisRecipients implements Serializable {
     private String accountId;
     @Column(name = "RCPT_SURNAME")
     private String rcptSurname;
+    @Column(name = "RCPT_MIDDLENAME")
+    private String rcptMiddlename;
     @Column(name = "RCPT_GIVENNAME")
     private String rcptGivenname;
     @Column(name = "BIRTHDATE")
@@ -93,6 +95,7 @@ public class GisRecipients implements Serializable {
         loadId = new String();
         accountId = new String();
         rcptSurname = new String();
+        rcptMiddlename = new String();
         rcptGivenname = new String();
         birthdate = new String();
     }
@@ -131,6 +134,14 @@ public class GisRecipients implements Serializable {
 
     public void setRcptSurname(String rcptSurname) {
         this.rcptSurname = rcptSurname;
+    }
+
+    public String getRcptMiddlename() {
+        return rcptMiddlename;
+    }
+
+    public void setRcptMiddlename(String rcptMiddlename) {
+        this.rcptMiddlename = rcptMiddlename;
     }
 
     public String getRcptGivenname() {
@@ -299,6 +310,7 @@ public class GisRecipients implements Serializable {
         recipient.loadId = loadId != null ? new String(loadId) : loadId;
         recipient.accountId = accountId != null ? new String(accountId) : accountId;
         recipient.rcptSurname = rcptSurname != null ? new String(rcptSurname) : rcptSurname;
+        recipient.rcptMiddlename = rcptMiddlename != null ? new String(rcptMiddlename) : rcptMiddlename;
         recipient.rcptGivenname = rcptGivenname != null ? new String(rcptGivenname) : rcptGivenname;
         recipient.birthdate = birthdate != null ? new String(birthdate) : birthdate;
 

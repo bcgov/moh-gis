@@ -16,19 +16,28 @@
  */
 package giswar.batch;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Properties;
 
+import javax.sql.DataSource;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author grant.shan
  */
-public class GisEntry {
+public class GisEntry{
 
     private int recordType;
     private String accountId;
-    private String surname;
     private String givenname;
+    private String middlename;
+    private String surname;
     private String brithDate;//yyyymm
     private String accountStatusCode;
     private String accountCode;
@@ -45,13 +54,10 @@ public class GisEntry {
     private String spouseGivenName;
     private String imsStartDate; //yyyymm
     private Date lastUpdateDate; //yyyymm
+    private static final Logger logger = Logger.getLogger(GisEntry.class.getName());
 
     public String getAccountCode() {
         return accountCode;
-    }
-
-    public void setAccountCode(String accountCode) {
-        this.accountCode = accountCode;
     }
 
     public String getAccountStatusCode() {
@@ -75,28 +81,96 @@ public class GisEntry {
         return accountId;
     }
 
-    public void setAccountId(String accountId) {
-        //If the ID is the SIN, the GIS-recipient-account-code is set to “S”,
-        //otherwise it is set to “A”
+    public void setAccountId(String clientID, String SIN, IDatabase db, DataSource ds) {
+        // Populate SIN if it exists
+        if (SIN != null && SIN.matches("\\d{9}")){
+            this.accountId = SIN;
+            setAccountCode("S");
+        } else {
+            // query db for matching client
+            Properties prop = new Properties();
+            List<String[]> batch = new ArrayList<String[]>(3);
+            batch.add(new String[]{this.givenname, this.middlename, this.surname, this.brithDate});
 
-        this.accountId = accountId;
+            prop.put(BatchConstants.DB_DATASOURCE, ds);
+            prop.put(BatchConstants.QUERY, 
+                "SELECT * FROM gis.gis_recipients WHERE rcpt_givenname=? AND rcpt_middlename=? AND rcpt_surname=? AND birthdate=?");
+            prop.put(BatchConstants.PARAMETERS, batch);
+            prop.put(BatchConstants.STATEMENT_TYPE, IDatabase.STATEMENT_TYPE.SELECT);
+            
+            Properties response = null;
+            try {
+                response = db.execute(prop);
+
+                if (response != null && response.containsKey(BatchConstants.ERROR)) {
+                    List<String> errors = (List<String>) response.get(BatchConstants.ERROR);
+
+                    for (String s : errors) {
+                        System.out.println(s);
+                    }
+                }
+
+            } catch (DatabaseException dbe) {
+                System.out.println(String.format("Data load error: %1$s", dbe.getMessage()));
+            }
+
+            List<String[]> resultSet = (List<String[]>) response.get("resultSet"); 
+            if (resultSet.size() > 0){
+                // should not get here but added the check just in case
+                if(resultSet.size() > 1){
+                    logger.log(Level.SEVERE, "Multiple users returned when only one should have");
+                }
+                // if account code is "O" then its an OAS account
+                if(resultSet.get(0)[7].equals("O")){
+                    // set accountId to clientID if it exists else 000000000000
+                    if(clientID != null && clientID.matches("\\d{12}")){
+                        this.accountId = clientID;
+                    } else {
+                        this.accountId = "000000000000";
+                    }
+                    setAccountCode("O");
+                // if account code is "S" then its a SIN account
+                } else if(resultSet.get(0)[7].equals("S")){
+                    // set accountId to SIN if it exists else 000000000
+                    if(resultSet.get(0)[2] != null && resultSet.get(0)[2].matches("\\d{9}")){
+                        this.accountId = resultSet.get(0)[2];
+                    } else {
+                        this.accountId = "000000000";
+                    }
+                    setAccountCode("S");
+                // if account code is "A" then its an IA account
+                } else {
+                    // set accountId to IA account id if it exists else 000000000
+                    if(resultSet.get(0)[2] != null && resultSet.get(0)[2].matches("\\d{9}")){
+                        this.accountId = resultSet.get(0)[2];
+                    } else {
+                        this.accountId = "000000000";
+                    }
+                    setAccountCode("A");
+                }
+            } else {
+                // if no matching client is found then we assume its a new OAS account so we set accountId to clientID if it exists else 000000000000
+                if(clientID != null && clientID.matches("\\d{12}")){
+                    this.accountId = clientID;
+                } else {
+                    this.accountId = "000000000000";
+                }
+                setAccountCode("O");
+            }
+        }
     }
 
     /**
-     * method to get teh Accoutn Code
+     * method to get the Account Code
      *
-     * @param accoutId  Account ID
-     * @param sin  SIN Number
+     * @param code  account code
      * @return
      */
-    public void setAccountCode(String accoutId, String sin) {
-        //If the ID is the SIN, the GIS-recipient-account-code is set to “S”,
-        //otherwise it is set to “A”
-        if (accountId != null && accountId.equals(sin)) {
-            this.accountCode = "S";
-        } else {
-            this.accountCode = "A";
-        }
+    public void setAccountCode(String code) {
+        // S for SIN
+        // A for IA Account Number
+        // O for OAS Account Number 
+        this.accountCode = code;
     }
 
     public String getAddress1() {
@@ -136,7 +210,7 @@ public class GisEntry {
     }
 
     public void setBrithDate(String brithDate) {
-        this.brithDate = "19" + brithDate;
+        this.brithDate = brithDate;
     }
 
     public String getEntitlementDate() {
@@ -163,6 +237,22 @@ public class GisEntry {
 
     public void setGivenname(String givenname) {
         this.givenname = givenname;
+    }
+
+    public String getMiddlename() {
+        return middlename;
+    }
+
+    public void setMiddleName(String middlename) {
+        this.middlename = middlename;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getImsStartDate() {
@@ -229,38 +319,22 @@ public class GisEntry {
         this.spouseGivenName = spouseGivenName;
     }
 
-    public String getSurname() {
-        return surname;
+    public void setName(String givenname, String middlename, String surname) {
+        setGivenname(givenname.trim());
+        setMiddleName(middlename.trim());
+        setSurname(surname.trim());
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setName(String surnameId, String name) {
-        surnameId = surnameId == null ? surnameId : surnameId.trim();
-        if (name != null && name.lastIndexOf(surnameId) > 0) {
-            int lastNameIndex = name.lastIndexOf(surnameId);
-            surname = name.substring(lastNameIndex).trim();
-            givenname = name.substring(0, lastNameIndex > 15 ? 15 : lastNameIndex).trim();
-            if (givenname != null && (givenname.startsWith("MR ") || givenname.startsWith("MRS "))) {
-                givenname = givenname.substring(givenname.indexOf(" ") + 1);
-            }
-
-        }
-    }
-
-    public void setEntry(String recordType1, String recordType2) {
-        setAccountId(recordType1.substring(3, 12));
-        setAccountCode(getAccountId(), recordType1.substring(198, 207));
-        setName(recordType1.substring(12, 17), recordType1.substring(17, 59));
-        setBrithDate(recordType1.substring(234, 238));
-        setAccountStatusCode(recordType1.substring(63, 64));
-        setEntitlementDate(recordType1.substring(70, 74));
+    public void setEntry(String recordType1, String recordType2, IDatabase db, DataSource ds) {
+        setName(recordType1.substring(17, 82), recordType1.substring(82, 147), recordType1.substring(147, 212));
+        setBrithDate(recordType1.substring(387, 393));
+        setAccountId(recordType1.substring(3, 15), recordType1.substring(351, 360), db, ds);
+        setAccountStatusCode(recordType1.substring(216, 217));
+        setEntitlementDate(recordType1.substring(223, 227));
         //For Address:
         //The ‘2’ record is used when the ‘there’ is a second record and 
         //GISRT1-ACNT-CD = 7. Otherwise you will use the existing address that is on record ‘1’.
-        String accountType = recordType1.substring(60, 61);
+        String accountType = recordType1.substring(211, 213);
         if (recordType2 != null && "7".equals(accountType)) {
             setAddress1(recordType2.substring(12, 42));
             setAddress2(recordType2.substring(42, 72));
@@ -268,16 +342,16 @@ public class GisEntry {
             setAddress4(recordType2.substring(102, 118));
             setPostalCode(recordType2.substring(118, 124));
         } else {
-            setAddress1(recordType1.substring(84, 114));
-            setAddress2(recordType1.substring(114, 144));
-            setAddress3(recordType1.substring(144, 174));
-            setAddress4(recordType1.substring(174, 190));
-            setPostalCode(recordType1.substring(190, 196));
+            setAddress1(recordType1.substring(237, 267));
+            setAddress2(recordType1.substring(267, 297));
+            setAddress3(recordType1.substring(297, 327));
+            setAddress4(recordType1.substring(327, 343));
+            setPostalCode(recordType1.substring(343, 349));
         }
         
-        setMaritalStatusCode(recordType1.substring(230, 231));
-        setSpouseAccountId(recordType1.substring(219, 228));
-        setSpouseGivenName(recordType1.substring(207, 219));
+        setMaritalStatusCode(recordType1.substring(383, 384));
+        setSpouseAccountId(recordType1.substring(372, 381));
+        setSpouseGivenName(recordType1.substring(360, 372));
     }
 
     public String getY2kCompliantDate(String monthYear, int sepaYear) {
@@ -310,6 +384,7 @@ public class GisEntry {
     public String toString() {
         return "accountId = " + accountId + ";" +
                 "surname = " + surname + ";" +
+                "middlename = " + middlename + ";" +
                 "givenname = " + givenname + ";" +
                 "brithDate = " + brithDate + ";" +
                 "accountStatusCode = " + accountStatusCode + ";" +

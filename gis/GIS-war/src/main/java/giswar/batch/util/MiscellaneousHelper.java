@@ -57,26 +57,27 @@ public class MiscellaneousHelper {
 
     public static String[] makeStringArray(GisEntry gisEntry) {
 
-        String[] dataItem = new String[18];
+        String[] dataItem = new String[19];
 
         dataItem[0] = gisEntry.getAccountId();
         dataItem[1] = gisEntry.getSurname();
-        dataItem[2] = gisEntry.getGivenname();
-        dataItem[3] = gisEntry.getBrithDate();
-        dataItem[4] = gisEntry.getAccountStatusCode();
-        dataItem[5] = gisEntry.getAccountCode();
-        dataItem[6] = gisEntry.getEntitlementDate();
-        dataItem[7] = gisEntry.getPayDate();
-        dataItem[8] = gisEntry.getFinalPayDate();
-        dataItem[9] = gisEntry.getAddress1();
-        dataItem[10] = gisEntry.getAddress2();
-        dataItem[11] = gisEntry.getAddress3();
-        dataItem[12] = gisEntry.getAddress4();
-        dataItem[13] = gisEntry.getPostalCode();
-        dataItem[14] = gisEntry.getMaritalStatusCode();
-        dataItem[15] = gisEntry.getSpouseAccountId();
-        dataItem[16] = gisEntry.getSpouseGivenName();
-        dataItem[17] = gisEntry.getImsStartDate();
+        dataItem[2] = gisEntry.getMiddlename();
+        dataItem[3] = gisEntry.getGivenname();
+        dataItem[4] = gisEntry.getBrithDate();
+        dataItem[5] = gisEntry.getAccountStatusCode();
+        dataItem[6] = gisEntry.getAccountCode();
+        dataItem[7] = gisEntry.getEntitlementDate();
+        dataItem[8] = gisEntry.getPayDate();
+        dataItem[9] = gisEntry.getFinalPayDate();
+        dataItem[10] = gisEntry.getAddress1();
+        dataItem[11] = gisEntry.getAddress2();
+        dataItem[12] = gisEntry.getAddress3();
+        dataItem[13] = gisEntry.getAddress4();
+        dataItem[14] = gisEntry.getPostalCode();
+        dataItem[15] = gisEntry.getMaritalStatusCode();
+        dataItem[16] = gisEntry.getSpouseAccountId();
+        dataItem[17] = gisEntry.getSpouseGivenName();
+        dataItem[18] = gisEntry.getImsStartDate();
 
         return dataItem;
     }

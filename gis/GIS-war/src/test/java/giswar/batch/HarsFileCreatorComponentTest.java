@@ -103,8 +103,8 @@ public class HarsFileCreatorComponentTest {
 
         List<String[]> sampleData = new ArrayList<>();
 
-        sampleData.add(new String[]{"102102", "Doe", "John", "201206", "201205", "Address Line 1", "Address Line 2", "Address Line 3", "Address Line 4", "Post Code"});
-        sampleData.add(new String[]{"102178", "Perkins", "Joe", "201201", "201208", "Address Line 1", "Address Line 2", "Address Line 3", "Address Line 4", "Post Code"});
+        sampleData.add(new String[]{"102102", "Doe", "M", "John", "201206", "201205", "Address Line 1", "Address Line 2", "Address Line 3", "Address Line 4", "Post Code"});
+        sampleData.add(new String[]{"102178", "Perkins", "H", "Joe", "201201", "201208", "Address Line 1", "Address Line 2", "Address Line 3", "Address Line 4", "Post Code"});
 
         return sampleData;
     }
@@ -114,16 +114,17 @@ public class HarsFileCreatorComponentTest {
         StringBuilder builder = new StringBuilder();
 
         for (String[] dt : sampleData) {
-            builder.append(MiscellaneousHelper.formatHarsData(dt[0], 9));
-            builder.append(MiscellaneousHelper.formatHarsData(dt[1], 20));
-            builder.append(MiscellaneousHelper.formatHarsData(dt[2], 15));
-            builder.append(MiscellaneousHelper.formatHarsData(dt[3], 6));
+            builder.append(MiscellaneousHelper.formatHarsData(dt[0], 12));
+            builder.append(MiscellaneousHelper.formatHarsData(dt[1], 65));
+            builder.append(MiscellaneousHelper.formatHarsData(dt[2], 65));
+            builder.append(MiscellaneousHelper.formatHarsData(dt[3], 65));
             builder.append(MiscellaneousHelper.formatHarsData(dt[4], 6));
-            builder.append(MiscellaneousHelper.formatHarsData(dt[5], 30));
+            builder.append(MiscellaneousHelper.formatHarsData(dt[5], 6));
             builder.append(MiscellaneousHelper.formatHarsData(dt[6], 30));
             builder.append(MiscellaneousHelper.formatHarsData(dt[7], 30));
             builder.append(MiscellaneousHelper.formatHarsData(dt[8], 30));
-            builder.append(MiscellaneousHelper.formatHarsData(dt[9], 6)).append("\r\n");
+            builder.append(MiscellaneousHelper.formatHarsData(dt[9], 30));
+            builder.append(MiscellaneousHelper.formatHarsData(dt[10], 6)).append("\r\n");
         }
 
         return builder.toString();

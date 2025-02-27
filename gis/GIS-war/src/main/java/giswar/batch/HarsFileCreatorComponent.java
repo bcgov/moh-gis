@@ -35,7 +35,7 @@ import javax.sql.DataSource;
 public class HarsFileCreatorComponent implements IBatchComponent {
 
     private static final Logger logger = Logger.getLogger(HarsFileCreatorComponent.class.getName());
-    private final String HARS_DATA_QUERY = "SELECT RC.ACCOUNT_ID, RC.RCPT_SURNAME, RC.RCPT_GIVENNAME, RC.BIRTHDATE, RC.PAY_DATE, ADDRESS1, ADDRESS2, ADDRESS3, ADDRESS4, POSTAL_CODE"
+    private final String HARS_DATA_QUERY = "SELECT RC.ACCOUNT_ID, RC.RCPT_SURNAME, RC.RCPT_MIDDLENAME, RC.RCPT_GIVENNAME, RC.BIRTHDATE, RC.PAY_DATE, ADDRESS1, ADDRESS2, ADDRESS3, ADDRESS4, POSTAL_CODE"
             + " FROM GIS_LOAD_DETAILS_SA RC"
             + " INNER JOIN GIS_LOAD_SA LD"
             + " ON RC.PAY_DATE = LD.PAY_DATE";
@@ -81,16 +81,17 @@ public class HarsFileCreatorComponent implements IBatchComponent {
             String[] dt;
             for (i = 0; i < rs.size(); i++) {
                 dt = rs.get(i);
-                builder.append(MiscellaneousHelper.formatHarsData(dt[0], 9));
-                builder.append(MiscellaneousHelper.formatHarsData(dt[1], 20));
-                builder.append(MiscellaneousHelper.formatHarsData(dt[2], 15));
-                builder.append(MiscellaneousHelper.formatHarsData(dt[3], 6));
+                builder.append(MiscellaneousHelper.formatHarsData(dt[0], 12));
+                builder.append(MiscellaneousHelper.formatHarsData(dt[1], 65));
+                builder.append(MiscellaneousHelper.formatHarsData(dt[2], 65));
+                builder.append(MiscellaneousHelper.formatHarsData(dt[3], 65));
                 builder.append(MiscellaneousHelper.formatHarsData(dt[4], 6));
-                builder.append(MiscellaneousHelper.formatHarsData(dt[5], 30));
+                builder.append(MiscellaneousHelper.formatHarsData(dt[5], 6));
                 builder.append(MiscellaneousHelper.formatHarsData(dt[6], 30));
                 builder.append(MiscellaneousHelper.formatHarsData(dt[7], 30));
                 builder.append(MiscellaneousHelper.formatHarsData(dt[8], 30));
-                builder.append(MiscellaneousHelper.formatHarsData(dt[9], 6)).append("\r\n");
+                builder.append(MiscellaneousHelper.formatHarsData(dt[9], 30));
+                builder.append(MiscellaneousHelper.formatHarsData(dt[10], 6)).append("\r\n");
 
                 bw.append(builder.toString());
 

@@ -44,12 +44,12 @@ public class DataLoadComponent implements IBatchComponent {
     private IDatabase db;
     private ILogHelper logHelper;
     private final String RECIPIENTS_INSERT_QUERY = "insert into GIS_LOAD_DETAILS_SA (  ACCOUNT_ID, "
-            + "RCPT_SURNAME, RCPT_GIVENNAME, BIRTHDATE, ACCOUNT_STATUS_CODE,"
+            + "RCPT_SURNAME, RCPT_MIDDLENAME, RCPT_GIVENNAME, BIRTHDATE, ACCOUNT_STATUS_CODE,"
             + "ACCOUNT_CODE, ENTLMNT_DATE, PAY_DATE, FINAL_PAY_DATE, "
             + "ADDRESS1, ADDRESS2, ADDRESS3, ADDRESS4,"
             + "POSTAL_CODE, MARital_STATUS_CODE, SPOUSE_ACT_ID, "
             + "SPOUSE_GIVEN_NAME, IMS_STRT_DT, LAST_UPDATE_DATE, LAST_MODIFIED_DATETIME) "
-            + " values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+            + " values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
     private DataSource ds;
 
     private StringBuilder summary;
@@ -144,10 +144,10 @@ public class DataLoadComponent implements IBatchComponent {
                     gisEntry = new GisEntry();
 
                     if (havingType2) {  
-                        gisEntry.setEntry(type1Line, type2Line);
+                        gisEntry.setEntry(type1Line, type2Line, db, ds);
                     } else {
                         // if no type2Line then we need to write our previous read type1Line
-                        gisEntry.setEntry(prevLine, null);
+                        gisEntry.setEntry(prevLine, null, db, ds);
                     }
 
                     try {
@@ -161,11 +161,11 @@ public class DataLoadComponent implements IBatchComponent {
                     i++; // increment counter only after doing a write
                 }
 
-                // If we have only type when at end of the file, then we need to make sure we write this record
+                // If we have only type 1 when at end of the file, then we need to make sure we write this record
                 // because we always wait to see if we have type 2 before we write.
                 if (read == null && prevLine != null && prevLine.startsWith("1")) {
                     gisEntry = new GisEntry();
-                    gisEntry.setEntry(prevLine, null);
+                    gisEntry.setEntry(prevLine, null, db, ds);
 
                     try {
                         validate(gisEntry, bw);
@@ -260,14 +260,13 @@ public class DataLoadComponent implements IBatchComponent {
 
         }
         //Validate account Id
-        String accountIdPattern = "\\d{9}";  //[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]";
+        String accountIdPattern = "\\d{9,12}";  // Matches any number that is 9 to 12 digits long
         if (!gisEntry.getAccountId().matches(accountIdPattern)) {
             writeMessage("AccountID is invalid: " + gisEntry.getAccountId(), bw);
             writeMessage("Offending Record:" + gisEntry.toString(), "INFO", bw);
         }
 
         //Validate Name
-
         if (gisEntry.getSurname() == null || gisEntry.getSurname().length() == 0) {
             writeMessage("Surname is blank. Account:" + gisEntry.getAccountId(), bw);
             writeMessage("Offending Record:" + gisEntry.toString(), "INFO", bw);
@@ -365,7 +364,6 @@ public class DataLoadComponent implements IBatchComponent {
 
             summary.append(formattedMessage);
             summary.append('\n');
-
             bw.write(formattedMessage);
             bw.newLine();
             bw.flush();
