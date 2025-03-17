@@ -83,7 +83,7 @@ public class GisEntry{
 
     public void setAccountId(String clientID, String SIN, IDatabase db, DataSource ds) {
         // Populate SIN if it exists
-        if (SIN != null && SIN != "000000000") {
+        if (SIN != null && !SIN.equals("000000000")) {
             this.accountId = SIN;
             setAccountCode("S");
         } else {
@@ -113,7 +113,6 @@ public class GisEntry{
             } catch (DatabaseException dbe) {
                 System.out.println(String.format("Data load error: %1$s", dbe.getMessage()));
             }
-
             List<String[]> resultSet = (List<String[]>) response.get("resultSet"); 
             if (resultSet.size() > 0){
                 // should not get here but added the check just in case
@@ -123,7 +122,7 @@ public class GisEntry{
                 // if account code is "O" then its an OAS account
                 if(resultSet.get(0)[7].equals("O")){
                     // set accountId to clientID if it exists else 000000000000
-                    if(clientID != null && clientID != "000000000000"){
+                    if(clientID != null && !clientID.equals("000000000000")){
                         this.accountId = clientID;
                     } else {
                         this.accountId = "000000000000";
@@ -132,7 +131,7 @@ public class GisEntry{
                 // if account code is "S" then its a SIN account
                 } else if(resultSet.get(0)[7].equals("S")){
                     // set accountId to SIN if it exists else 000000000
-                    if(resultSet.get(0)[2] != null && resultSet.get(0)[2] != "000000000"){
+                    if(resultSet.get(0)[2] != null && !resultSet.get(0)[2].equals("000000000")){
                         this.accountId = resultSet.get(0)[2];
                     } else {
                         this.accountId = "000000000";
@@ -141,7 +140,7 @@ public class GisEntry{
                 // if account code is "A" then its an IA account
                 } else {
                     // set accountId to IA account id if it exists else 000000000
-                    if(resultSet.get(0)[2] != null && resultSet.get(0)[2] != "000000000"){
+                    if(resultSet.get(0)[2] != null && !resultSet.get(0)[2].equals("000000000")){
                         this.accountId = resultSet.get(0)[2];
                     } else {
                         this.accountId = "000000000";
@@ -150,7 +149,7 @@ public class GisEntry{
                 }
             } else {
                 // if no matching client is found then we assume its a new OAS account so we set accountId to clientID if it exists else 000000000000
-                if(clientID != null && clientID != "000000000000"){
+                if(clientID != null && !clientID.equals("000000000000")){
                     this.accountId = clientID;
                 } else {
                     this.accountId = "000000000000";
