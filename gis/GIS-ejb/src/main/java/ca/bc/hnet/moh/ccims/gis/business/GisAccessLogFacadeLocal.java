@@ -18,7 +18,7 @@
 package ca.bc.hnet.moh.ccims.gis.business;
 
 import ca.bc.hnet.moh.ccims.gis.entity.GisAccessLog;
-import javax.ejb.Local;
+import jakarta.ejb.Local;
 
 /**
  *

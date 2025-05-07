@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     
-    <!-- Define javax.faces.PROJECT_STAGE in glassfish-resources.xml and reference via JNDI instead of web.xml -->
+    <!-- Define jakarta.faces.PROJECT_STAGE in glassfish-resources.xml and reference via JNDI instead of web.xml -->
     <resource-ref>
         <res-ref-name>jsf/ProjectStage</res-ref-name>
         <res-type>java.lang.String</res-type>
@@ -15,7 +15,7 @@
     
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
-        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     
@@ -42,7 +42,7 @@
             <url-pattern>/error.xhtml</url-pattern>
             <url-pattern>/pageNotFound.xhtml</url-pattern>
             <url-pattern>/sessionExpired.xhtml</url-pattern>
-            <url-pattern>/javax.faces.resource/*</url-pattern>
+            <url-pattern>/jakarta.faces.resource/*</url-pattern>
         </web-resource-collection>
     </security-constraint>
     
@@ -60,7 +60,7 @@
     </security-constraint>
     
     <error-page>
-        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <exception-type>jakarta.faces.application.ViewExpiredException</exception-type>
         <location>/sessionExpired.xhtml</location>
     </error-page>
     

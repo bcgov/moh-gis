@@ -20,7 +20,7 @@ package ca.bc.hnet.moh.ccims.gis.business;
 import ca.bc.hnet.moh.ccims.gis.entity.GisRecipients;
 import java.util.Calendar;
 import java.util.List;
-import javax.ejb.Local;
+import jakarta.ejb.Local;
 
 /**
  *
