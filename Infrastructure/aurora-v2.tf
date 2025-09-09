@@ -41,7 +41,7 @@ module "aurora_postgresql_v2" {
   name              = "${var.gis_cluster_name}-${var.target_env}"
   engine            = "aurora-postgresql"
   engine_mode       = "provisioned"
-  engine_version    = "14.9"
+  engine_version    = "14.15"
   storage_encrypted = true
   database_name     = var.gis_database_name
 
