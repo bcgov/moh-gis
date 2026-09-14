@@ -55,7 +55,8 @@ public class Search implements Serializable {
             new SelectItem(1, "Current"),
             new SelectItem(3, "Last 3 Months"),
             new SelectItem(6, "Last 6 Months"),
-            new SelectItem(12, "Last 12 Months")
+            new SelectItem(12, "Last 12 Months"),
+            new SelectItem(36, "Last 36 Months")
         };
         
         recipientSearchParams = new GisRecipients();
