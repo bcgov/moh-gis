@@ -49,12 +49,13 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>12.0.0</version>
+            <version>15.0.4</version>
+            <classifier>jakarta</classifier>
         </dependency>
         <dependency>
             <groupId>fish.payara.api</groupId>
             <artifactId>payara-api</artifactId>
-            <version>5.2022.4</version>
+            <version>7.2026.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -65,8 +66,8 @@
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <version>5.5.0</version>
+            <artifactId>mockito-core</artifactId>
+            <version>5.23.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

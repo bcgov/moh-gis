@@ -20,8 +20,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
+                    <release>${maven.compiler.release}</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -61,9 +60,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0.1</version>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>10.0.0</version>
             <scope>provided</scope>
         </dependency>
         <!-- Fork of com.jcraft.jsch which has since been abandoned -->
@@ -84,10 +83,9 @@
     <properties>
         <revision>3.3.1</revision>
 
-        <maven.compiler.version>3.8.0</maven.compiler.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.surefire.version>3.1.2</maven.surefire.version>
+        <maven.compiler.version>3.14.1</maven.compiler.version>
+        <maven.compiler.release>21</maven.compiler.release>
+        <maven.surefire.version>3.5.6</maven.surefire.version>
 
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

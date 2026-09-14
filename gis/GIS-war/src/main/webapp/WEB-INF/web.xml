@@ -15,9 +15,10 @@
     
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
-        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    
     
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
@@ -42,7 +43,7 @@
             <url-pattern>/error.xhtml</url-pattern>
             <url-pattern>/pageNotFound.xhtml</url-pattern>
             <url-pattern>/sessionExpired.xhtml</url-pattern>
-            <url-pattern>/javax.faces.resource/*</url-pattern>
+            <url-pattern>/jakarta.faces.resource/*</url-pattern>
         </web-resource-collection>
     </security-constraint>
     
@@ -60,7 +61,7 @@
     </security-constraint>
     
     <error-page>
-        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <exception-type>jakarta.faces.application.ViewExpiredException</exception-type>
         <location>/sessionExpired.xhtml</location>
     </error-page>
     
@@ -128,7 +129,7 @@
     <!-- Override PrimeFaces default CSP Policy (script-src 'self') -->
     <context-param>
         <param-name>primefaces.CSP_POLICY</param-name>
-        <param-value>base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-src 'self'; frame-ancestors 'self'; img-src 'self'; manifest-src 'none'; media-src 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'</param-value>
+        <param-value>base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-src 'self'; frame-ancestors 'self'; img-src 'self'; manifest-src 'none'; media-src 'none'; object-src 'none'; script-src 'self'</param-value>
     </context-param>
     
 </web-app>

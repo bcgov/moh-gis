@@ -1,4 +1,4 @@
-FROM maven:3.8.6-openjdk-11-slim as build-stage
+FROM maven:3.9-eclipse-temurin-25-noble AS build-stage
 RUN mkdir -p /home/gis
 COPY gis/GIS-ear /home/gis/GIS-ear
 COPY gis/GIS-ejb /home/gis/GIS-ejb
@@ -7,7 +7,7 @@ COPY gis/pom.xml /home/gis
 
 RUN mvn -f /home/gis/pom.xml clean package
 
-FROM payara/server-full:5.2022.4-jdk11
+FROM payara/server-full:7.2026.4-jdk25
 RUN mkdir -p /opt/payara/.ssh
 RUN chmod 700 /opt/payara/.ssh
 

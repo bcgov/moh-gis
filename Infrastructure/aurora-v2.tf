@@ -41,7 +41,7 @@ module "aurora_postgresql_v2" {
   name              = "${var.gis_cluster_name}-${var.target_env}"
   engine            = "aurora-postgresql"
   engine_mode       = "provisioned"
-  engine_version    = "14.9"
+  engine_version    = "14.17"
   storage_encrypted = true
   database_name     = var.gis_database_name
 
@@ -122,7 +122,7 @@ resource "aws_secretsmanager_secret_version" "gis_mastercreds_secret_version" {
    {
     "username": "${var.gis_master_username}",
     "password": "${random_password.gis_master_password.result}",
-    "engine": "14.9",
+    "engine": "14.17",
     "host": "${module.aurora_postgresql_v2.cluster_endpoint}",
     "port": ${module.aurora_postgresql_v2.cluster_port},
     "dbClusterIdentifier": "${module.aurora_postgresql_v2.cluster_id}"
@@ -165,7 +165,7 @@ resource "aws_secretsmanager_secret_version" "gis_apicreds_secret_version" {
    {
     "username": "${var.gis_api_username}",
     "password": "${random_password.gis_api_password.result}",
-    "engine": "14.9",
+    "engine": "14.17",
     "host": "${module.aurora_postgresql_v2.cluster_endpoint}",
     "port": ${module.aurora_postgresql_v2.cluster_port},
     "dbClusterIdentifier": "${module.aurora_postgresql_v2.cluster_id}"

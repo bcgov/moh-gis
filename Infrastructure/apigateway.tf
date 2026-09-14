@@ -43,6 +43,25 @@ resource "aws_api_gateway_integration_response" "gis-int-reponse" {
 }
 resource "aws_api_gateway_deployment" "gis_deploy" {
   rest_api_id = aws_api_gateway_rest_api.gis-api.id
+
+  triggers = {
+    redeployment = sha1(jsonencode([
+      aws_api_gateway_resource.gis-gateway.id,
+      aws_api_gateway_method.gis-method.id,
+      aws_api_gateway_integration.gis-integration.id,
+    ]))
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  depends_on = [
+    aws_api_gateway_method.gis-method,
+    aws_api_gateway_integration.gis-integration,
+    aws_api_gateway_method_response.gis-response,
+    aws_api_gateway_integration_response.gis-int-reponse,
+  ]
 }
 
 resource "aws_api_gateway_stage" "gis-stage" {

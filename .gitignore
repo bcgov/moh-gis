@@ -5,6 +5,9 @@
 id_rsa_DEV
 known_hosts
 
+# Local environment variables and credentials
+.env
+
 # Local .terraform directories
 **/.terraform/*
 
