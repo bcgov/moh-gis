@@ -107,6 +107,10 @@ module "api_gateway" {
       integration_type   = "HTTP_PROXY"
       integration_method = "ANY"
 
+       tls_config = {
+        server_name_to_verify = var.application_url
+      }
+
       request_parameters = {
         "append:header.SourceIp"       = "$request.header.X-Forwarded-For"
         "append:header.clientSourceIP" = "$context.identity.sourceIp"
