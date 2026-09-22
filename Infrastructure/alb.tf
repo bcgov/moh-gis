@@ -55,3 +55,7 @@ resource "aws_lb_listener_rule" "host_based_weighted_routing" {
     }
   }
 }
+resource "aws_lb_listener_certificate" "gis" {
+  listener_arn    = data.aws_alb_listener.front_end.arn
+  certificate_arn = data.aws_acm_certificate.gis_certificate.arn
+}
