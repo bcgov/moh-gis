@@ -9,6 +9,10 @@ on:
       version:
         description: 'Version Number'
         required: false
+      plan_only:
+        description: 'Run Terraform plan only (skip apply)'
+        type: boolean
+        default: false
 #   push:
 #     branches:
 #       - main
@@ -60,6 +64,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build and push Docker images
+        if: ${{ !inputs.plan_only }}
         uses: docker/build-push-action@v4
         with:
           builder: ${{ steps.buildx.outputs.name }}
@@ -103,10 +108,19 @@ jobs:
         with:
           terragrunt_version: ${{ env.TG_VERSION }}
 
-      - name: Terragrunt Apply
+      - name: Terragrunt Plan
         working-directory: ${{ env.TG_SRC_PATH }}/${{ env.TFC_WORKSPACE }}
         env:
           app_image: ${{ env.IMAGE_ID }}:${{ github.sha }}
           LICENSE_PLATE: ${{ secrets.MY_LICENSE_PLATE }}
         run: |
-            terragrunt run-all apply --terragrunt-non-interactive
+            terragrunt run-all plan -out=tfplan -input=false --terragrunt-non-interactive
+
+      - name: Terragrunt Apply
+        if: ${{ !inputs.plan_only }}
+        working-directory: ${{ env.TG_SRC_PATH }}/${{ env.TFC_WORKSPACE }}
+        env:
+          app_image: ${{ env.IMAGE_ID }}:${{ github.sha }}
+          LICENSE_PLATE: ${{ secrets.MY_LICENSE_PLATE }}
+        run: |
+            terragrunt run-all apply -input=false --terragrunt-non-interactive tfplan
