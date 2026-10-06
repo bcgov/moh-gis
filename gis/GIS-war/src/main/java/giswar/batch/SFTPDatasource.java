@@ -243,9 +243,7 @@ public class SFTPDatasource implements IData {
             session.setConfig("PubkeyAcceptedAlgorithms", session.getConfig("PubkeyAcceptedAlgorithms") + ",ssh-rsa");
             session.connect();
         } catch (JSchException sfe) {
-
-            logger.log(Level.SEVERE, "Connection problem with remote SFTP host", sfe);
-            return null;  // Return null if file cannot be found
+            throw new IOException(String.format("Unable to connect to SFTP host %1$s as user %2$s", host, user), sfe);
         }
         boolean isAuthenticated = session.isConnected();
         if (!isAuthenticated) {
@@ -257,12 +255,12 @@ public class SFTPDatasource implements IData {
 
     private ChannelSftp getSftpChannel(Session session) throws Exception {
 
-        Channel channel = null;
+        Channel channel;
         try {
             channel = session.openChannel("sftp");
             channel.connect();
         } catch (JSchException sfe) {
-            logger.log(Level.SEVERE, "Connection problem with remote SFTP session", sfe);
+            throw new IOException(String.format("Unable to open an SFTP channel to %1$s", host), sfe);
         }
         return (ChannelSftp) channel;
     }
