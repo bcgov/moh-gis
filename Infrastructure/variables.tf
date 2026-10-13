@@ -1,9 +1,6 @@
 variable "target_env" {
   description = "AWS workload account env (e.g. dev, test, prod, sandbox, unclass)"
 }
-variable "domain" {
-  description = "Domain name being used to access the website"
-}
 
 variable "aws_region" {
   description = "The AWS region things are created in"

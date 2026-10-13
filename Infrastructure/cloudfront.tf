@@ -5,7 +5,7 @@ provider "aws" {
 
 data "aws_acm_certificate" "gis_cloudfront_certificate" {
   provider    = aws.us-east-1
-  domain      = var.domain
+  domain      = var.application_url
   statuses    = ["ISSUED"]
   most_recent = true
 }
