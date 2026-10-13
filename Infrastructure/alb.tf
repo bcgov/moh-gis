@@ -24,7 +24,8 @@ resource "aws_alb_target_group" "app" {
     ignore_changes        = [name]
   }
   stickiness {
-    type = "lb_cookie"
+    type    = "lb_cookie"
+    enabled = false
   }
 
   health_check {
