@@ -14,9 +14,27 @@ jobs:
     name: Run ZAP Scan
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      contents: read
     steps:
-      - name: ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.9.0
+      - uses: actions/checkout@v4
+
+      - name: Run authenticated ZAP scan
+        env:
+          APPLICATION_URL: ${{ vars.APPLICATION_URL }}
+          ZAP_USER: ${{ secrets.ZAP_USER }}
+          ZAP_PASS: ${{ secrets.ZAP_PASS }}
+        run: |
+          mkdir -p zap-out && chmod 777 zap-out
+          cp .github/zap/plan.yaml zap-out/plan.yaml
+          docker run --rm \
+            -v "$(pwd)/zap-out:/zap/wrk:rw" \
+            -e APPLICATION_URL -e ZAP_USER -e ZAP_PASS \
+            ghcr.io/zaproxy/zaproxy:stable \
+            zap.sh -cmd -autorun /zap/wrk/plan.yaml
+
+      - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          target: ${{ vars.APPLICATION_URL }}
+          name: zap-report-${{ github.event.inputs.environment }}
+          path: zap-out/
