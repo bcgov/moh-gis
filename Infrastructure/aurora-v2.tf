@@ -118,59 +118,13 @@ resource "aws_secretsmanager_secret" "gis_mastercreds_secret" {
 
 resource "aws_secretsmanager_secret_version" "gis_mastercreds_secret_version" {
   secret_id     = aws_secretsmanager_secret.gis_mastercreds_secret.id
-  secret_string = <<EOF
-   {
-    "username": "${var.gis_master_username}",
-    "password": "${random_password.gis_master_password.result}",
-    "engine": "14.17",
-    "host": "${module.aurora_postgresql_v2.cluster_endpoint}",
-    "port": ${module.aurora_postgresql_v2.cluster_port},
-    "dbClusterIdentifier": "${module.aurora_postgresql_v2.cluster_id}"
-    "dbname": "gis_db"
-   }
-  EOF
-  lifecycle {
-    ignore_changes = [secret_string]
-  }
-}
-
-resource "random_password" "gis_api_password" {
-  length           = 16
-  special          = true
-  override_special = "!#$%&*()-_=+[]{}<>:?"
-}
-
-variable "gis_api_username" {
-  description = "The username for the DB api user"
-  type        = string
-  default     = "fam_proxy_api"
-  sensitive   = true
-}
-
-resource "random_pet" "api_creds_secret_name" {
-  prefix = "gis-api-creds"
-  length = 2
-}
-
-resource "aws_secretsmanager_secret" "gis_apicreds_secret" {
-  name = random_pet.api_creds_secret_name.id
-  tags = {
-    managed-by = "terraform"
-  }
-}
-
-resource "aws_secretsmanager_secret_version" "gis_apicreds_secret_version" {
-  secret_id     = aws_secretsmanager_secret.gis_apicreds_secret.id
-  secret_string = <<EOF
-   {
-    "username": "${var.gis_api_username}",
-    "password": "${random_password.gis_api_password.result}",
-    "engine": "14.17",
-    "host": "${module.aurora_postgresql_v2.cluster_endpoint}",
-    "port": ${module.aurora_postgresql_v2.cluster_port},
-    "dbClusterIdentifier": "${module.aurora_postgresql_v2.cluster_id}"
-   }
-  EOF
+  secret_string = jsonencode({
+    username            = var.gis_master_username
+    password            = random_password.gis_master_password.result
+    host                = module.aurora_postgresql_v2.cluster_endpoint
+    port                = module.aurora_postgresql_v2.cluster_port
+    dbClusterIdentifier = module.aurora_postgresql_v2.cluster_id
+  })
   lifecycle {
     ignore_changes = [secret_string]
   }
