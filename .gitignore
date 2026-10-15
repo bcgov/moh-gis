@@ -16,3 +16,5 @@ known_hosts
 *.tfstate.*
 .terraform.lock.hcl
 **/.terragrunt-cache/*
+
+.claude
