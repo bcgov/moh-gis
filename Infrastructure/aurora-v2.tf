@@ -19,7 +19,7 @@ variable "gis_master_username" {
 variable "gis_database_name" {
   description = "The name of the database"
   type        = string
-  default     = "gis"
+  default     = "gis_db"
 }
 
 resource "aws_db_subnet_group" "gis_subnet_group" {
@@ -41,7 +41,7 @@ module "aurora_postgresql_v2" {
   name              = "${var.gis_cluster_name}-${var.target_env}"
   engine            = "aurora-postgresql"
   engine_mode       = "provisioned"
-  engine_version    = "14.17"
+  engine_version    = "14"
   storage_encrypted = true
   database_name     = var.gis_database_name
 
@@ -58,8 +58,12 @@ module "aurora_postgresql_v2" {
   create_monitoring_role = false
   create_random_password = false
 
-  apply_immediately   = true
-  skip_final_snapshot = true
+  apply_immediately = true
+
+  # Pinned to major version only; AWS applies minor upgrades in the maintenance window (UTC).
+  auto_minor_version_upgrade   = true
+  allow_major_version_upgrade  = false
+  preferred_maintenance_window = "sun:11:00-sun:11:30"
 
   db_parameter_group_name         = aws_db_parameter_group.gis_postgresql13.id
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.gis_postgresql13.id
