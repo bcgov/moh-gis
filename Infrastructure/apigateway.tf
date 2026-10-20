@@ -112,6 +112,7 @@ module "api_gateway" {
       }
 
       request_parameters = {
+        "overwrite:header.Host"        = var.alb_origin_id
         "append:header.SourceIp"       = "$request.header.X-Forwarded-For"
         "append:header.clientSourceIP" = "$context.identity.sourceIp"
       }

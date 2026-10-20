@@ -6,79 +6,17 @@ on:
         description: 'Environment to ZAP Scan'
         type: environment
         required: true
- 
+
 concurrency: ${{ github.event.inputs.environment }}
- 
+
 jobs:
   zap_scan:
     name: Run ZAP Scan
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-    permissions:
-      contents: read
+    permissions: write-all
     steps:
-      - name: Write ZAP plan
-        run: |
-          mkdir -p zap-out && chmod 777 zap-out
-          cat > zap-out/plan.yaml <<'EOF'
-          env:
-            contexts:
-              - name: app
-                urls:
-                  - ${APPLICATION_URL}
-                includePaths:
-                  - ${APPLICATION_URL}.*
-                excludePaths:
-                  - ".*[Ll]ogout.*"
-                  - ".*[Dd]elete.*"
-                authentication:
-                  method: browser
-                  parameters:
-                    loginPageUrl: ${APPLICATION_URL}
-                    loginPageWait: 5
-                    browserId: firefox-headless
-                  verification:
-                    method: response
-                    # Replace with text that only appears when logged in
-                    loggedInRegex: "\\QLogout\\E"
-                sessionManagement:
-                  method: cookie
-                users:
-                  - name: scan-account
-                    credentials:
-                      username: ${ZAP_USER}
-                      password: ${ZAP_PASS}
-          jobs:
-            - type: spider
-              parameters:
-                context: app
-                user: scan-account
-                maxDuration: 5
-            - type: passiveScan-wait
-            - type: report
-              parameters:
-                template: traditional-html
-                reportDir: /zap/wrk
-                reportFile: report.html
-          EOF
- 
-      - name: Run authenticated ZAP scan
-        env:
-          APPLICATION_URL: ${{ vars.APPLICATION_URL }}
-          ZAP_USER: ${{ secrets.ZAP_USER }}
-          ZAP_PASS: ${{ secrets.ZAP_PASS }}
-        run: |
-          docker run --rm --shm-size=1g \
-            -v "$(pwd)/zap-out:/zap/wrk:rw" \
-            -e APPLICATION_URL -e ZAP_USER -e ZAP_PASS \
-            ghcr.io/zaproxy/zaproxy:stable \
-            zap.sh -cmd -autorun /zap/wrk/plan.yaml
- 
-      - name: Upload report
-        if: always()
-        uses: actions/upload-artifact@v4
+      - name: ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.9.0
         with:
-          name: zap-report-${{ github.event.inputs.environment }}
-          path: zap-out/report.html
-          if-no-files-found: warn
+          target: ${{ vars.APPLICATION_URL }}
