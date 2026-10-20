@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     
     <!-- Define javax.faces.PROJECT_STAGE in glassfish-resources.xml and reference via JNDI instead of web.xml -->
     <resource-ref>
@@ -28,6 +28,15 @@
     <!-- Set to Keycloak's SSO Session Idle (30) + Time to account for the user login process (3) -->
     <session-config>
         <session-timeout>33</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+            <secure>true</secure>
+            <attribute>
+                <attribute-name>SameSite</attribute-name>
+                <attribute-value>Lax</attribute-value>
+            </attribute>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
     </session-config>
     
     <welcome-file-list>
@@ -129,7 +138,7 @@
     <!-- Override PrimeFaces default CSP Policy (script-src 'self') -->
     <context-param>
         <param-name>primefaces.CSP_POLICY</param-name>
-        <param-value>base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-src 'self'; frame-ancestors 'self'; img-src 'self'; manifest-src 'none'; media-src 'none'; object-src 'none'; script-src 'self'</param-value>
+        <param-value>default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-src 'self'; frame-ancestors 'self'; img-src 'self'; manifest-src 'none'; media-src 'none'; object-src 'none'; worker-src 'none'; style-src 'self' 'unsafe-inline'; script-src 'self'</param-value>
     </context-param>
     
 </web-app>
