@@ -21,6 +21,33 @@ data "aws_cloudfront_origin_request_policy" "AllViewerExceptHostHeader"{
     name = "Managed-AllViewerExceptHostHeader"
 }
 
+resource "aws_cloudfront_response_headers_policy" "security_headers_policy" {
+  name    = "${var.application}-security-headers"
+  comment = "STS, CSP and Permissions-Policy"
+
+  security_headers_config {
+    strict_transport_security {
+      access_control_max_age_sec = 31536000
+      include_subdomains         = true
+      preload                    = false
+      override                   = true
+    }
+
+    content_security_policy {
+      content_security_policy = "default-src 'self';  script-src 'self';  style-src 'self';  img-src 'self' data:;  font-src 'self';  object-src 'none';  frame-ancestors 'none';  base-uri 'self';  form-action 'self'; upgrade-insecure-requests;"
+      override                = false
+    }
+  }
+
+  custom_headers_config {
+    items {
+      header   = "Permissions-Policy"
+      value    = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), fullscreen=(self)"
+      override = true
+    }
+  }
+}
+
 resource "aws_cloudfront_distribution" "gis_distribution" {
   origin {
     domain_name = local.api_gateway_domain
@@ -36,6 +63,7 @@ resource "aws_cloudfront_distribution" "gis_distribution" {
       origin_shield_region = "us-east-1"
     }
   }
+  aliases = [var.application_url]
   
   enabled             = true
   is_ipv6_enabled     = true
@@ -56,6 +84,7 @@ resource "aws_cloudfront_distribution" "gis_distribution" {
     origin_request_policy_id = data.aws_cloudfront_origin_request_policy.AllViewerExceptHostHeader.id
     compress = true
     viewer_protocol_policy = "redirect-to-https"
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.security_headers_policy.id
   }
 
    price_class = "PriceClass_100"
