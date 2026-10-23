@@ -15,5 +15,6 @@ generate "prod_tfvars" {
   application_url = "gis.hlth.gov.bc.ca"
   aurora_acu_min = 0.5
   aurora_acu_max = 5
+  aurora_backup_retention_days = 20
   EOF
 }

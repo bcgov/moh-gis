@@ -99,6 +99,11 @@ variable "aurora_acu_max" {
   default     = 1
 }
 
+variable "aurora_backup_retention_days" {
+  description = "Days of Aurora automated backups to keep, from 1 to 35"
+  default     = 7
+}
+
 variable "timestamp" {
   description = "Used to trigger ECS to redeploy builds when no task changes are present"
   type        = string
