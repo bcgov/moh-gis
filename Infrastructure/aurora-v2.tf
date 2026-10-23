@@ -65,6 +65,11 @@ module "aurora_postgresql_v2" {
   allow_major_version_upgrade  = false
   preferred_maintenance_window = "sun:11:00-sun:11:30"
 
+  # Daily automated snapshot (UTC). 07:30 UTC = 00:30 America/Vancouver,
+  # 1.5 hours before the 02:00 BC data load (gis_schedule). Must not overlap the maintenance window.
+  backup_retention_period = var.aurora_backup_retention_days
+  preferred_backup_window = "07:30-08:00"
+
   db_parameter_group_name         = aws_db_parameter_group.gis_postgresql13.id
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.gis_postgresql13.id
 
