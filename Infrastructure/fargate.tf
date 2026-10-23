@@ -20,6 +20,7 @@ resource "aws_ecs_task_definition" "gis_td" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.fargate_cpu
+  # TEST and PROD set to 2G memory for nightly data load to run smoothly, DEV still set to 1G memory as default.
   memory                   = var.fargate_memory
   tags                     = local.common_tags
   container_definitions = jsonencode([
