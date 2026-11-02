@@ -26,4 +26,4 @@ RUN chmod 600 /opt/payara/.ssh/id_rsa /opt/payara/.ssh/known_hosts
 
 COPY --from=build-stage /home/gis/GIS-ear/target/GIS-ear.ear $DEPLOY_DIR
 COPY gis/pre-boot-commands.asadmin $PREBOOT_COMMANDS
-COPY gis/postgresql-42.4.0.jar /opt/payara/appserver/glassfish/domains/domain1/lib
+COPY gis/postgresql-42.7.14.jar /opt/payara/appserver/glassfish/domains/domain1/lib
