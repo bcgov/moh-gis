@@ -25,7 +25,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_cpu_utilization" {
   }
 
   alarm_actions = [
-    aws_sns_topic.alerts.arn
+    data.aws_sns_topic.alerts.arn
   ]
 }
 
@@ -47,7 +47,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_memory_utilization" {
   }
 
   alarm_actions = [
-    aws_sns_topic.alerts.arn
+    data.aws_sns_topic.alerts.arn
   ]
 }
 
@@ -70,7 +70,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_service_status" {
   alarm_description = "Alarm for Amazon ECS service status"
 
   alarm_actions = [
-    aws_sns_topic.alerts.arn
+    data.aws_sns_topic.alerts.arn
   ]
 }
 
@@ -93,7 +93,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_network_traffic" {
   alarm_description = "Alarm for Amazon ECS Network Traffic"
 
   alarm_actions = [
-    aws_sns_topic.alerts.arn
+    data.aws_sns_topic.alerts.arn
   ]
 }
 
@@ -116,7 +116,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_disk_usage" {
   alarm_description = "Alarm for Amazon ECS task filesystem utilization"
 
   alarm_actions = [
-    aws_sns_topic.alerts.arn
+    data.aws_sns_topic.alerts.arn
   ]
 }
 
@@ -138,7 +138,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_task_failures" {
   alarm_description = "Alarm for Amazon ECS task failures"
 
   alarm_actions = [
-    aws_sns_topic.alerts.arn
+    data.aws_sns_topic.alerts.arn
   ]
 }
 
@@ -150,7 +150,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_cpu_util_anomaly" {
   tags                = local.common_tags
   alarm_description   = "Alarm for Amazon ECS CPU Anomaly"
   alarm_actions = [
-    aws_sns_topic.alerts.arn
+    data.aws_sns_topic.alerts.arn
   ]
 
   metric_query {
@@ -192,7 +192,7 @@ resource "aws_cloudwatch_metric_alarm" "aurora_cpu_utilization" {
   alarm_description   = "Alarm when Aurora CPU utilization exceeds 70%"
 
   alarm_actions = [
-    aws_sns_topic.alerts.arn
+    data.aws_sns_topic.alerts.arn
   ]
 
   dimensions = {
@@ -212,7 +212,7 @@ resource "aws_cloudwatch_metric_alarm" "aurora_db_connections" {
   alarm_description   = "Alarm when the number of database connections exceeds 100 for 2 consecutive periods"
 
   alarm_actions = [
-    aws_sns_topic.alerts.arn
+    data.aws_sns_topic.alerts.arn
   ]
 
   dimensions = {
@@ -231,7 +231,7 @@ resource "aws_cloudwatch_metric_alarm" "aurora_disk_queue_depth" {
   threshold           = 10
   alarm_description   = "Alarm when the disk queue depth (IOPS requests waiting to be serviced) exceeds 10 for 2 consecutive periods"
   alarm_actions = [
-    aws_sns_topic.alerts.arn
+    data.aws_sns_topic.alerts.arn
   ]
 
   dimensions = {
@@ -257,6 +257,6 @@ resource "aws_cloudwatch_metric_alarm" "billing" {
   alarm_description = "This alarm will be triggered if the estimated charges for the account exceed $3000 CAD within a 1-month period."
 
   alarm_actions = [
-    aws_sns_topic.alerts.arn
+    data.aws_sns_topic.alerts.arn
   ]
 }
