@@ -1,4 +1,4 @@
-resource "aws_sns_topic" "alerts" {
+data "aws_sns_topic" "alerts" {
   name = "cloudwatch_alarms"
 }
 
